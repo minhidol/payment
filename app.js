@@ -11,7 +11,7 @@ const indexApiRouter = require('./src/api/routes/index.route');
 const bearerToken = require('express-bearer-token');
 
 var app = express();
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 
 // view engine setup
 app.use(bearerToken());

@@ -17,6 +17,10 @@ var userSchema = new mongoose.Schema({
         default: "",
         required: true
     },
+    roleDetail: {
+        type: String,
+        default: ""
+    },
     name: {
         type: String,
         default: ""

@@ -5,7 +5,7 @@ const permissionGroupRoute = require('./permission_group.route');
 
 const router = express.Router()
 
-router.use('/user', userRoute);
+router.use('/account', userRoute);
 // router.use(authMiddleware.isAuth);
 router.use('/permission-group', permissionGroupRoute);
 

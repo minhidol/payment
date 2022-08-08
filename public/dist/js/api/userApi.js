@@ -3,7 +3,25 @@ import axiosClient from '/dist/js/api/index.js';
 
 const handleApiLogin = async(data) => {
     try {
-        return await axiosClient.post('http://localhost:3000/api/user/login', data);
+        return await axiosClient.post('/account/login', data);
+    } catch (error) {
+        console.log('error: ', error);
+        return null;
+    }
+}
+
+const handleCreateUser = async(data) => {
+    try {
+        return await axiosClient.post('/account/register', data);
+    } catch (error) {
+        console.log('error: ', error);
+        return null;
+    }
+}
+
+const handleGetListUser = async(data) => {
+    try {
+        return await axiosClient.get('/account/get-list-staff', data);
     } catch (error) {
         console.log('error: ', error);
         return null;
@@ -11,6 +29,8 @@ const handleApiLogin = async(data) => {
 }
 
 export{
-    handleApiLogin
+    handleApiLogin,
+    handleCreateUser,
+    handleGetListUser
 }
  

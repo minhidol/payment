@@ -3,7 +3,7 @@ const Joi = require('joi');
 const userSchema = Joi.object({
     username: Joi.string()
         .min(4)
-        .max(30)
+        .max(80)
         .required(),
     name: Joi.string(),
     password: Joi.string()
@@ -15,6 +15,8 @@ const userSchema = Joi.object({
     .min(1)
     .max(6)
     .required(),
+
+    roleDetail: Joi.string()
 })
 
 module.exports = userSchema;

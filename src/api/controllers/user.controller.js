@@ -3,10 +3,18 @@ const constants = require('../../constants/constants');
 const {rsError, rsSuccess} = require('../helpers/response');
 const userRegisterJoi = require('../joi/user/userRegister');
 
+const handleGetListStaff = async(req, res) => {
+    try {
+        const listStaff = await userService.getListStaff();
+        return res.json(rsSuccess(listStaff));
+    } catch (error) {
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
+
 const handleRegister = async(req, res) => {
     try {
         const validate = userRegisterJoi.validate(req.body);
-        console.log('validate: ', validate);
         if(validate.error)
             return res.json(rsError(202, constants.ERROR_BODY_REQUEST));
         const userCreated = await userService.register(req.body);
@@ -36,5 +44,6 @@ const handleLogin = async(req, res) => {
 
 module.exports = {
     handleRegister,
-    handleLogin
+    handleLogin,
+    handleGetListStaff
 }

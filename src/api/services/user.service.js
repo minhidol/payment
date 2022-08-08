@@ -8,8 +8,8 @@ const saltRounds = 10;
 
 const getListStaff = async() => {
   try{
-    const listStaff = await userModel.find();
-    console.log('list staff: ', listStaff);
+    const listStaff = await userModel.find().lean();
+    return listStaff;
   }catch(err){
     throw err;
   }
@@ -37,10 +37,11 @@ const register = async(body) => {
             bcrypt.hash(body.password, saltRounds, async function(err, hash) {
               if (err) reject(err)
               const user = {
-                username: body.username.toLowerCase(),
-                password: hash,
-                name: body.name,
-                role: body.role
+                  username: body.username.toLowerCase(),
+                  password: hash,
+                  name: body.name,
+                  role: body.role,
+                  roleDetail: body.roleDetail
                 };
                 await userModel.create(user);
               resolve(constants.STATUS_SUCCESS);
@@ -84,5 +85,6 @@ const login = async(body) => {
 module.exports = {
   register,
   getUserByUsername,
-  login
+  login,
+  getListStaff
 };
