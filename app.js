@@ -6,12 +6,15 @@ var logger = require('morgan');
 var jsonLog = require("morgan-json");
 var requestIp = require("request-ip");
 const hbs = require('express-handlebars');
+const handlebars = require('handlebars');
+handlebars.registerHelper('dateFormat', require('handlebars-dateformat'));
 var indexRouter = require('./src/frontend/routes/index');
 const indexApiRouter = require('./src/api/routes/index.route');
 const bearerToken = require('express-bearer-token');
 
+
 var app = express();
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 
 // view engine setup
 app.use(bearerToken());

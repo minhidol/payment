@@ -6,6 +6,22 @@ const {generateToken} = require('../helpers/jwt');
 const {config} = require('../../../config/env');
 const saltRounds = 10;
 
+const updateUser = async(data) => {
+  try {
+    return await userModel.findOneAndUpdate({
+      username: data.username
+    },{
+      role: data.role,
+      roleDetail: data.roleDetail,
+      name: data.name,
+      update_by: data.update_by,
+      update_date: Date.now()
+    })
+  } catch (error) {
+    throw error;
+  }
+}
+
 const getListStaff = async() => {
   try{
     const listStaff = await userModel.find().lean();
@@ -86,5 +102,6 @@ module.exports = {
   register,
   getUserByUsername,
   login,
-  getListStaff
+  getListStaff,
+  updateUser
 };

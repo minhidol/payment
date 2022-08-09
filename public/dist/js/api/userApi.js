@@ -28,9 +28,30 @@ const handleGetListUser = async(data) => {
     }
 }
 
+const handleUpdateUser = async(data) => {
+    try {
+        return await axiosClient.post('/account/update', data);
+    } catch (error) {
+        console.log('error: ', error);
+        return null;
+    }
+}
+
+const handleGetUser = async(username) => {
+    try {
+        return await axiosClient.get(`/account/get-by-username?username=${username}`);
+    } catch (error) {
+        console.log('error: ', error);
+        return null;
+    }
+}
+
+
 export{
     handleApiLogin,
     handleCreateUser,
-    handleGetListUser
+    handleGetListUser,
+    handleUpdateUser,
+    handleGetUser
 }
  

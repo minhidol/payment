@@ -11,6 +11,10 @@ module.exports = {
     USERNAME_NOT_EXIST: 'Username không tồn tại',
     MESSAGE_PASSWORD_NOT_VALID: 'Password không hợp lệ',
     USERNAME_EXIST: 'Tài khoản đã tồn tại',
-    NOT_FIND_ACCESS_TOKEN: 'Không tìm thấy access token'
+    NOT_FIND_ACCESS_TOKEN: 'Không tìm thấy access token',
+
+    // Token
+    TOKEN_EXPIRED: 1,
+    TOKEN_NOT_EXPIRED: 0
 };
   

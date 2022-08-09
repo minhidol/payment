@@ -1,4 +1,5 @@
-import {handleCreateUser, handleGetListUser} from '/dist/js/api/userApi.js';
+import {handleCreateUser, handleGetListUser,
+handleGetUser, handleUpdateUser} from '/dist/js/api/userApi.js';
 const nameCreateUser = document.querySelector('#InputNameCreateUser');
 const username = document.querySelector('#InputUsernameCreateUser');
 const password = document.querySelector('#InputPasswordCreateUser');
@@ -101,7 +102,13 @@ if(formCreateUser){
         }
     }));
 }
-
+function getFormattedDate(date) {
+    let year = date.getFullYear();
+    let month = (1 + date.getMonth()).toString().padStart(2, '0');
+    let day = date.getDate().toString().padStart(2, '0');
+  
+    return day + '/' + month + '/' + year;
+}
 formCreateUser.addEventListener('submit', async function (e) {
     try {
         e.preventDefault();
@@ -128,15 +135,20 @@ formCreateUser.addEventListener('submit', async function (e) {
             else{
                 $("#modal-default").modal('hide');
                 const listStaff = await handleGetListUser();
-                $("#table-user").empty();
+                $("#table-user tr").remove();
                 const arrUser = listStaff.Result;
                 arrUser.forEach(item => {
+                    const newDate = new Date(item.create_date);
+                    const dateString = getFormattedDate(newDate);
                     $("#table-user").append(`
                     <tr>
                         <td>${item.name}</td>
                         <td>${item.username}</td>
                         <td>${item.roleDetail}</td>
-                        <td>${item.create_date}</td>
+                        <td>${dateString}</td>
+                        <td><a  class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default-update-user">
+                        <i class="fas fa-user"></i> Chi tiết
+                      </a></td>
                     </tr>`);
                 })
                 username.value = '';
@@ -148,7 +160,26 @@ formCreateUser.addEventListener('submit', async function (e) {
     } catch (error) {
         console.log('error: ', error);
     }
-    
-    
+});
+
+$('#TableUser tr').click(async function () {
+    try {
+        alert('123')
+        //  //alert("Clicked");
+        //var currentRow=$(this).closest("tr");
+        // var usernameDetail = currentRow.find("td:eq(1)").html();
+        // const getUser = await handleGetUser(usernameDetail);
+        // const userTemp = getUser.Result;
+        // //console.log('user info: ', userTemp.username);
+        // const nameUpdateUser = document.querySelector('#InputNameUpdateUser');
+        // const usernameUpdate = document.querySelector('#InputUsernameUpdateUser');
+        // nameUpdateUser.value = userTemp.name;
+        // usernameUpdate.value = userTemp.username;
+        // $('#UpdateChoosePermission').val(userTemp.role).change();
+        //your code
+    } catch (error) {
+        console.log('error: ', error);
+    }
+   
 });
 

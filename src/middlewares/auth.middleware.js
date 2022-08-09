@@ -40,7 +40,11 @@ const isAuthCookie = async(req, res, next) => {
 			return res.redirect('/login');
 		}
 		if(isJwtExpired(cookie))
-			return res.json(rsErrorTokenExpired());
+		{
+			req.isJwtExpired = constants.TOKEN_EXPIRED;
+			return res.redirect('/login');
+			//return next();
+		}
 		const accessTokenSecret = config.ACCESS_TOKEN_SECRET;
 		const verified = await authMethod.verifyToken(
 			cookie,

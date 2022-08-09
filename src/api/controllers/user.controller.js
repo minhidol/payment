@@ -3,6 +3,25 @@ const constants = require('../../constants/constants');
 const {rsError, rsSuccess} = require('../helpers/response');
 const userRegisterJoi = require('../joi/user/userRegister');
 
+const handleGetUser = async(req, res) => {
+    try {
+        return res.json(rsSuccess(await userService.getUserByUsername(req.query.username)));
+    } catch (error) {
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
+
+const handleUpdateUser = async(req, res) => {
+    try {
+        const data = {...req.body};
+        data.update_by = req.jwtDecode.username;
+        await userService.updateUser(data);
+        return res.json(rsSuccess());
+    } catch (error) {
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
+
 const handleGetListStaff = async(req, res) => {
     try {
         const listStaff = await userService.getListStaff();
@@ -45,5 +64,7 @@ const handleLogin = async(req, res) => {
 module.exports = {
     handleRegister,
     handleLogin,
-    handleGetListStaff
+    handleGetListStaff,
+    handleUpdateUser,
+    handleGetUser
 }

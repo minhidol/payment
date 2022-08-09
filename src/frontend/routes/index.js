@@ -1,5 +1,6 @@
 const express = require('express');
 const homeRoute = require('./home.route');
+const constants = require('../../constants/constants');
 const userRoute = require('./user.route');
 const permissionRoute = require('./permission.route');
 const authMiddleware = require('../../middlewares/auth.middleware');
@@ -10,7 +11,8 @@ router.get('/', function(req, res){
 })
 router.get('/login', function(req, res){
     const token = req.cookies.token;
-    if(token)
+    const isTokenExpire = req.isJwtExpired;
+    if(token && isTokenExpire == constants.TOKEN_NOT_EXPIRED)
         return res.redirect('/home');
     return res.render('login');
 })
