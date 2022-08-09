@@ -1,6 +1,6 @@
 
 
-const baseURL = 'http://localhost:3000/api';
+const baseURL = 'http://118.69.111.40//api';
 
   
 export {baseURL}
