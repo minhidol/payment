@@ -110,11 +110,10 @@
                     </tr>
                   </thead>
                   <tbody id="table-user">
-                    {{#each listUser}}
+                    {{#each listPermission}}
                       <tr>
                         <td>{{this.name}}</td>
-                        <td>{{this.username}}</td>
-                        <td><span class="tag tag-success">{{this.roleDetail}}</span></td>
+                        <td>{{this.action}}</td>
                         <td>{{this.create_date}}</td>
                       </tr>
                     {{/each}}

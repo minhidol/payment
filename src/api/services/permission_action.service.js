@@ -2,7 +2,7 @@ var permissionActionModel = require('../models/permission_action.model');
 
 const getListPermissionAction = async() => {
     try{
-
+        
     }catch(err){
         throw err;
     }
