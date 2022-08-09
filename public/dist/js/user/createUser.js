@@ -139,6 +139,9 @@ formCreateUser.addEventListener('submit', async function (e) {
                         <td>${item.create_date}</td>
                     </tr>`);
                 })
+                username.value = '';
+                password.value = '';
+                nameCreateUser.value = '';
             }
                 
         }
