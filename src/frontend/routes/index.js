@@ -5,15 +5,17 @@ const permissionRoute = require('./permission.route');
 const authMiddleware = require('../../middlewares/auth.middleware');
 
 const router = express.Router();
-
+router.get('/', function(req, res){
+    return res.redirect('/home');
+})
 router.get('/login', function(req, res){
     const token = req.cookies.token;
     if(token)
-        return res.redirect('/');
+        return res.redirect('/home');
     return res.render('login');
 })
 router.use(authMiddleware.isAuthCookie);
-router.get('/', function(req, res){
+router.get('/home', function(req, res){
     return res.render('main', {
         user: req.jwtDecode
     });

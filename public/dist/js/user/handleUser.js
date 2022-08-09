@@ -112,7 +112,7 @@ if(formLogin){
                 return;
             }
             document.cookie = `token=${login.Result.access_token}`;
-            window.location.href = "/";
+            window.location.href = "/home";
         }
         } catch (error) {
             errorLogin.textContent = 'Server bị lỗi!';
