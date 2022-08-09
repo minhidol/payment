@@ -7,7 +7,7 @@ const authMiddleware = require('../../middlewares/auth.middleware');
 const router = express.Router()
 
 router.use('/account', userRoute);
-router.use(authMiddleware.isAuth);
+//router.use(authMiddleware.isAuth);
 router.use('/permission-group', permissionGroupRoute);
 router.use('/permission-action', permissionActionRoute);
 
