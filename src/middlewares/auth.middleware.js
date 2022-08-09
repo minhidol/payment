@@ -21,7 +21,7 @@ const isAuth = async(req, res, next) => {
 		if(isJwtExpired(accessTokenFromHeader))
 			return res.json(rsErrorTokenExpired());
 		const jwtDecode = await authMethod.decodedToken(accessTokenFromHeader, accessTokenSecret);
-		req.jwtDecode = jwtDecode;
+		req.jwtDecode = jwtDecode.payload;
 		next();
 	} catch (error) {
 		return res.json(rsErrorInvalid());

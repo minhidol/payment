@@ -15,7 +15,7 @@ var defaultSchema = new mongoose.Schema({
     },
     update_by: {
         type: String,
-        default: ""
+        default: Date.now()
     },
     is_delete: {
         type: Number,

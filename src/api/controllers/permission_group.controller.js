@@ -6,6 +6,7 @@ const permissionGroupCreated = require('../joi/permission_group/permissionGroupC
 const handleCreatePermissionGroup = async(req, res) => {
     try {
         // them user created, updated
+        console.log('req: ', req.jwtDecode)
         const validate = permissionGroupCreated.validate(req.body);
         if(validate.error)
             return res.json(rsError(202, constants.ERROR_BODY_REQUEST));

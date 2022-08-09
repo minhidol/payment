@@ -1,6 +1,7 @@
 const express = require('express');
 const homeRoute = require('./home.route');
 const userRoute = require('./user.route');
+const permissionRoute = require('./permission.route');
 const authMiddleware = require('../../middlewares/auth.middleware');
 
 const router = express.Router();
@@ -19,7 +20,7 @@ router.get('/', function(req, res){
 })
 
 router.use('/user', userRoute);
-
+router.use('/permission', permissionRoute);
 
 // router.get('/user', function(req, res){
 //     return res.render('formCreateUser', {

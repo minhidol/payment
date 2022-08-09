@@ -24,9 +24,12 @@ var permissionGroupSchema = new mongoose.Schema({
         }
 
     ],
-    action: {
-        type: Array
-    },
+    action: [
+        {
+            name: String,
+            name_detail: String
+        }
+    ],
     is_delete: {
         type: Number,
         default: 0

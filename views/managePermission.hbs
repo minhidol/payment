@@ -1,0 +1,190 @@
+<div class="wrapper">
+   <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+      </div>
+     {{> navbar}}
+     {{> sidebar}}
+     <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Quản lý quyền</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Quản lý quyền</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content" >
+      <div class="container-fluid">
+        <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #007bff">
+              <h4 class="modal-title" style="color:#fff">Danh sách quyền</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+             <form id="LogCreateUser">
+              <div class="modal-body">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Họ và tên</label>
+                    <input type="text" class="form-control" id="InputNameCreateUser" placeholder="Nhập họ và tên">
+                    <p style="color: red"><small ></small></p>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Tên đăng nhập</label>
+                    <input type="text" class="form-control" id="InputUsernameCreateUser" placeholder="Nhập tên đăng nhập">
+                    <p style="color: red"><small ></small></p>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Mật khẩu</label>
+                    <input type="password" class="form-control" id="InputPasswordCreateUser" placeholder="Nhập mật khẩu">
+                    <p style="color: red"><small ></small></p>
+                  </div>
+                  <div class="form-group">
+                    <label>Nhóm quyền</label>
+                    <select id="ChoosePermission" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                      {{#each listPermission}}
+                        <option value="{{this.type}}">{{this.name}}</option>
+                      {{/each}}
+                    </select>
+                    <p style="color: red" id="ErrorCreateUser"></p>
+                </div>
+                </div>
+              </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-success">Tạo mới</button>
+                </div>
+                {{!-- <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" style="float: right">Đăng nhập</button>
+                </div> --}}
+                </form>
+            
+          
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Danh sách quyền</h3>
+                
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    {{!-- <button type="button" class="btn btn-block btn-primary">Thêm mới</button> --}}
+                  <button type="button"  class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-default">
+                  Thêm mới
+                </button>
+                    {{!-- <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div> --}}
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Nhóm quyền</th>
+                      <th>Tính năng được sử dụng</th>
+                      <th>Ngày cập nhật</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-user">
+                    {{#each listUser}}
+                      <tr>
+                        <td>{{this.name}}</td>
+                        <td>{{this.username}}</td>
+                        <td><span class="tag tag-success">{{this.roleDetail}}</span></td>
+                        <td>{{this.create_date}}</td>
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        {{!-- <div class="row" style="margin-top: 0%">
+          <div class="col-md-5" style="margin-left: auto;margin-right: auto">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Tạo mới</h3>
+              </div>
+              
+              <form id="CreateUser">
+                <div class="card-body">
+                    <div class="form-group">
+                    <label for="exampleInputFullName1">Tên đầy đủ</label>
+                    <input type="text" class="form-control" id="InputName" placeholder="Nhập tên đầy đủ">
+                    <p style="color: red"><small ></small></p>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Tên đăng nhập</label>
+                    <input type="text" class="form-control" id="InputUsername" placeholder="Nhập tên đăng nhập">
+                    <p style="color: red"><small ></small></p>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Mật khẩu</label>
+                    <input type="password" class="form-control" id="InputPassword" placeholder="Nhập mật khẩu">
+                    <p style="color: red"><small ></small></p>
+                    <p style="color: red" id="ErrorLogin"></p>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPermission1">Nhóm quyền</label>
+                    <input type="text" class="form-control" id="InputPermission" placeholder="Chọn nhóm quyền">
+                    <p style="color: red"><small ></small></p>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" style="float: right">Đăng nhập</button>
+                </div>
+                </form>
+            </div>
+          </div>
+        </div> --}}
+      </div>
+    </section>
+    {{!-- <section class="content">
+      <div class="container-fluid">
+       
+      </div><!-- /.container-fluid -->
+    </section> --}}
+    <!-- /.content -->
+  </div>
+   <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+</div>
+  
+
