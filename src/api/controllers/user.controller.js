@@ -18,6 +18,7 @@ const handleUpdateUser = async(req, res) => {
         await userService.updateUser(data);
         return res.json(rsSuccess());
     } catch (error) {
+        console.log('error: ', error);
         return res.json(rsError(201, constants.ERROR_API));
     }
 }
