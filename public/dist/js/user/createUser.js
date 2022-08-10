@@ -133,27 +133,29 @@ formCreateUser.addEventListener('submit', async function (e) {
                 errorCreateUser.textContent = 'Tên đăng nhập đã tồn tại'
             }
             else{
-                $("#modal-default").modal('hide');
-                const listStaff = await handleGetListUser();
-                $("#table-user tr").remove();
-                const arrUser = listStaff.Result;
-                arrUser.forEach(item => {
-                    const newDate = new Date(item.create_date);
-                    const dateString = getFormattedDate(newDate);
-                    $("#table-user").append(`
-                    <tr>
-                        <td>${item.name}</td>
-                        <td>${item.username}</td>
-                        <td>${item.roleDetail}</td>
-                        <td>${dateString}</td>
-                        <td><a  class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default-update-user">
-                        <i class="fas fa-user"></i> Chi tiết
-                      </a></td>
-                    </tr>`);
-                })
-                username.value = '';
-                password.value = '';
-                nameCreateUser.value = '';
+                //$("#modal-default").modal('hide');
+                window.location.href = "/user";
+                //const listStaff = await handleGetListUser();
+                //$("#table-user tr").remove();
+                //const arrUser = listStaff.Result;
+                // arrUser.forEach(item => {
+                //     const newDate = new Date(item.create_date);
+                //     const dateString = getFormattedDate(newDate);
+                //     $("#table-user").append(`
+                //     <tr>
+                //         <td>${item.name}</td>
+                //         <td>${item.username}</td>
+                //         <td>${item.roleDetail}</td>
+                //         <td>${dateString}</td>
+                //         <td><a  class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default-update-user">
+                //         <i class="fas fa-user"></i> Chi tiết
+                //       </a></td>
+                //     </tr>`);
+                // })
+                // username.value = '';
+                // password.value = '';
+                // nameCreateUser.value = '';
+
             }
                 
         }
@@ -164,18 +166,18 @@ formCreateUser.addEventListener('submit', async function (e) {
 
 $('#TableUser tr').click(async function () {
     try {
-        alert('123')
+        //alert('123')
         //  //alert("Clicked");
-        //var currentRow=$(this).closest("tr");
-        // var usernameDetail = currentRow.find("td:eq(1)").html();
-        // const getUser = await handleGetUser(usernameDetail);
-        // const userTemp = getUser.Result;
-        // //console.log('user info: ', userTemp.username);
-        // const nameUpdateUser = document.querySelector('#InputNameUpdateUser');
-        // const usernameUpdate = document.querySelector('#InputUsernameUpdateUser');
-        // nameUpdateUser.value = userTemp.name;
-        // usernameUpdate.value = userTemp.username;
-        // $('#UpdateChoosePermission').val(userTemp.role).change();
+        var currentRow=$(this).closest("tr");
+        var usernameDetail = currentRow.find("td:eq(1)").html();
+        const getUser = await handleGetUser(usernameDetail);
+        const userTemp = getUser.Result;
+        //console.log('user info: ', userTemp.username);
+        const nameUpdateUser = document.querySelector('#InputNameUpdateUser');
+        const usernameUpdate = document.querySelector('#InputUsernameUpdateUser');
+        nameUpdateUser.value = userTemp.name;
+        usernameUpdate.value = userTemp.username;
+        $('#UpdateChoosePermission').val(userTemp.role).change();
         //your code
     } catch (error) {
         console.log('error: ', error);
