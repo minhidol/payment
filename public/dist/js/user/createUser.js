@@ -150,9 +150,11 @@ formCreateUser.addEventListener('submit', async function (e) {
                         <td>${item.username}</td>
                         <td>${item.roleDetail}</td>
                         <td>${dateString}</td>
-                        <td><a  class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default-update-user">
-                        <i class="fas fa-user"></i> Chi tiết
-                      </a></td>
+                        <td><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default-update-user">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                        Chỉnh sửa
+                    </a></td>
                     </tr>`;
                 });
                 var tableUser = document.getElementById('table-user');
@@ -217,8 +219,10 @@ formUpdate.addEventListener('submit', async function (e) {
                     <td>${item.username}</td>
                     <td>${item.roleDetail}</td>
                     <td>${dateString}</td>
-                        <td><a  class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default-update-user">
-                        <i class="fas fa-user"></i> Chi tiết
+                        <td><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default-update-user">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                        Chỉnh sửa
                     </a></td>
                 </tr>`;
                 });
