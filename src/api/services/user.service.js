@@ -81,6 +81,7 @@ const login = async(body) => {
     if(!isPasswordValid)
       return constants.PASSWORD_NOT_VALID;
     const permission = await permissionGroupService.findGroupPermissionByType(checkUserExist.role);
+    console.log('permission123: ', permission)
     const payload = {
       username: checkUserExist.username,
       name: checkUserExist.name,

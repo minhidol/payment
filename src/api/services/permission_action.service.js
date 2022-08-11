@@ -2,7 +2,16 @@ var permissionActionModel = require('../models/permission_action.model');
 
 const getListPermissionAction = async() => {
     try{
-        
+        // const
+        const listPermission = await permissionActionModel.find().lean();
+        const listFeatureUse = [];
+        listPermission.forEach(item => {
+           // console.log('item: ', item)
+            item.action_feature.forEach(each => {
+                listFeatureUse.push(each)
+            })
+        });
+        return listFeatureUse;
     }catch(err){
         throw err;
     }

@@ -2,7 +2,15 @@ const permissionActionService = require('../services/permission_action.service')
 const constants = require('../../constants/constants');
 const {rsError, rsSuccess} = require('../helpers/response');
 
-
+const handleGetListFeature = async(req, res) => {
+    try {
+        const listFeature = await permissionActionService.getListPermissionAction();
+        return res.json(rsSuccess(listFeature));
+    } catch (error) {
+        console.log('error: ', error);
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
 const handleCreateAndUpdatePermissionAction = async(req, res) => {
     try {
         // them user created, updated
@@ -21,5 +29,6 @@ const handleCreateAndUpdatePermissionAction = async(req, res) => {
 
 
 module.exports = {
-    handleCreateAndUpdatePermissionAction
+    handleCreateAndUpdatePermissionAction,
+    handleGetListFeature
 }
