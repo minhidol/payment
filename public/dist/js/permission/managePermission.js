@@ -1,3 +1,4 @@
+import {handleGetListFeature} from '/dist/js/api/permissionApi.js';
 const permissionGroup = document.querySelector('#InputPermissionGroup');
 
 $(document).on('click','#table-permission tr td', async function () {
@@ -20,4 +21,5 @@ $(document).on('click','#table-permission tr td', async function () {
 
 $(document).ready(function() {
     $('#js-example-basic-multiple').select2();
+    
 });

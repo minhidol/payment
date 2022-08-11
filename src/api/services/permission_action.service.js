@@ -2,7 +2,16 @@ var permissionActionModel = require('../models/permission_action.model');
 
 const getListPermissionAction = async() => {
     try{
-        
+        // const
+        const listPermission = await permissionActionModel.find().lean();
+        const listFeature = listPermission.action_feature;
+        const listFeatureUse = [];
+        listPermission.forEach(item => {
+            item.forEach(each => {
+                listFeature.push(each)
+            })
+        });
+        return listPermission;
     }catch(err){
         throw err;
     }
@@ -51,5 +60,6 @@ const createAndUpdateGroupDetail = async(body) => {
 module.exports ={
     createAndUpdateGroupDetail,
     getPermissionActionByName,
+    getListPermissionAction,
     getListPermissionAction
 }
