@@ -3,6 +3,19 @@ const constants = require('../../constants/constants');
 const {rsError, rsSuccess} = require('../helpers/response');
 const permissionGroupCreated = require('../joi/permission_group/permissionGroupCreated');
 
+
+const handleUpdateActionPermission = async(req, res) => {
+    try {
+        // them user created, updated
+        await permissionGroupService.updateActionPermission(req.body);
+        return res.json(rsSuccess(null));
+
+    } catch (error) {
+        console.log('error: ', error);
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
+
 const handleCreatePermissionGroup = async(req, res) => {
     try {
         // them user created, updated
@@ -22,5 +35,6 @@ const handleCreatePermissionGroup = async(req, res) => {
 
 
 module.exports = {
-    handleCreatePermissionGroup
+    handleCreatePermissionGroup,
+    handleUpdateActionPermission
 }

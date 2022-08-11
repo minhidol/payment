@@ -1,38 +1,27 @@
-import {handleGetListFeature} from '/dist/js/api/permissionApi.js';
-import {getCookie, parseJwt} from '/dist/js/helpers/tokenCookie.js';
+import {handleGetListFeature, handleUpdateListFeature} from '/dist/js/api/permissionApi.js';
 const permissionGroup = document.querySelector('#InputPermissionGroup');
 const selectMultiple = $('#js-example-basic-multiple');
-
+const formUpdate = document.querySelector('#FormPermission');
 $(document).on('click','#table-permission tr td a', async function () {
     try {
         var currentRow=$(this).closest("tr");
         var permission = currentRow.find("td:eq(0)").html();
         permissionGroup.value = permission;
-        const listFeature = await handleGetListFeature();
+        const listFeature = await handleGetListFeature(permission);
         const optionFeature = listFeature.Result;
-        let count = 0;
-        optionFeature.forEach(element => {
-            count++;
+        console.log('option feature: ', optionFeature)
+        $('#js-example-basic-multiple')
+            .find('option')
+            .remove()
+        optionFeature.listFeature.forEach(element => {
             $('#js-example-basic-multiple').append(`<option value="${element.name}">
             ${element.name_detail}
             </option>`);
         });
-        const token = getCookie('token');
-
-        const optionChooseFromToken = parseJwt(token).payload.action;
         const listOptionSelected = [];
-        optionChooseFromToken.forEach(item => {
-            //console.log('item: ', item)
-            console.log('item: ', item)
-            optionFeature.forEach(each => {
-            //     //console.log('each: ', each)
-                if(item.name_detail == each.name_detail)
-                    //console.log('item: ', item)
-                    listOptionSelected.push(item.name)
-            })
+        optionFeature.listFeatureOfGroup.forEach(item => {
+            listOptionSelected.push(item.name)
         })
-        // console.log('list: ', optionFeature)
-        // console.log('option choose: ', listOptionSelected)
         $("#js-example-basic-multiple").val(listOptionSelected);
         
  } catch (error) {
@@ -42,4 +31,33 @@ $(document).on('click','#table-permission tr td a', async function () {
 
 $(document).ready(function() {
     $('#js-example-basic-multiple').select2();
+});
+
+formUpdate.addEventListener('submit', async function (e) {
+    try {
+        e.preventDefault();
+        var actionTextSelected = [];
+        var actionValue = selectMultiple.val();
+        var optionSelected = [];
+        for (var i = 0; i < actionValue.length; i++) {
+            var label = selectMultiple.find('option[value="'+actionValue[i]+'"]').text().trim();
+            optionSelected.push({
+                name: actionValue[i],
+                action: label
+            })
+        }
+        const data = {
+            name: permissionGroup.value,
+            action: optionSelected
+        }
+        console.log('action selected: ', optionSelected)
+        await handleUpdateListFeature(data);
+        
+        // let isFormValid = isNameValid;
+        $("#modal-default-permission").modal('hide');
+  
+
+    } catch (error) {
+        console.log('error: ', error);
+    }
 });

@@ -26,12 +26,12 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header" style="background-color: rgb(255, 193, 7);">
-              <h4 class="modal-title" style="color:#fff; font-weight: bold">Danh sách quyền</h4>
+              <h4 class="modal-title" style="color:#fff;">Danh sách quyền</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-             <form id="LogCreateUser">
+             <form id="FormPermission">
               <div class="modal-body">
                 <div class="card-body">
                   <div class="form-group">
@@ -47,7 +47,6 @@
                       {{/each}}
                     </select> --}}
                     <select  id="js-example-basic-multiple" name="states[]" multiple="multiple" style="display: block;width: 100%">
-      
                     </select>
                     <p style="color: red" id="ErrorCreateUser"></p>
                 </div>
@@ -67,7 +66,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Danh sách quyền</h3>
+                <h3 class="card-title" style="font-weight: bold">Danh sách quyền</h3>
                 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">

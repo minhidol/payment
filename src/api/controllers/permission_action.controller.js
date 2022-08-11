@@ -2,9 +2,10 @@ const permissionActionService = require('../services/permission_action.service')
 const constants = require('../../constants/constants');
 const {rsError, rsSuccess} = require('../helpers/response');
 
+
 const handleGetListFeature = async(req, res) => {
     try {
-        const listFeature = await permissionActionService.getListPermissionAction();
+        const listFeature = await permissionActionService.getListPermissionAction(req.query.name);
         return res.json(rsSuccess(listFeature));
     } catch (error) {
         console.log('error: ', error);

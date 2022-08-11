@@ -1,6 +1,18 @@
 const groupPermissionModel = require('../models/permission_group.model');
 const constants = require('../../constants/constants');
 
+const updateActionPermission = async(data) => {
+    try {
+        return await groupPermissionModel.findOneAndUpdate({
+            name: data.name
+        }, {
+            action: data.action
+        })
+    } catch (error) {
+        throw error;
+    }
+}
+
 const findAll = async() => {
     try {
         return await groupPermissionModel.find().lean();
@@ -54,5 +66,7 @@ const createAndUpdate = async(body) => {
 module.exports = {
     createAndUpdate,
     findGroupPermissionByType,
-    findAll
+    findAll,
+    findGroupPermissionByName,
+    updateActionPermission
 };

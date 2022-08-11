@@ -1,6 +1,7 @@
 var permissionActionModel = require('../models/permission_action.model');
+var permissionGroupService = require('./permission_group.service');
 
-const getListPermissionAction = async() => {
+const getListPermissionAction = async(name) => {
     try{
         // const
         const listPermission = await permissionActionModel.find().lean();
@@ -11,7 +12,13 @@ const getListPermissionAction = async() => {
                 listFeatureUse.push(each)
             })
         });
-        return listFeatureUse;
+        const groupPermission = await permissionGroupService.findGroupPermissionByName(name);
+        const listFeatureOfGroup = groupPermission.action;
+        const result = {
+            listFeature: listFeatureUse,
+            listFeatureOfGroup: listFeatureOfGroup
+        }
+        return result;
     }catch(err){
         throw err;
     }
