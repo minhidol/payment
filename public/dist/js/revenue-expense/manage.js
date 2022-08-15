@@ -84,9 +84,23 @@ if(formRevenueExpense){
                     </tr>`;
                 })
                 var tableRevenueExpense = document.getElementById('body-revenue-expense');
+                var pagination = document.getElementById('PaginationGeneral')
                 //console.log('table: ', tableRevenueExpense)
                 tableRevenueExpense.innerHTML = htmlLi;
-                totalRevenueExpense.textContent = getListRevenueExpense.Result.total;
+                console.log('pagination: ', ulPagination);
+                $('#PaginationGeneral li').remove();
+                let stringPagination = '';
+                stringPagination+=`<li class="paginate_button page-item previous disabled" id="example2_previous" disabled>
+                <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link" >
+                  Previous
+                </a>
+              </li>
+              <li class="paginate_button page-item active">
+                <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+                  1
+                </a>
+              </li>`;
+                pagination.innerHTML = stringPagination;
                 $("#modal-default-revenue-expense").modal('hide');
 
             }
@@ -164,6 +178,7 @@ $(document).on('click','#PaginationGeneral li', async function () {
         })
         var tableRevenueExpense = document.getElementById('body-revenue-expense');
         tableRevenueExpense.innerHTML = htmlLi;
+        
         if(getListRevenueExpense.Result.pages == page){
             buttonNext[0].classList.add('disabled');
         }
