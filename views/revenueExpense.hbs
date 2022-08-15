@@ -37,7 +37,10 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Loại</label>
-                    <input type="text" class="form-control" id="InputTypeRevenueExpense" placeholder="Nhập họ và tên">
+                    <select id="ChooseRevenue" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                        <option value="1">Thu</option>
+                        <option value="2">Chi</option>
+                    </select>
                     <p style="color: red"><small ></small></p>
                   </div>
                   <div class="form-group">
@@ -47,119 +50,111 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Ghi chú</label>
-                    <input type="password" class="form-control" id="InputNoter" placeholder="Nhập ghi chú">
+                    <input type="text" class="form-control" id="InputNoter" placeholder="Nhập ghi chú">
                     <p style="color: red"><small ></small></p>
                   </div>
-                  {{!-- <div class="form-group">
-                    <label>Nhóm quyền</label>
-                    <select id="ChoosePermission" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                      {{#each listPermission}}
-                        <option value="{{this.type}}">{{this.name}}</option>
-                      {{/each}}
-                    </select>
-                    <p style="color: red" id="ErrorCreateUser"></p>
-                </div> --}}
                 </div>
               </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Hủy</button>
                     <button type="submit" class="btn btn-success btn-sm">Tạo mới</button>
                 </div>
-                </form>     
+              </form>     
           </div>
         </div>
       </div>
-
-      <div class="modal fade" id="modal-default-update-user">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #007bff">
-              <h4 class="modal-title" style="color:#fff">Thông tin user</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-             <form id="LogUpdateUser">
-              <div class="modal-body">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Họ và tên</label>
-                    <input type="text" class="form-control" id="InputNameUpdateUser" placeholder="Nhập họ và tên">
-                    <p style="color: red"><small ></small></p>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Tên đăng nhập</label>
-                    <input type="text" class="form-control" id="InputUsernameUpdateUser" placeholder="Nhập tên đăng nhập" disabled>
-                    <p style="color: red"><small ></small></p>
-                  </div>
-                  <div class="form-group">
-                    <label>Nhóm quyền</label>
-                    <select id="UpdateChoosePermission" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                      {{#each listPermission}}
-                        <option value="{{this.type}}">{{this.name}}</option>
-                      {{/each}}
-                    </select>
-                    <p style="color: red" id="ErrorCreateUser"></p>
-                </div>
-                </div>
-              </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-info btn-sm">
-                              <i class="fas fa-pencil-alt">
-                              </i>
-                              Cập nhật
-                          </button>
-                </div>
-                </form>     
-          </div>
-        </div>
-      </div>
-        <div class="row">
+      <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title" style="font-weight: bold">Danh sách thu chi</h3>
-                <div class="card-tools">
+                <h3 class="card-title">Danh sách thu chi</h3>
+                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
-                  <button type="button"  class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-default-revenue-expense">
-                  Thêm mới
-                </button>
+                    <button type="button"  class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-default-revenue-expense">
+                      Thêm mới
+                    </button>
                   </div>
                 </div>
               </div>
-              <div class="card-body table-responsive p-0" style="height: 500px">
-                <table class="table table-head-fixed text-nowrap" id="TableUser">
+              <div class="card-body">
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6"></div>
+                <div class="col-sm-12 col-md-6"></div></div><div class="row"><div class="col-sm-12">
+                  <table id="table-revenue-expense" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
                   <thead>
                     <tr>
-                      <th>Họ và tên</th>
-                      <th>Tên đăng nhập</th>
-                      <th>Quyền</th>
-                      <th>Ngày tạo</th>
-                    </tr>
+                      <th tabindex="0" aria-controls="example2"
+                       rowspan="1" colspan="1">
+                       Ngày tạo
+                       </th>
+                       <th tabindex="0" aria-controls="example2" 
+                       rowspan="1" colspan="1" >
+                       Số tiền
+                       </th>
+                       <th tabindex="0" aria-controls="example2" 
+                       rowspan="1" colspan="1" >
+                       Ghi chú
+                       </th>
+                       </tr>
                   </thead>
-                  {{!-- <tbody id="table-user">
-                    {{#each listUser}}
-                      <tr>
-                        <td>{{this.name}}</td>
-                        <td>{{this.username}}</td>
-                        <td><span class="tag tag-success">{{this.roleDetail}}</span></td>
+                  <tbody id="body-revenue-expense">
+                    {{#each listRevenueExpense}}
+                      <tr class="odd">
                         <td>{{dateFormat this.create_date "DD/MM/yyyy"}}</td>
-                        <td> 
-
-                          <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default-update-user">
-                              <i class="fas fa-pencil-alt">
-                              </i>
-                              Chỉnh sửa
-                          </a>
-                    </td>
+                        <td>{{this.total}}</td>
+                        <td>{{this.note}}</td>
                       </tr>
-                    {{/each}}
-                  </tbody> --}}
-                </table>
+                  {{/each}}
+                  </tbody>
+                </table></div></div>
+                <div class="row">
+                  <div class="col-sm-12 col-md-5">
+                      <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
+                        Số khoảng thu chi: <span id="total-revenue-expense">{{total}}</span>
+                      </div>
+                  </div>
+                  <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                      <ul class="pagination" id="PaginationGeneral">
+                        <li class="paginate_button page-item previous disabled" id="example2_previous" disabled>
+                          <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link" >
+                            Previous
+                          </a>
+                        </li>
+                        <li class="paginate_button page-item active">
+                          <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+                            1
+                          </a>
+                        </li>
+                        {{#for 2 totalPages 1}}
+                        <li class="paginate_button page-item ">
+                            <a href="#" aria-controls="example2" data-dt-idx=`{{this}}` tabindex="0" class="page-link">{{this}}</a>
+                        </li>
+                        {{/for}}
+                        {{#if (compare totalPages 1)}}
+                          <li class="paginate_button page-item next disabled" id="example2_next">
+                              <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                          </li>
+                          {{else}}
+                          <li class="paginate_button page-item next" id="example2_next">
+                              <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                          </li>
+                        {{/if}}
+                        {{!-- {{#if totalPages < 6}}
+                          <li class="paginate_button page-item next disable" id="example2_next">
+                              <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                          </li>
+                        {{/if}} --}}
+                      </ul>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
               </div>
+              <!-- /.card-body -->
             </div>
+            <!-- /.card -->
           </div>
+          <!-- /.col -->
         </div>
       </div>
     </section>

@@ -1,4 +1,3 @@
-//import {baseURL} from '/dist/js/constants.js';
 import {handleApiLogin} from '/dist/js/api/userApi.js';
 const username = document.querySelector('#InputUsername');
 const password = document.querySelector('#InputPassword');

@@ -1,6 +1,6 @@
 var mongoose = require('./database');
 var defaultSchema = require('./default.model');
-
+var mongoosePaginate = require('mongoose-paginate-async-await');
 var revenueExpenseSchema = new mongoose.Schema({
     type: {
         type: String,
@@ -23,6 +23,7 @@ var revenueExpenseSchema = new mongoose.Schema({
 }, { strict: false });
 
 
+revenueExpenseSchema.plugin(mongoosePaginate);
 var revenueExpense = mongoose.model('revenue_expense', revenueExpenseSchema);
 
 module.exports = revenueExpense;

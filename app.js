@@ -8,6 +8,15 @@ var requestIp = require("request-ip");
 const hbs = require('express-handlebars');
 const handlebars = require('handlebars');
 handlebars.registerHelper('dateFormat', require('handlebars-dateformat'));
+handlebars.registerHelper('for', function(from, to, incr, block) {
+  var accum = '';
+  for(var i = from; i <= to; i += incr)
+      accum += block.fn(i);
+  return accum;
+});
+handlebars.registerHelper('compare', function(variable, value) {
+  return variable == value;
+});
 var indexRouter = require('./src/frontend/routes/index');
 const indexApiRouter = require('./src/api/routes/index.route');
 const bearerToken = require('express-bearer-token');

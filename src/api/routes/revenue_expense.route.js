@@ -4,5 +4,5 @@ var router = express.Router();
 var revenueExpenseController = require('../controllers/revenue_expense.controller');
 
 router.post('/create', revenueExpenseController.handleCreateRevenueExpense);
-//router.get('/get-list-feature', permissionActionController.handleGetListFeature);
+router.get('/get-revenue-expense', revenueExpenseController.handleGetListRevenueExpenseByUsername);
 module.exports = router
