@@ -11,11 +11,11 @@ var defaultSchema = new mongoose.Schema({
     },
     update_date: {
         type: Date,
-        default: null
+        default: Date.now()
     },
     update_by: {
         type: String,
-        default: Date.now()
+        default: ""
     },
     is_delete: {
         type: Number,

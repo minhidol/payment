@@ -4,6 +4,7 @@ const type = document.querySelector('#ChooseRevenue');
 const note = document.querySelector('#InputNoter');
 const total = document.querySelector('#InputTotalTypeRevenueExpense');
 const formRevenueExpense = document.querySelector('#FormRevenueExpense');
+const totalRevenueExpense = document.querySelector('#total-revenue-expense');
 const ulPagination = document.querySelector('#PaginationGeneral');
 
 const isRequired = value => value === '' ? false : true;
@@ -64,7 +65,6 @@ if(formRevenueExpense){
                     total: total.value,
                     note: note.value
                 });
-                
                 const getListRevenueExpense = await handleGetListRevenueExpense({
                     page: 1,
                     perPage: 10
@@ -86,6 +86,7 @@ if(formRevenueExpense){
                 var tableRevenueExpense = document.getElementById('body-revenue-expense');
                 //console.log('table: ', tableRevenueExpense)
                 tableRevenueExpense.innerHTML = htmlLi;
+                totalRevenueExpense.textContent = getListRevenueExpense.Result.total;
                 $("#modal-default-revenue-expense").modal('hide');
 
             }
@@ -106,24 +107,44 @@ if(formRevenueExpense){
 $(document).on('click','#PaginationGeneral li', async function () {
     try {
         var paginateActive = $('#PaginationGeneral li.active');
+        var buttonPrevious = $('#PaginationGeneral li#example2_previous');
+        var totalPages = document.getElementById('total-pages').innerHTML.trim();
+        var buttonNext = $('#PaginationGeneral li#example2_next');
+        buttonPrevious[0].classList.remove('disabled');
+        buttonNext[0].classList.remove('disabled');
         var isButtonNext = this.classList.contains('next');
         var isButtonPrevious = this.classList.contains('previous');
-        paginateActive[0].classList.remove('active');
-        
         var pageCurrent = Number(paginateActive[0].textContent.trim());
         let page = 1;
         if(isButtonNext){
+            if(pageCurrent == totalPages){
+                buttonNext[0].classList.add('disabled');
+                return;
+            }
             var nextActive = paginateActive.next();
             nextActive[0].classList.add('active');
             page = pageCurrent + 1;
+            console.log('page: ', page);
         }else if(isButtonPrevious){
+            if(pageCurrent == 1){
+                buttonPrevious[0].classList.add('disabled');
+                return;
+            }
             var prevActive = paginateActive.prev();
             prevActive[0].classList.add('active');
-            console.log('previous');
+            page = pageCurrent - 1;
+            console.log('page: ', page);
         }else{
             this.classList.add('active');
             page = this.textContent.trim();
         }
+        if(page == 1){
+            buttonPrevious[0].classList.add('disabled');
+        }
+        if(page == totalPages){
+            buttonNext[0].classList.add('disabled');
+        }
+        paginateActive[0].classList.remove('active');
         const getListRevenueExpense = await handleGetListRevenueExpense({
             page: page,
             perPage: 10
@@ -143,7 +164,9 @@ $(document).on('click','#PaginationGeneral li', async function () {
         })
         var tableRevenueExpense = document.getElementById('body-revenue-expense');
         tableRevenueExpense.innerHTML = htmlLi;
-        
+        if(getListRevenueExpense.Result.pages == page){
+            buttonNext[0].classList.add('disabled');
+        }
  } catch (error) {
      console.log('error: ', error);
  }

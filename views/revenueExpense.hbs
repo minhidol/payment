@@ -110,6 +110,7 @@
                   <div class="col-sm-12 col-md-5">
                       <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
                         Số khoảng thu chi: <span id="total-revenue-expense">{{total}}</span>
+                         <span id="total-pages" style="display: none;">{{totalPages}}</span>
                       </div>
                   </div>
                   <div class="col-sm-12 col-md-7">
@@ -139,11 +140,6 @@
                               <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
                           </li>
                         {{/if}}
-                        {{!-- {{#if totalPages < 6}}
-                          <li class="paginate_button page-item next disable" id="example2_next">
-                              <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                          </li>
-                        {{/if}} --}}
                       </ul>
                                 </div>
                             </div>
