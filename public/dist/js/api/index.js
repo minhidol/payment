@@ -18,6 +18,7 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(async (config) => {
     // Handle token here ...
+    $('#pleaseWaitDialog').modal();
     const token = getCookie('token');
     if(token){
         config.headers.Authorization = `Bearer ${token}`;
@@ -27,6 +28,7 @@ axiosClient.interceptors.request.use(async (config) => {
 axiosClient.interceptors.response.use((response) => {
     if (response && response.data) {
         //console.log('response: ', response)
+        $('#pleaseWaitDialog').modal('hide');
         return response.data;
     }
     return response;

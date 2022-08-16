@@ -7,6 +7,7 @@ const renderDebt = async(req, res) => {
         const listStaff = await userService.getListStaff();
         const listPermission = await groupPermissionService.findAll();
         res.render('debt',{
+            layout: 'debt',
             user: req.jwtDecode,
             listPermission: listPermission,
             //listFeature: listFeature

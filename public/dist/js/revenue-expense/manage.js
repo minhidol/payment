@@ -62,6 +62,11 @@ formSearchRevenueExpense.addEventListener('submit', async function (e) {
             type: typeSelect
         };
         const listResult = await handleFilterRevenueExpense(query);
+        if(listResult.Result.total == 0){
+            alert('Không tìm thấy dữ liệu!');
+            return;
+        }
+        
         var typePagination = document.getElementById('type-pagination');
         typePagination.innerHTML = 2;
         setDateTotable(listResult)
@@ -205,26 +210,24 @@ async function setTablePagination(getListRevenueExpense){
             <a class="btn btn-primary btn-sm" href="#">
                 <i class="fas fa-folder">
                 </i>
-                View
-            </a>
-            <a class="btn btn-info btn-sm" href="#">
-                <i class="fas fa-pencil-alt">
-                </i>
-                Edit
+                Chi tiết
             </a>
             <a class="btn btn-danger btn-sm" href="#">
                 <i class="fas fa-trash">
                 </i>
-                Delete
+                Xóa
             </a>
         </td>
             </tr>`;
         })
+        $('html, body').animate({
+            scrollTop: $("#table-revenue-expense").offset().top
+        }, 1000);
         var tableRevenueExpense = document.getElementById('body-revenue-expense');
         tableRevenueExpense.innerHTML = htmlLi;
         var totalPagesAdd = document.getElementById('total-pages');
         totalPagesAdd.innerHTML = getListRevenueExpense.Result.pages;
-        
+       
   
 }
 
@@ -245,17 +248,12 @@ async function setDateTotable(getListRevenueExpense){
             <a class="btn btn-primary btn-sm" href="#">
                 <i class="fas fa-folder">
                 </i>
-                View
-            </a>
-            <a class="btn btn-info btn-sm" href="#">
-                <i class="fas fa-pencil-alt">
-                </i>
-                Edit
+                Chi tiết
             </a>
             <a class="btn btn-danger btn-sm" href="#">
                 <i class="fas fa-trash">
                 </i>
-                Delete
+                Xóa
             </a>
         </td>
         </tr>`;
@@ -266,29 +264,29 @@ async function setDateTotable(getListRevenueExpense){
     $('#PaginationGeneral li').remove();
     let stringPagination = '';
     stringPagination+=`<li class="paginate_button page-item previous disabled" id="example2_previous" disabled>
-    <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link" >
+    <a aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link" >
       Previous
     </a>
   </li>
   <li class="paginate_button page-item active">
-    <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+    <a  aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
       1
     </a>
   </li>`;
     for(let i = 2; i <= totalPages; i++){
         stringPagination+=`<li class="paginate_button page-item ">
-        <a href="#" aria-controls="example2" data-dt-idx=${i} tabindex="0" class="page-link">${i}</a>
+        <a aria-controls="example2" data-dt-idx=${i} tabindex="0" class="page-link">${i}</a>
     </li>`
     }
     if(totalPages == 1){
         //console.log('1')
         stringPagination+=` <li class="paginate_button page-item next disabled" id="example2_next" disabled>
-            <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+            <a aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
         </li>`;
     }else{
         // console.log('2')
         stringPagination+=` <li class="paginate_button page-item next" id="example2_next">
-        <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+        <a  aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
         </li>`;
     }
     
@@ -296,5 +294,9 @@ async function setDateTotable(getListRevenueExpense){
     var totalPagesAdd = document.getElementById('total-pages');
     totalPagesAdd.innerHTML  = totalPages;
     totalRevenueExpense.textContent = getListRevenueExpense.Result.total;
+    
+    $('html, body').animate({
+        scrollTop: $("#table-revenue-expense").offset().top
+    }, 1000);
 }
 

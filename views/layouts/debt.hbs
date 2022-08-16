@@ -63,43 +63,6 @@
   <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
 </head>
   <body class="hold-transition sidebar-mini layout-fixed">
-    <div class="modal hide" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
-      {{!-- <div class="modal-dialog">
-          <div class="modal-content"> --}}
-             {{!-- <form id="FormRevenueExpense"> --}}
-              {{!-- <div class="modal-body">
-                <div class="card-body"> --}}
-                  {{!-- <div class="form-group"> --}}
-                    <i class="fas fa-spinner fa-spin" style=" position: absolute;
-   left: 50%;
-   top: 50%;
-   height:60px;
-   width:60px;">
-                    </i>
-                  {{!-- </div> --}}
-                {{!-- </div>
-              </div> --}}
-              {{!-- </form>      --}}
-          {{!-- </div>
-        </div> --}}
-      {{!-- <i class="fas fa-spinner fa-spin">
-              </i>    --}}
-       {{!-- <div class="modal-dialog">
-        <div class="modal-content">
-            
-             <i class="fas fa-spinner fa-spin">
-              </i>   
-          </div>
-       </div> --}}
-     {{!-- <div class="modal-header">
-         <h1>Please Wait</h1>
-     </div>
-     <div class="modal-body">
-         <div id="ajax_loader">
-             LOADING
-         </div>
-     </div> --}}
-  </div>
     {{{body}}}
 
     
@@ -172,10 +135,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="/dist/js/demo.js"></script>
 <script type="module" src="dist/js/revenue-expense/manage.js"></script>
-<script type="module" src="dist/js/loading.js"></script>
-<script type="module" src="dist/js/api/index.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
 <!-- Page specific script -->
 <script>
   $(function () {

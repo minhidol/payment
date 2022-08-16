@@ -55,9 +55,15 @@
                   </div>
                 </div>
               </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-success btn-sm">Tạo mới</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">
+                      <i class="fas fa-times">
+                      </i>
+                      Hủy</button>
+                    <button type="submit" class="btn btn-success btn-sm">
+                      <i class="fas fa-plus">
+                      </i>
+                      Tạo mới</button>
                 </div>
               </form>     
           </div>
@@ -68,7 +74,7 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-3">
                <div class="form-group">
                   <label>Thời gian:</label>
                   <div class="input-group">
@@ -93,7 +99,7 @@
                 </div>
                 <div class="col-md-2" style="text-align: center;">
                    <div class="form-group" style="margin-top: 35px">
-                    <button  type="submit" class="btn btn-success btn-sm" >Tìm kiếm</button>
+                    <button  type="submit" class="btn btn-success btn-sm" > <i class="fas fa-search"></i>Tìm kiếm</button>
                   </div>
                 </div>
        
@@ -113,7 +119,8 @@
                 <h3 class="card-title" style="font-weight: bold;">Danh sách thu chi</h3>
                  <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
-                    <button type="button"  class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-default-revenue-expense">
+                    <button type="button"  class="btn btn-info" data-toggle="modal" data-target="#modal-default-revenue-expense">
+                      <i class="fas fa-plus"></i>
                       Thêm mới
                     </button>
                   </div>
@@ -158,17 +165,12 @@
                           <a class="btn btn-primary btn-sm" href="#">
                               <i class="fas fa-folder">
                               </i>
-                              View
-                          </a>
-                          <a class="btn btn-info btn-sm" href="#">
-                              <i class="fas fa-pencil-alt">
-                              </i>
-                              Edit
+                              Chi tiết
                           </a>
                           <a class="btn btn-danger btn-sm" href="#">
                               <i class="fas fa-trash">
                               </i>
-                              Delete
+                              Xóa
                           </a>
                       </td>
                       </tr>
@@ -187,27 +189,27 @@
                       <h1 id="type-pagination" style="display:none">1</h1>
                       <ul class="pagination" id="PaginationGeneral">
                         <li class="paginate_button page-item previous disabled" id="example2_previous" disabled>
-                          <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link" >
+                          <a  aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link" >
                             Previous
                           </a>
                         </li>
                         <li class="paginate_button page-item active">
-                          <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+                          <a  aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
                             1
                           </a>
                         </li>
                         {{#for 2 totalPages 1}}
                         <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="example2" data-dt-idx=`{{this}}` tabindex="0" class="page-link">{{this}}</a>
+                            <a  aria-controls="example2" data-dt-idx=`{{this}}` tabindex="0" class="page-link">{{this}}</a>
                         </li>
                         {{/for}}
                         {{#if (compare totalPages 1)}}
                           <li class="paginate_button page-item next disabled" id="example2_next">
-                              <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                              <a  aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
                           </li>
                           {{else}}
                           <li class="paginate_button page-item next" id="example2_next">
-                              <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                              <a  aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
                           </li>
                         {{/if}}
                       </ul>
