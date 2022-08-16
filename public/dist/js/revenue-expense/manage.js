@@ -54,12 +54,6 @@ if(formRevenueExpense){
             let isTotalValid = checkTotal();
             let isFormValid = isTotalValid;
             if (isFormValid) {
-                console.log('123123');
-                console.log('aa: ', {
-                    type: type.value,
-                    total: total.value,
-                    note: note.value
-                })
                 await handleCreateRevenueExpense({
                     type: type.value,
                     total: total.value,
@@ -72,6 +66,8 @@ if(formRevenueExpense){
                 console.log('result: ', getListRevenueExpense);
                 $("#body-revenue-expense").find('tr').remove();
                 const data = getListRevenueExpense.Result.data;
+                const totalPages = getListRevenueExpense.Result.pages;
+                console.log(getListRevenueExpense.Result);
                 let htmlLi = "";
                 data.forEach(item => {
                     const newDate = new Date(item.create_date);
@@ -85,9 +81,7 @@ if(formRevenueExpense){
                 })
                 var tableRevenueExpense = document.getElementById('body-revenue-expense');
                 var pagination = document.getElementById('PaginationGeneral')
-                //console.log('table: ', tableRevenueExpense)
                 tableRevenueExpense.innerHTML = htmlLi;
-                console.log('pagination: ', ulPagination);
                 $('#PaginationGeneral li').remove();
                 let stringPagination = '';
                 stringPagination+=`<li class="paginate_button page-item previous disabled" id="example2_previous" disabled>
@@ -100,7 +94,16 @@ if(formRevenueExpense){
                   1
                 </a>
               </li>`;
+                for(let i = 2; i < totalPages; i++){
+                    stringPagination+=`<li class="paginate_button page-item ">
+                    <a href="#" aria-controls="example2" data-dt-idx=${i} tabindex="0" class="page-link">${i}</a>
+                </li>`
+                }
+                stringPagination+=` <li class="paginate_button page-item next" id="example2_next">
+                <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                </li>`;
                 pagination.innerHTML = stringPagination;
+                totalRevenueExpense.textContent = getListRevenueExpense.Result.total;
                 $("#modal-default-revenue-expense").modal('hide');
 
             }
