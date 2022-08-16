@@ -4,6 +4,7 @@ const groupPermissionService = require('../../api/services/permission_group.serv
 
 const renderRevenueExpense = async(req, res) => {
     try {
+
         const listRevenueExpense = await revenueExpenseService.getListRevenueExpenseByUsername({
             username: req.jwtDecode.username,
             page: 1,
@@ -12,6 +13,7 @@ const renderRevenueExpense = async(req, res) => {
         console.log('data: ', listRevenueExpense);
         //const 
         res.render('revenueExpense',{
+            layout: 'revenue-expense',
             user: req.jwtDecode,
             listRevenueExpense: listRevenueExpense.data,
             total: listRevenueExpense.total,

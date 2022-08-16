@@ -32,7 +32,7 @@ app.set('view engine', 'hbs');
 app.engine('hbs', hbs.engine({
   layoutsDir: __dirname + '/views/layouts',
   extname: 'hbs',
-  defaultLayout: 'index',
+  //defaultLayout: 'index',
   partialsDir: __dirname + '/views/partials/'
 }));
 logger.token("clientRealIp", function (req, res) {

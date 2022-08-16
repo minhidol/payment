@@ -1,4 +1,4 @@
-import {handleCreateRevenueExpense, handleGetListRevenueExpense} 
+import {handleCreateRevenueExpense, handleGetListRevenueExpense, handleFilterRevenueExpense} 
     from '/dist/js/api/revenueExpenseApi.js';
 const type = document.querySelector('#ChooseRevenue');
 const note = document.querySelector('#InputNoter');
@@ -6,6 +6,9 @@ const total = document.querySelector('#InputTotalTypeRevenueExpense');
 const formRevenueExpense = document.querySelector('#FormRevenueExpense');
 const totalRevenueExpense = document.querySelector('#total-revenue-expense');
 const ulPagination = document.querySelector('#PaginationGeneral');
+const formSearchRevenueExpense = document.querySelector('#searchRevenueExpense');
+const reservation = document.querySelector('#reservation');
+const selectTypeRevenue = document.querySelector('#type-revenue');
 
 const isRequired = value => value === '' ? false : true;
 const isNumber = (val) => {
@@ -47,6 +50,28 @@ function getFormattedDate(date) {
     return day + '/' + month + '/' + year;
 }
 
+formSearchRevenueExpense.addEventListener('submit', async function (e) {
+    try {
+        e.preventDefault();
+        const dateString = reservation.value.split('-').map(element => element.trim());;
+        const typeSelect = $( "#type-revenue option:selected" ).text();
+        const query = {
+            page: 1,
+            perPage: 10,
+            dateSearch: dateString,
+            type: typeSelect
+        };
+        const listResult = await handleFilterRevenueExpense(query);
+        var typePagination = document.getElementById('type-pagination');
+        typePagination.innerHTML = 2;
+        setDateTotable(listResult)
+    } catch (error) {
+        console.log('error: ', error)
+        //errorLogin.textContent = 'Server bị lỗi!';
+        return;
+    }
+});
+
 if(formRevenueExpense){
     formRevenueExpense.addEventListener('submit', async function (e) {
         try {
@@ -55,7 +80,7 @@ if(formRevenueExpense){
             let isFormValid = isTotalValid;
             if (isFormValid) {
                 await handleCreateRevenueExpense({
-                    type: type.value,
+                    type: $( "#ChooseRevenue option:selected" ).text(),
                     total: total.value,
                     note: note.value
                 });
@@ -63,49 +88,10 @@ if(formRevenueExpense){
                     page: 1,
                     perPage: 10
                 });
-                console.log('result: ', getListRevenueExpense);
-                $("#body-revenue-expense").find('tr').remove();
-                const data = getListRevenueExpense.Result.data;
-                const totalPages = getListRevenueExpense.Result.pages;
-                console.log(getListRevenueExpense.Result);
-                let htmlLi = "";
-                data.forEach(item => {
-                    const newDate = new Date(item.create_date);
-                    const dateString = getFormattedDate(newDate);
-                    htmlLi+=`
-                    <tr class="odd">
-                        <td>${dateString}</td>
-                        <td>${item.total}</td>
-                        <td>${item.note}</td>
-                    </tr>`;
-                })
-                var tableRevenueExpense = document.getElementById('body-revenue-expense');
-                var pagination = document.getElementById('PaginationGeneral')
-                tableRevenueExpense.innerHTML = htmlLi;
-                $('#PaginationGeneral li').remove();
-                let stringPagination = '';
-                stringPagination+=`<li class="paginate_button page-item previous disabled" id="example2_previous" disabled>
-                <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link" >
-                  Previous
-                </a>
-              </li>
-              <li class="paginate_button page-item active">
-                <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
-                  1
-                </a>
-              </li>`;
-                for(let i = 2; i < totalPages; i++){
-                    stringPagination+=`<li class="paginate_button page-item ">
-                    <a href="#" aria-controls="example2" data-dt-idx=${i} tabindex="0" class="page-link">${i}</a>
-                </li>`
-                }
-                stringPagination+=` <li class="paginate_button page-item next" id="example2_next">
-                <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                </li>`;
-                pagination.innerHTML = stringPagination;
-                totalRevenueExpense.textContent = getListRevenueExpense.Result.total;
+                setDateTotable(getListRevenueExpense);
                 $("#modal-default-revenue-expense").modal('hide');
-
+                var typePagination = document.getElementById('type-pagination');
+                typePagination.innerHTML = 1;
             }
         } catch (error) {
             console.log('error: ', error)
@@ -115,12 +101,6 @@ if(formRevenueExpense){
     });
 }
 
-// if(handleLogout){
-//     handleLogout.addEventListener('click', function(e){
-//         document.cookie = "token=;";
-//         window.location.href = "/";
-//     })
-// }
 $(document).on('click','#PaginationGeneral li', async function () {
     try {
         var paginateActive = $('#PaginationGeneral li.active');
@@ -129,6 +109,11 @@ $(document).on('click','#PaginationGeneral li', async function () {
         var buttonNext = $('#PaginationGeneral li#example2_next');
         buttonPrevious[0].classList.remove('disabled');
         buttonNext[0].classList.remove('disabled');
+        if(totalPages == 1){
+            console.log(1)
+            buttonPrevious[0].classList.add('disabled');
+            buttonNext[0].classList.add('disabled');
+        }
         var isButtonNext = this.classList.contains('next');
         var isButtonPrevious = this.classList.contains('previous');
         var pageCurrent = Number(paginateActive[0].textContent.trim());
@@ -141,19 +126,34 @@ $(document).on('click','#PaginationGeneral li', async function () {
             var nextActive = paginateActive.next();
             nextActive[0].classList.add('active');
             page = pageCurrent + 1;
-            console.log('page: ', page);
+            paginateActive[0].classList.remove('active');
         }else if(isButtonPrevious){
+            console.log('12312')
             if(pageCurrent == 1){
+                console.log(22222)
                 buttonPrevious[0].classList.add('disabled');
                 return;
             }
             var prevActive = paginateActive.prev();
             prevActive[0].classList.add('active');
             page = pageCurrent - 1;
-            console.log('page: ', page);
+            paginateActive[0].classList.remove('active');
         }else{
-            this.classList.add('active');
-            page = this.textContent.trim();
+            if(this.textContent ==  paginateActive[0].textContent){
+                if(pageCurrent == 1){
+                    buttonPrevious[0].classList.add('disabled');
+                }
+                if(pageCurrent == totalPages){
+                    console.log('total pages')
+                    buttonNext[0].classList.add('disabled');
+                }
+                return;
+            }
+            else{
+                paginateActive[0].classList.remove('active');
+                this.classList.add('active');
+                page = this.textContent.trim();
+            }
         }
         if(page == 1){
             buttonPrevious[0].classList.add('disabled');
@@ -161,27 +161,27 @@ $(document).on('click','#PaginationGeneral li', async function () {
         if(page == totalPages){
             buttonNext[0].classList.add('disabled');
         }
-        paginateActive[0].classList.remove('active');
-        const getListRevenueExpense = await handleGetListRevenueExpense({
-            page: page,
-            perPage: 10
-        });
-        $("#body-revenue-expense").find('tr').remove();
-        const data = getListRevenueExpense.Result.data;
-        let htmlLi = "";
-        data.forEach(item => {
-            const newDate = new Date(item.create_date);
-            const dateString = getFormattedDate(newDate);
-            htmlLi+=`
-            <tr class="odd">
-                <td>${dateString}</td>
-                <td>${item.total}</td>
-                <td>${item.note}</td>
-            </tr>`;
-        })
-        var tableRevenueExpense = document.getElementById('body-revenue-expense');
-        tableRevenueExpense.innerHTML = htmlLi;
+        var typePagination = document.getElementById('type-pagination').textContent;
+        console.log('type pagination: ', typePagination.textContent)
+        let getListRevenueExpense = {};
+        if(typePagination == 1){
+            getListRevenueExpense = await handleGetListRevenueExpense({
+                page: page,
+                perPage: 10
+            });
+        }else{
+            const dateString = reservation.value.split('-').map(element => element.trim());;
+            const typeSelect = $( "#type-revenue option:selected" ).text();
+            const query = {
+                page: page,
+                perPage: 10,
+                dateSearch: dateString,
+                type: typeSelect
+            };
+            getListRevenueExpense = await handleFilterRevenueExpense(query);
+        }
         
+        setTablePagination(getListRevenueExpense);
         if(getListRevenueExpense.Result.pages == page){
             buttonNext[0].classList.add('disabled');
         }
@@ -190,4 +190,111 @@ $(document).on('click','#PaginationGeneral li', async function () {
  }
 });
 
+async function setTablePagination(getListRevenueExpense){
+    $("#body-revenue-expense").find('tr').remove();
+        const data = getListRevenueExpense.Result.data;
+        let htmlLi = "";
+        data.forEach(item => {
+            htmlLi+=`
+            <tr class="odd">
+                <td>${item.create_date}</td>
+                <td>${item.total}</td>
+                <td>${item.type}</td>
+                <td>${item.note}</td>
+                <td class="project-actions text-center" style="align-items: center;">
+            <a class="btn btn-primary btn-sm" href="#">
+                <i class="fas fa-folder">
+                </i>
+                View
+            </a>
+            <a class="btn btn-info btn-sm" href="#">
+                <i class="fas fa-pencil-alt">
+                </i>
+                Edit
+            </a>
+            <a class="btn btn-danger btn-sm" href="#">
+                <i class="fas fa-trash">
+                </i>
+                Delete
+            </a>
+        </td>
+            </tr>`;
+        })
+        var tableRevenueExpense = document.getElementById('body-revenue-expense');
+        tableRevenueExpense.innerHTML = htmlLi;
+        var totalPagesAdd = document.getElementById('total-pages');
+        totalPagesAdd.innerHTML = getListRevenueExpense.Result.pages;
+        
+  
+}
+
+async function setDateTotable(getListRevenueExpense){
+    $("#body-revenue-expense").find('tr').remove();
+    const data = getListRevenueExpense.Result.data;
+    const totalPages = getListRevenueExpense.Result.pages;
+    let htmlLi = "";
+    data.forEach(item => {
+        item.create_date
+        htmlLi+=`
+        <tr class="odd">
+            <td>${item.create_date}</td>
+            <td>${item.total}</td>
+            <td>${item.type}</td>
+            <td>${item.note}</td>
+            <td class="project-actions text-center" style="align-items: center;">
+            <a class="btn btn-primary btn-sm" href="#">
+                <i class="fas fa-folder">
+                </i>
+                View
+            </a>
+            <a class="btn btn-info btn-sm" href="#">
+                <i class="fas fa-pencil-alt">
+                </i>
+                Edit
+            </a>
+            <a class="btn btn-danger btn-sm" href="#">
+                <i class="fas fa-trash">
+                </i>
+                Delete
+            </a>
+        </td>
+        </tr>`;
+    })
+    var tableRevenueExpense = document.getElementById('body-revenue-expense');
+    var pagination = document.getElementById('PaginationGeneral')
+    tableRevenueExpense.innerHTML = htmlLi;
+    $('#PaginationGeneral li').remove();
+    let stringPagination = '';
+    stringPagination+=`<li class="paginate_button page-item previous disabled" id="example2_previous" disabled>
+    <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link" >
+      Previous
+    </a>
+  </li>
+  <li class="paginate_button page-item active">
+    <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+      1
+    </a>
+  </li>`;
+    for(let i = 2; i <= totalPages; i++){
+        stringPagination+=`<li class="paginate_button page-item ">
+        <a href="#" aria-controls="example2" data-dt-idx=${i} tabindex="0" class="page-link">${i}</a>
+    </li>`
+    }
+    if(totalPages == 1){
+        //console.log('1')
+        stringPagination+=` <li class="paginate_button page-item next disabled" id="example2_next" disabled>
+            <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+        </li>`;
+    }else{
+        // console.log('2')
+        stringPagination+=` <li class="paginate_button page-item next" id="example2_next">
+        <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+        </li>`;
+    }
+    
+    pagination.innerHTML = stringPagination;
+    var totalPagesAdd = document.getElementById('total-pages');
+    totalPagesAdd.innerHTML  = totalPages;
+    totalRevenueExpense.textContent = getListRevenueExpense.Result.total;
+}
 

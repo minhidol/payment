@@ -17,6 +17,7 @@ const managerPermission = async(req, res) => {
 
         console.log('list permission: ', listPermission)
         res.render('managePermission', {
+            layout: 'index',
             user: req.jwtDecode,
             listPermission: listPermission,
             listFeature: listFeature

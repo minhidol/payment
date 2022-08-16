@@ -10,7 +10,15 @@ const handleCreateRevenueExpense = async(data) => {
 }
 const handleGetListRevenueExpense = async(query) => {
     try {
-        return await axiosClient.get(`/revenue-expense/get-revenue-expense?page=${query.page}&pageNum=${query.pageNum}`);
+        return await axiosClient.get(`/revenue-expense/get-revenue-expense?page=${query.page}&perPage=${query.perPage}`);
+    } catch (error) {
+        console.log('error: ', error);
+        return null;
+    }
+}
+const handleFilterRevenueExpense = async(query) => {
+    try {
+        return await axiosClient.get(`/revenue-expense/filter?page=${query.page}&perPage=${query.perPage}&date_search=${query.dateSearch}&type=${query.type}`);
     } catch (error) {
         console.log('error: ', error);
         return null;
@@ -19,6 +27,7 @@ const handleGetListRevenueExpense = async(query) => {
 
 export{
     handleCreateRevenueExpense,
-    handleGetListRevenueExpense
+    handleGetListRevenueExpense,
+    handleFilterRevenueExpense
 }
  

@@ -7,6 +7,7 @@ const managerUser = async(req, res) => {
         const listStaff = await userService.getListStaff();
         const listPermission = await groupPermissionService.findAll();
         res.render('formCreateUser', {
+            layout: 'index',
             user: req.jwtDecode,
             listUser: listStaff,
             listPermission: listPermission

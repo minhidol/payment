@@ -27,9 +27,22 @@ const handleGetListRevenueExpenseByUsername = async(req, res) => {
     }
 }
 
+const handleGetListRevenueExpenseFilter = async(req, res) => {
+    try{
+        const query = {...req.query};
+        query.username = req.jwtDecode.username;
+        const listRevenue = await revenueExpenseService.getListRevenueExpenseFilter(query);
+        return res.json(rsSuccess(listRevenue));
+    }catch(error){
+        console.log('error: ', error);
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
+
 
 
 module.exports = {
     handleCreateRevenueExpense,
-    handleGetListRevenueExpenseByUsername
+    handleGetListRevenueExpenseByUsername,
+    handleGetListRevenueExpenseFilter
 }

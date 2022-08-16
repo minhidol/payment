@@ -15,11 +15,12 @@ router.get('/login', function(req, res){
     const isTokenExpire = req.isJwtExpired;
     if(token && isTokenExpire == constants.TOKEN_NOT_EXPIRED)
         return res.redirect('/home');
-    return res.render('login');
+    return res.render('login', {layout: 'index'});
 })
 router.use(authMiddleware.isAuthCookie);
 router.get('/home', function(req, res){
     return res.render('main', {
+        layout: 'index',
         user: req.jwtDecode
     });
 })

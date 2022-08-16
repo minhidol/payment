@@ -5,4 +5,5 @@ var revenueExpenseController = require('../controllers/revenue_expense.controlle
 
 router.post('/create', revenueExpenseController.handleCreateRevenueExpense);
 router.get('/get-revenue-expense', revenueExpenseController.handleGetListRevenueExpenseByUsername);
+router.get('/filter', revenueExpenseController.handleGetListRevenueExpenseFilter);
 module.exports = router
