@@ -7,12 +7,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Quản lý thu chi</h1>
+            <h1 class="m-0">Quản lý chi</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Quản lý user</li>
+              <li class="breadcrumb-item active">Quản lý chi</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -26,21 +26,18 @@
         <div class="modal fade" id="modal-default-revenue-expense">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header" style="background-color: #007bff">
-              <h4 class="modal-title" style="color:#fff">Khoảng thu chi</h4>
+            <div class="modal-header" style="background-color: #dc3545">
+              <h4 class="modal-title" style="color:#fff">Phiếu chi tiền</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true" style="color: #fff">&times;</span>
               </button>
             </div>
              <form id="FormRevenueExpense">
               <div class="modal-body">
                 <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Loại</label>
-                    <select id="ChooseRevenue" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                        <option value="1">Thu</option>
-                        <option value="2">Chi</option>
-                    </select>
+                   <div class="form-group">
+                    <label for="exampleInputEmail1">Người nhận</label>
+                    <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập tên người nhận tiền">
                     <p style="color: red"><small ></small></p>
                   </div>
                   <div class="form-group">
@@ -49,18 +46,25 @@
                     <p style="color: red"><small ></small></p>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Ghi chú</label>
-                    <input type="text" class="form-control" id="InputNoter" placeholder="Nhập ghi chú">
+                   <label for="exampleInputEmail1">Loại phiếu</label>
+                    <select id="ChooseRevenue" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                        <option value="1">Phiếu chi lương</option>
+                        <option value="2">Phiếu chi tiền mặt</option>
+                    </select>
+                    </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Lý do chi tiền</label>
+                    <input type="textarea" class="form-control" id="InputNoter" placeholder="Nhập lý do chi tiền">
                     <p style="color: red"><small ></small></p>
                   </div>
                 </div>
               </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
                       <i class="fas fa-times">
                       </i>
                       Hủy</button>
-                    <button type="submit" class="btn btn-success btn-sm">
+                    <button type="submit" class="btn btn-danger btn-sm">
                       <i class="fas fa-plus">
                       </i>
                       Tạo mới</button>
@@ -89,13 +93,13 @@
                 </div>
               </div>
               <div class="col-md-2">
-                  <div class="form-group">
+                  {{!-- <div class="form-group">
                         <label>Loại</label>
                         <select class="form-control" id="type-revenue">
                           <option>Thu</option>
                           <option>Chi</option>
                         </select>
-                      </div>
+                      </div> --}}
                 </div>
                 <div class="col-md-2" style="text-align: center;">
                    <div class="form-group" style="margin-top: 35px">
@@ -116,7 +120,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title" style="font-weight: bold;">Danh sách thu chi</h3>
+                <h3 class="card-title" style="font-weight: bold;">Lịch sử lập phiếu chi</h3>
                  <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
                     <button type="button"  class="btn btn-info" data-toggle="modal" data-target="#modal-default-revenue-expense">
@@ -133,34 +137,45 @@
                   <thead>
                     <tr>
                       <th tabindex="0" aria-controls="example2"
-                       rowspan="1" colspan="1" style="width: 20%">
+                       rowspan="1" colspan="1">
                        Ngày tạo
                        </th>
+                        <th tabindex="0" aria-controls="example2"
+                       rowspan="1" colspan="1" >
+                       Khách hàng
+                       </th>
+                        <th tabindex="0" aria-controls="example2" 
+                       rowspan="1" colspan="1">
+                       Loại phiếu
+                       </th>
+                        <th tabindex="0" aria-controls="example2" 
+                       rowspan="1" colspan="1" >
+                       Lý do
+                       </th>
                        <th tabindex="0" aria-controls="example2" 
-                       rowspan="1" colspan="1" style="width: 20%">
+                       rowspan="1" colspan="1" >
                        Số tiền
                        </th>
                        <th tabindex="0" aria-controls="example2" 
-                       rowspan="1" colspan="1" style="width: 20%">
-                       Loại
+                       rowspan="1" colspan="1" >
+                       Nhân viên
                        </th>
+                      
                        <th tabindex="0" aria-controls="example2" 
-                       rowspan="1" colspan="1" style="width: 20%">
-                       Ghi chú
-                       </th>
-                       <th tabindex="0" aria-controls="example2" 
-                       rowspan="1" colspan="1" style="width: 20%">
+                       rowspan="1" colspan="1" >
                        
                        </th>
                        </tr>
                   </thead>
                   <tbody id="body-revenue-expense">
-                    {{#each listRevenueExpense}}
+                    {{#each listExpense}}
                       <tr class="odd">
                         <td>{{this.create_date}}</td>
-                        <td>{{this.total}}</td>
+                        <td>{{this.receiver}}</td>
                         <td>{{this.type}}</td>
                         <td>{{this.note}}</td>
+                        <td>{{this.total}}</td>
+                        <td>{{this.create_by}}</td>
                         <td class="project-actions text-center" style="align-items: center;">
                           <a class="btn btn-primary btn-sm" href="#">
                               <i class="fas fa-folder">
@@ -179,8 +194,9 @@
                 </table></div></div>
                 <div class="row">
                   <div class="col-sm-12 col-md-5">
-                      <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
-                        Số khoảng thu chi: <span id="total-revenue-expense">{{total}}</span>
+                      <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"
+                      style="padding-left: 20px;">
+                        Số khoảng chi: <span id="total-revenue-expense">{{total}}</span>
                          <span id="total-pages" style="display: none;">{{totalPages}}</span>
                       </div>
                   </div>

@@ -3,7 +3,7 @@ const constants = require('../../constants/constants');
 const userRoute = require('./user.route');
 const permissionRoute = require('./permission.route');
 const debtRoute = require('./debt.route');
-const revenueExpenseRoute = require('./revenue_expense.route');
+const expenseRoute = require('./expense.route');
 const authMiddleware = require('../../middlewares/auth.middleware');
 
 const router = express.Router();
@@ -28,7 +28,7 @@ router.get('/home', function(req, res){
 router.use('/user', userRoute);
 router.use('/permission', permissionRoute);
 router.use('/debt', debtRoute);
-router.use('/revenue-expense', revenueExpenseRoute);
+router.use('/expense', expenseRoute);
 
 
 

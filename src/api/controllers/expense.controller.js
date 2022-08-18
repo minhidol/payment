@@ -1,12 +1,12 @@
-const revenueExpenseService = require('../services/revenue_expense.service');
+const expenseService = require('../services/expense.service');
 const constants = require('../../constants/constants');
 const {rsError, rsSuccess} = require('../helpers/response');
 
-const handleCreateRevenueExpense = async(req, res) => {
+const handleCreateExpense = async(req, res) => {
     try {
         const data = {...req.body};
         data.create_by = req.jwtDecode.username;
-        await revenueExpenseService.createRevenueExpense(data);
+        await expenseService.createExpense(data);
         return res.json(rsSuccess(null));
 
     } catch (error) {
@@ -15,24 +15,24 @@ const handleCreateRevenueExpense = async(req, res) => {
     }
 }
 
-const handleGetListRevenueExpenseByUsername = async(req, res) => {
+const handleGetListExpenseByUsername = async(req, res) => {
     try{
         const query = {...req.query};
         query.username = req.jwtDecode.username;
-        const listRevenue = await revenueExpenseService.getListRevenueExpenseByUsername(query);
-        return res.json(rsSuccess(listRevenue));
+        const listExpense = await expenseService.getListExpenseByUsername(query);
+        return res.json(rsSuccess(listExpense));
     }catch(error){
         console.log('error: ', error);
         return res.json(rsError(201, constants.ERROR_API));
     }
 }
 
-const handleGetListRevenueExpenseFilter = async(req, res) => {
+const handleGetListExpenseFilter = async(req, res) => {
     try{
         const query = {...req.query};
         query.username = req.jwtDecode.username;
-        const listRevenue = await revenueExpenseService.getListRevenueExpenseFilter(query);
-        return res.json(rsSuccess(listRevenue));
+        const listExpense = await expenseService.getListExpenseFilter(query);
+        return res.json(rsSuccess(listExpense));
     }catch(error){
         console.log('error: ', error);
         return res.json(rsError(201, constants.ERROR_API));
@@ -42,7 +42,7 @@ const handleGetListRevenueExpenseFilter = async(req, res) => {
 
 
 module.exports = {
-    handleCreateRevenueExpense,
-    handleGetListRevenueExpenseByUsername,
-    handleGetListRevenueExpenseFilter
+    handleCreateExpense,
+    handleGetListExpenseByUsername,
+    handleGetListExpenseFilter
 }

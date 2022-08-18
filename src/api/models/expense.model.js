@@ -1,21 +1,25 @@
 var mongoose = require('./database');
 var defaultSchema = require('./default.model');
 var mongoosePaginate = require('mongoose-paginate-async-await');
-var revenueExpenseSchema = new mongoose.Schema({
-    type: {
-        type: String,
-        default: null,
-        require: true
-    },
-    note: {
+var expenseSchema = new mongoose.Schema({
+    receiver: {
         type: String,
         default: "",
+        require: true
     },
     total: {
         type: String,
         default: "",
     },
-    is_delete: {
+    type: {
+        type: String,
+        default: "",
+    },
+    note: {
+        type: String,
+        default: "",
+    },
+        is_delete: {
         type: Number,
         default: 0
     },
@@ -23,7 +27,7 @@ var revenueExpenseSchema = new mongoose.Schema({
 }, { strict: false });
 
 
-revenueExpenseSchema.plugin(mongoosePaginate);
-var revenueExpense = mongoose.model('revenue_expense', revenueExpenseSchema);
+expenseSchema.plugin(mongoosePaginate);
+var expense = mongoose.model('expense', expenseSchema);
 
-module.exports = revenueExpense;
+module.exports = expense;
