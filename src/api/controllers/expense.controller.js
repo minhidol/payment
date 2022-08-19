@@ -1,11 +1,13 @@
 const expenseService = require('../services/expense.service');
 const constants = require('../../constants/constants');
 const {rsError, rsSuccess} = require('../helpers/response');
+var moment = require('moment');
 
 const handleCreateExpense = async(req, res) => {
     try {
         const data = {...req.body};
         data.create_by = req.jwtDecode.username;
+        data.create_date = moment(new Date()).format("DD/MM/YYYY HH:mm:ss")
         await expenseService.createExpense(data);
         return res.json(rsSuccess(null));
 

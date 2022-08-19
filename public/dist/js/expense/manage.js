@@ -15,7 +15,19 @@ const reservation = document.querySelector("#reservation");
 const receiver = document.querySelector("#InputReceiver");
 const totalRevenueExpense = document.querySelector("#total-revenue-expense");
 const note = document.querySelector("#InputNoter");
+$('#InputTotalTypeRevenueExpense').keyup(function(event) {
+  console.log('123')
+  // skip for arrow keys
+  if(event.which >= 37 && event.which <= 40) return;
 
+  // format number
+  $(this).val(function(index, value) {
+    return value
+    .replace(/\D/g, "")
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    ;
+  });
+});
 const isRequired = (value) => (value === "" ? false : true);
 const isNumber = (val) => {
   return /^\d+$/.test(val);
@@ -39,8 +51,6 @@ const checkTotal = () => {
   const totalValid = total.value.trim();
   if (!isRequired(totalValid)) {
     showError(total, "Số tiền không được bỏ trống.");
-  } else if (!isNumber(totalValid)) {
-    showError(total, "Số tiền không được chứa chữ.");
   } else {
     showSuccess(total);
     valid = true;
@@ -78,16 +88,22 @@ formSearchRevenueExpense.addEventListener("submit", async function (e) {
     const dateString = reservation.value
       .split("-")
       .map((element) => element.trim());
-    const typeSelect = $("#type-revenue option:selected").text();
+    const typeSelect = $("#type-revenue option:selected").val();
     const query = {
       page: 1,
       perPage: 10,
       dateSearch: dateString,
-      type: typeSelect,
     };
+    if(typeSelect == 0){
+      query.type = ""
+    }else{
+      query.type = $("#type-revenue option:selected").text();
+    }
+    console.log('query: ', query);
     const listResult = await handleFilterExpense(query);
+    console.log('list result: ', listResult)
     if (listResult.Result.total == 0) {
-      alert("Không tìm thấy dữ liệu!");
+      $('#message-not-found').modal();
       return;
     }
 
