@@ -28,18 +28,14 @@ const getListExpenseByUsername = async(query) => {
 const getListExpenseFilter = async(query) => {
     try{
         console.log('query: ', query);
-        const arrDate = query.date_search.split(',');
-        const from_date = moment(new Date(arrDate[0])).format("DD/MM/YYYY");
-        const to_date = moment(new Date(arrDate[1])).add(1, 'days').format("DD/MM/YYYY");
-        console.log('arr date: ', {from_date, to_date});
         const listExpense = await expenseModel.paginate({
             create_by: query.username,
             type: query.type,
             create_date: {
-               $gte: from_date,
+               $gte: query.from_date,
             },
              create_date: {
-               $lte: to_date,
+               $lte: query.to_date,
             },
             is_delete: constants.NOT_DELETED
         },{

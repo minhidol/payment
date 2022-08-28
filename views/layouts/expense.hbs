@@ -182,8 +182,12 @@
   $(function () {
 
     //Date picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
+    $('#reservation_from_date').datetimepicker({
+        format: 'DD/MM/yyyy'
+    });
+
+    $('#reservation_to_date').datetimepicker({
+        format: 'DD/MM/yyyy'
     });
 
     //Date and time picker

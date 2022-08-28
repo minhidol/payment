@@ -18,7 +18,7 @@ const handleGetListExpense = async(query) => {
 }
 const handleFilterExpense = async(query) => {
     try {
-        return await axiosClient.get(`/expense/filter?page=${query.page}&perPage=${query.perPage}&date_search=${query.dateSearch}&type=${query.type}`);
+        return await axiosClient.get(`/expense/filter?page=${query.page}&perPage=${query.perPage}&from_date=${query.from_date}&to_date=${query.to_date}&type=${query.type}`);
     } catch (error) {
         console.log('error: ', error);
         return null;
