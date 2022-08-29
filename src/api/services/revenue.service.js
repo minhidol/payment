@@ -1,10 +1,10 @@
-var expenseModel = require('../models/expense.model');
+var revenueModel = require('../models/revenue.model');
 var constants = require('../../constants/constants');
 var moment = require('moment');
 
-const getListExpenseByUsername = async(query) => {
+const getListRevenueByUsername = async(query) => {
     try{
-        const listExpense = await expenseModel.paginate({
+        const listRevenue = await revenueModel.paginate({
             create_by: query.username,
             is_delete: constants.NOT_DELETED
         },{
@@ -14,10 +14,10 @@ const getListExpenseByUsername = async(query) => {
             sort: { create_date: -1 }
         });
         const result = {
-            page: listExpense.page,
-            pages: listExpense.pages,
-            total: listExpense.documents,
-            data: listExpense.data,
+            page: listRevenue.page,
+            pages: listRevenue.pages,
+            total: listRevenue.documents,
+            data: listRevenue.data,
         }
         return result;
     }catch(error){
@@ -25,7 +25,7 @@ const getListExpenseByUsername = async(query) => {
     }
 }
 
-const getListExpenseFilter = async(query) => {
+const getListRevenueFilter = async(query) => {
     try{
         
         const queryFilter = {
@@ -40,17 +40,17 @@ const getListExpenseFilter = async(query) => {
             queryFilter.type = query.type;
         }
         console.log('query: ', query);
-        const listExpense = await expenseModel.paginate(queryFilter,{
+        const listRevenue = await revenueModel.paginate(queryFilter,{
             page: query.page,
             perPage: query.perPage,
             lean: true,
             sort: { create_date: -1 }
         });
         const result = {
-            page: listExpense.page,
-            pages: listExpense.pages,
-            total: listExpense.documents,
-            data: listExpense.data,
+            page: listRevenue.page,
+            pages: listRevenue.pages,
+            total: listRevenue.documents,
+            data: listRevenue.data,
         }
         return result;
     }catch(error){
@@ -58,9 +58,9 @@ const getListExpenseFilter = async(query) => {
     }
 }
 
-const createExpense = async(data) => {
+const createRevenue = async(data) => {
     try{
-        return await expenseModel.create(data);
+        return await revenueModel.create(data);
     }catch(err){
         throw err;
     }
@@ -68,7 +68,7 @@ const createExpense = async(data) => {
 
 
 module.exports ={
-    createExpense,
-    getListExpenseByUsername,
-    getListExpenseFilter
+    createRevenue,
+    getListRevenueByUsername,
+    getListRevenueFilter
 }

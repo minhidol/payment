@@ -1,7 +1,7 @@
 <div class="wrapper">
      {{> navbar}}
      
-      <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #263544">
+     <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #263544">
    <a href="#" class="brand-link">
       <img src="dist/img/logo1.jpg" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
       <span class="brand-text font-weight-light" style="font-weight: 1000; font-size:15px">Tài Chính</span>
@@ -52,13 +52,13 @@
               </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/revenue" class="nav-link">
+                  <a href="/revenue" class="nav-link active">
                     <i class="fa fa-circle nav-icon" style="font-size: 10px;"></i>
                     <p>Quản lý thu</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/expense" class="nav-link active">
+                  <a href="/expense" class="nav-link">
                     <i class="fa fa-circle nav-icon" style="font-size: 10px;"></i>
                     <p>Quản lý chi</p>
                   </a>
@@ -82,8 +82,6 @@
     </div>
  </aside>
 
-
-
      <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -94,12 +92,12 @@
             <h5 class="m-0" style="font-weight: 500;
     font-family: quicksand,sans-serif; color: #6c757d">
     <i class="fas fa-money" style="color: blue;"></i>
-    Quản lý các khoản chi</h5>
+    Quản lý các khoản thu</h5>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-              <li class="breadcrumb-item active">Quản lý chi</li>
+              <li class="breadcrumb-item active">Quản lý thu</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -129,8 +127,8 @@
         <div class="modal fade" id="modal-default-revenue-expense">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header" style="background-color: #dc3545">
-              <h4 class="modal-title" style="color:#fff;font-size: 20px">Phiếu chi tiền</h4>
+            <div class="modal-header" style="background-color: #5867dd">
+              <h4 class="modal-title" style="color:#fff;font-size: 20px">Phiếu thu tiền</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true" style="color: #fff">&times;</span>
               </button>
@@ -158,21 +156,26 @@
                     </select>
                     </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Lý do chi tiền</label>
-                    <input type="textarea" class="form-control" id="InputNoter" placeholder="Nhập lý do chi tiền">
+                    <label for="exampleInputPassword1">Lý do thu tiền</label>
+                    <input type="textarea" class="form-control" id="InputNoter" placeholder="Nhập lý do thu tiền">
                     <p style="color: red"><small ></small></p>
                   </div>
                 </div>
               </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"
+                    >
                       <i class="fas fa-times">
                       </i>
                       Hủy</button>
-                    <button type="submit" class="btn btn-danger btn-sm">
+                    <button type="submit" class="btn btn-primary btn-sm"
+                    style="    color: #fff;
+    background-color: #5867dd;
+    border-color: #5867dd"
+                    >
                       <i class="fas fa-money-check-alt">
                       </i>
-                    Chi tiền</button>
+                    Thu tiền</button>
                 </div>
               </form>     
           </div>
@@ -183,7 +186,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Lịch sử lập phiếu chi</h3>
+                <h3 class="card-title">Lịch sử lập phiếu thu</h3>
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
                     <button type="button"  class="btn btn-success" data-toggle="modal" 
@@ -291,7 +294,7 @@
                        </tr>
                   </thead>
                   <tbody id="body-revenue-expense">
-                    {{#each listExpense}}
+                    {{#each listRevenue}}
                       <tr class="odd">
                         <td>{{this.create_date}}</td>
                         <td>{{this.receiver}}</td>
@@ -319,7 +322,7 @@
                   <div class="col-sm-12 col-md-5">
                       <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"
                       style="padding-left: 20px;">
-                        Số khoảng chi: <span id="total-revenue-expense">{{total}}</span>
+                        Số khoảng thu: <span id="total-revenue-expense">{{total}}</span>
                          <span id="total-pages" style="display: none;">{{totalPages}}</span>
                       </div>
                   </div>

@@ -9,12 +9,10 @@ const formRevenueExpense = document.querySelector("#FormRevenueExpense");
 const formSearchRevenueExpense = document.querySelector(
   "#searchRevenueExpense"
 );
-const reservation = document.querySelector("#reservation");
 const receiver = document.querySelector("#InputReceiver");
 const totalRevenueExpense = document.querySelector("#total-revenue-expense");
 const note = document.querySelector("#InputNoter");
-const reservation_from_date = document.querySelector("#reservation_from_date");
-const reservation_to_date = document.querySelector("#reservation_to_date");
+
 $('#InputTotalTypeRevenueExpense').keyup(function(event) {
   console.log('123')
   // skip for arrow keys
@@ -86,6 +84,8 @@ formSearchRevenueExpense.addEventListener("submit", async function (e) {
   try {
     e.preventDefault();
     const typeSelect = $("#type-revenue option:selected").text();
+    const valueSelected = $("#type-revenue option:selected").val();
+    
     var to_date = $('#reservation_to_date').find('input').val();
     var from_date = $('#reservation_from_date').find('input').val();
     const query = {
@@ -93,12 +93,15 @@ formSearchRevenueExpense.addEventListener("submit", async function (e) {
       perPage: 10,
       from_date: from_date,
       to_date: to_date,
-      type: typeSelect,
+      type: typeSelect
     };
+    if(valueSelected == 0){
+      query.type = '';
+    }
     //console.log('query: ', query);
     const listResult = await handleFilterExpense(query);
     if (listResult.Result.total == 0) {
-      alert("Không tìm thấy dữ liệu!");
+      $('#message-not-found').modal();
       return;
     }
 
@@ -217,13 +220,16 @@ $(document).on("click", "#PaginationGeneral li", async function () {
       var to_date = $('#reservation_to_date').find('input').val();
     var from_date = $('#reservation_from_date').find('input').val();
       const typeSelect = $("#type-revenue option:selected").text();
+      const valueSelected = $("#type-revenue option:selected").val();
       const query = {
         page: page,
         perPage: 10,
         from_date: from_date,
-      to_date: to_date,
+        to_date: to_date,
         type: typeSelect,
       };
+      if(valueSelected == 0)
+        query.type = '';
       getListRevenueExpense = await handleFilterExpense(query);
     }
 

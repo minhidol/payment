@@ -4,6 +4,7 @@ const userRoute = require('./user.route');
 const permissionRoute = require('./permission.route');
 const debtRoute = require('./debt.route');
 const expenseRoute = require('./expense.route');
+const revenueRoute = require('./revenue.route');
 const authMiddleware = require('../../middlewares/auth.middleware');
 
 const router = express.Router();
@@ -29,7 +30,7 @@ router.use('/user', userRoute);
 router.use('/permission', permissionRoute);
 router.use('/debt', debtRoute);
 router.use('/expense', expenseRoute);
-
+router.use('/revenue', revenueRoute);
 
 
 
