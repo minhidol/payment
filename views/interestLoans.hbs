@@ -1,7 +1,7 @@
 <div class="wrapper">
      {{> navbar}}
      
-     <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #263544">
+      <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #263544">
    <a href="#" class="brand-link">
       <img src="dist/img/logo1.jpg" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
       <span class="brand-text font-weight-light" style="font-weight: 1000; font-size:15px">Tài Chính</span>
@@ -42,8 +42,8 @@
                 </li>
             </ul>
             </li>
-            <li class="nav-item menu-open">
-              <a href="#" class="nav-link active">
+            <li class="nav-item">
+              <a href="#" class="nav-link">
                 <i class="fas fa-money-check-alt"></i>
                 <p>
                   Quản lý thu chi
@@ -52,7 +52,7 @@
               </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/revenue" class="nav-link active">
+                  <a href="/revenue" class="nav-link">
                     <i class="fa fa-circle nav-icon" style="font-size: 10px;"></i>
                     <p>Quản lý thu</p>
                   </a>
@@ -66,7 +66,7 @@
             </ul>
             </li>
             
-            <li class="nav-item">
+            <li class="nav-item menu-open">
               <a href="/interest-loans" class="nav-link">
                 <i class="fas fa-money-check-alt"></i>
                 <p>
@@ -82,6 +82,8 @@
     </div>
  </aside>
 
+
+
      <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -92,12 +94,12 @@
             <h5 class="m-0" style="font-weight: 500;
     font-family: quicksand,sans-serif; color: #6c757d">
     <i class="fas fa-money" style="color: blue;"></i>
-    Quản lý các khoản thu</h5>
+    Quản lý vay lãi</h5>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-              <li class="breadcrumb-item active">Quản lý thu</li>
+              <li class="breadcrumb-item active">Quản lý chi</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -125,59 +127,212 @@
     <section class="content" >
       <div class="container-fluid">
         <div class="modal fade" id="modal-default-revenue-expense">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #5867dd">
-              <h4 class="modal-title" style="color:#fff;font-size: 20px">Phiếu thu tiền</h4>
+        <div class="modal-dialog" style="width: 90%;max-width:1200px;margin: 30px auto;position: relative">
+          <div class="modal-content"
+            style="box-shadow: 0px 0px 15px 1px rgb(69 65 78 / 20%;
+                border: 0;
+                border-radius: 4px;position: relative;
+                display: flex;
+                flex-direction: column;
+                pointer-events: auto;
+                background-color: #fff;
+                background-clip: padding-box;
+                outline: 0;
+            "
+          >
+            <div class="modal-header" 
+            style="padding: 12px;
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                border-bottom: 1px solid #e9ecef;
+                border-top-left-radius: 0.3rem;
+                border-top-right-radius: 0.3rem;">
+              <h4 class="modal-title" style="color: #3f4047;font-weight: 400 !important;
+                font-size: 1.1rem;margin-bottom: 0;
+                  line-height: 1.5;">Thêm mới khoản vay</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true" style="color: #fff">&times;</span>
+                <span aria-hidden="true" style="color: #3f4047">&times;</span>
               </button>
             </div>
-             <form id="FormRevenueExpense" style="font-sỉze: 15px">
-              <div class="modal-body">
-                <div class="card-body">
-                   <div class="form-group">
-                    <label for="exampleInputEmail1">Người nhận</label>
-                    <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập tên người nhận tiền">
-                    <p style="color: red"><small ></small></p>
+             {{!-- <form id="FormRevenueExpense" style="font-sỉze: 15px"> --}}
+              <div class="modal-body" style="padding: 25px;position: relative;flex: 1 1 auto;">
+                <form id="FormRevenueExpense" style="font-sỉze: 15px">
+                  <h6>
+                      <i class="m-portlet__head-text  m--margin-left-30">
+                          <i class="fa fa-user"></i> Thông tin khách hàng
+                      </i>
+                  </h6>
+                  <div class="" style="border-top:1px dashed #ebedf2;margin-bottom:15px"></div>
+                  <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Khách hàng<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập tên khách hàng">
+                      </div>
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="text-align: right;color:#3f4047;padding-top: 0.6rem">
+                        Số điện thoại<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập số điện thoại">
+                      </div>
                   </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Số tiền</label>
-                    <input type="text" class="form-control" id="InputTotalTypeRevenueExpense" placeholder="Nhập số tiền">
-                    <p style="color: red"><small ></small></p>
+                  <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Số CMND/Hộ chiếu<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập số CMND/Hộ chiếu">
+                      </div>
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="text-align: right;color:#3f4047;padding-top: 0.6rem">
+                        Ngày cấp<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập nơi cấp CMND">
+                      </div>
                   </div>
-                  <div class="form-group">
-                   <label for="exampleInputEmail1">Loại phiếu</label>
-                    <select id="ChooseRevenue" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                          {{#each listStatus}}
-                            <option value="{{this.type}}">{{this.name}}</option>
-                          {{/each}}
+                   <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Nơi cấp<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập nơi cấp CMND/Hộ chiếu">
+                      </div>
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="text-align: right;color:#3f4047;padding-top: 0.6rem">
+                        Địa chỉ<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <textarea type="textarea" class="form-control" id="InputReceiver" placeholder="Nhập địa chỉ"></textarea>
+                      </div>
+                  </div>
+                   <h6>
+                      <i class="m-portlet__head-text  m--margin-left-30">
+                          <i class="fas fa-money-check-alt"></i> Thông tin khoản vay
+                      </i>
+                  </h6>
+                  <div class="" style="border-top:1px dashed #ebedf2;margin-bottom:15px"></div>
+                
+                  <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Loại tài sản thế chấp<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <select class="form-control" id="type-revenue">
+                          <option value="0">--Không có tài sản thế chấp--</option>
+                          <option value="1">Tài sản mặc định</option>
                         </select>
-                    </select>
-                    </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Lý do thu tiền</label>
-                    <input type="textarea" class="form-control" id="InputNoter" placeholder="Nhập lý do thu tiền">
-                    <p style="color: red"><small ></small></p>
+                      </div>
                   </div>
-                </div>
+                   <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Tên tài sản<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập tên tài sản">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Tổng số tiền vay<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="InputReceiver" placeholder="0">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Hình thức lãi<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <select class="form-control" id="type-revenue">
+                          <option value="0">Chọn giá trị</option>
+                          <option value="1">Lãi ngày</option>
+                        </select>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Kỳ lãi<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập số kỳ lãi">
+                        <span class="input-group-addon">
+                          <i class="text-black" id="strLoanTime">Ngày</i>
+                        </span>
+                      </div>
+                      <div class="col-lg-3">
+                        (VD : 10 ngày đóng lãi 1 lần thì điền số 10)
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Lãi<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập số kỳ lãi">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Ngày vay<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="input-group date" id="reservation_from_date" data-target-input="nearest">
+                          <input type="text" class="form-control datetimepicker-input" data-target="#reservation_from_date">
+                          <div class="input-group-append" data-target="#reservation_from_date" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Ghi chú<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <textarea type="text" class="form-control" id="InputReceiver" placeholder="Nhập số kỳ lãi"></textarea>
+                      </div>
+                  </div>
+                  {{!-- <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        <span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <select class="form-control" id="type-revenue">
+                          <option value="0">Chọn giá trị</option>
+                          <option value="1">Lãi ngày</option>
+                        </select>
+                      </div>
+                  </div> --}}
+                </form>
               </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"
-                    >
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
                       <i class="fas fa-times">
                       </i>
                       Hủy</button>
-                    <button type="submit" class="btn btn-primary btn-sm"
-                    style="    color: #fff;
-    background-color: #5867dd;
-    border-color: #5867dd"
-                    >
+                    <button type="submit" class="btn btn-danger btn-sm">
                       <i class="fas fa-money-check-alt">
                       </i>
-                    Thu tiền</button>
+                    Chi tiền</button>
                 </div>
-              </form>     
+              {{!-- </form>      --}}
           </div>
         </div>
       </div>
@@ -186,10 +341,10 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Lịch sử lập phiếu thu</h3>
+                <h3 class="card-title">Danh sách vay lãi</h3>
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
-                    <button type="button"  class="btn btn-success" data-toggle="modal" 
+                    <button type="button"  class="btn btn-primary btn-flat" data-toggle="modal" 
                     data-target="#modal-default-revenue-expense"
                     style="font-size: .9rem"
                     >
@@ -234,7 +389,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    {{!-- <div class="col-md-3">
                   <div class="form-group">
                         <label>Loại</label>
                         <select class="form-control" id="type-revenue">
@@ -244,7 +399,7 @@
                           {{/each}}
                         </select>
                       </div>
-                </div>
+                </div> --}}
                     <div class="col-md-2" style="text-align: center;">
                       <div class="form-group" style="margin-top: 35px">
                         <button  type="submit" class="btn btn-info btn-sm" > <i class="fas fa-search"></i>Tìm kiếm</button>
@@ -264,37 +419,48 @@
                     <tr>
                       <th tabindex="0" aria-controls="example2"
                        rowspan="1" colspan="1">
-                       Ngày tạo
+                       Khách hàng
                        </th>
                         <th tabindex="0" aria-controls="example2"
                        rowspan="1" colspan="1" >
-                       Khách hàng
+                       Tài sản
                        </th>
                         <th tabindex="0" aria-controls="example2" 
                        rowspan="1" colspan="1">
-                       Loại phiếu
+                       VNĐ
                        </th>
                         <th tabindex="0" aria-controls="example2" 
                        rowspan="1" colspan="1" >
-                       Lý do
+                       Ngày vay
                        </th>
                        <th tabindex="0" aria-controls="example2" 
                        rowspan="1" colspan="1" >
-                       Số tiền
+                       Lãi đã đóng
                        </th>
                        <th tabindex="0" aria-controls="example2" 
                        rowspan="1" colspan="1" >
-                       Nhân viên
+                       Nợ cũ
                        </th>
-                      
+                      <th tabindex="0" aria-controls="example2" 
+                       rowspan="1" colspan="1" >
+                       Lãi đến hôm nay
+                       </th>
                        <th tabindex="0" aria-controls="example2" 
                        rowspan="1" colspan="1" >
-                       
+                       Ngày phải đóng lãi
+                       </th>
+                       <th tabindex="0" aria-controls="example2" 
+                       rowspan="1" colspan="1" >
+                       Tình trạng
+                       </th>
+                       <th tabindex="0" aria-controls="example2" 
+                       rowspan="1" colspan="1" >
+                       Chức năng
                        </th>
                        </tr>
                   </thead>
                   <tbody id="body-revenue-expense">
-                    {{#each listRevenue}}
+                    {{#each listExpense}}
                       <tr class="odd">
                         <td>{{this.create_date}}</td>
                         <td>{{this.receiver}}</td>
@@ -322,7 +488,7 @@
                   <div class="col-sm-12 col-md-5">
                       <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"
                       style="padding-left: 20px;">
-                        Số khoảng thu: <span id="total-revenue-expense">{{total}}</span>
+                        Số khoảng chi: <span id="total-revenue-expense">{{total}}</span>
                          <span id="total-pages" style="display: none;">{{totalPages}}</span>
                       </div>
                   </div>

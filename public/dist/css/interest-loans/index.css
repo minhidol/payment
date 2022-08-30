@@ -1,0 +1,9 @@
+@media (min-width: 993px)
+{.label-interest{
+    text-align: right
+}}
+
+.label-interest{
+    font-size: 1rem;
+    font-weight: 700 !important;
+}

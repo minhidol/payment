@@ -8,8 +8,6 @@ const renderRevenue = async(req, res) => {
             perPage: 10
         });
         const listStatusRevenue = await statusRevenueService.getListStatusRevenue();
-        //console.log('data1: ', listStatusExpense);
-        //const 
         res.render('revenue',{
             layout: 'revenue',
             user: req.jwtDecode,

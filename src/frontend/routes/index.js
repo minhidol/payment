@@ -5,6 +5,7 @@ const permissionRoute = require('./permission.route');
 const debtRoute = require('./debt.route');
 const expenseRoute = require('./expense.route');
 const revenueRoute = require('./revenue.route');
+const interestLoansRoute = require('./interest_loans.route');
 const authMiddleware = require('../../middlewares/auth.middleware');
 
 const router = express.Router();
@@ -31,7 +32,7 @@ router.use('/permission', permissionRoute);
 router.use('/debt', debtRoute);
 router.use('/expense', expenseRoute);
 router.use('/revenue', revenueRoute);
-
+router.use('/interest-loans', interestLoansRoute);
 
 
 module.exports = router;
