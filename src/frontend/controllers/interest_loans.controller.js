@@ -1,4 +1,4 @@
-//const revenueService = require('../../api/services/revenue.service');
+const statusService = require('../../api/services/status.service');
 //const statusRevenueService = require('../../api/services/status_revenue.service');
 
 
@@ -9,10 +9,11 @@ const renderInterestLoans = async(req, res) => {
         //     page: 1,
         //     perPage: 10
         // });
-        // const listStatusRevenue = await statusRevenueService.getListStatusRevenue();
+        const listStatusInterestLoans = await statusService.getListStatusInterestLoans();
         res.render('interestLoans',{
             layout: 'interest_loans',
             user: req.jwtDecode,
+            listStatusInterest: listStatusInterestLoans
             // listRevenue: listRevenue.data,
             // total: listRevenue.total,
             // totalPages: listRevenue.pages,

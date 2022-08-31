@@ -7,3 +7,31 @@
     font-size: 1rem;
     font-weight: 700 !important;
 }
+
+div.input-group{
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+div.input-group .form-control{
+    display: flex;
+    position: relative;
+    z-index: 2;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+}
+.input-group-addon {
+    color: #575962;
+    border-color: #ebedf2;
+    background-color: #f4f5f8;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
+    display: flex
+}

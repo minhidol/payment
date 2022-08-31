@@ -157,7 +157,7 @@
             </div>
              {{!-- <form id="FormRevenueExpense" style="font-sỉze: 15px"> --}}
               <div class="modal-body" style="padding: 25px;position: relative;flex: 1 1 auto;">
-                <form id="FormRevenueExpense" style="font-sỉze: 15px">
+                <form id="FormInterestLoans" style="font-sỉze: 15px">
                   <h6>
                       <i class="m-portlet__head-text  m--margin-left-30">
                           <i class="fa fa-user"></i> Thông tin khách hàng
@@ -170,46 +170,48 @@
                         Khách hàng<span class="text-danger">*</span></label>
                       </div>
                       <div class="col-lg-3">
-                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập tên khách hàng">
+                        <input type="text" class="form-control" id="InputClient" placeholder="Nhập tên khách hàng">
+                        {{!-- <p style="color: red"><small ></small></p> --}}
                       </div>
                       <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
                         style="text-align: right;color:#3f4047;padding-top: 0.6rem">
                         Số điện thoại<span class="text-danger">*</span></label>
                       </div>
                       <div class="col-lg-3">
-                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập số điện thoại">
+                        <input type="text" class="form-control" id="InputNumberPhone" placeholder="Nhập số điện thoại">
+                        {{!-- <p style="color: red"><small ></small></p> --}}
                       </div>
                   </div>
                   <div class="form-group row">
                       <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
                         style="color:#3f4047;padding-top: 0.6rem">
-                        Số CMND/Hộ chiếu<span class="text-danger">*</span></label>
+                        Số CMND/Hộ chiếu</label>
                       </div>
                       <div class="col-lg-3">
-                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập số CMND/Hộ chiếu">
+                        <input type="text" class="form-control" id="InputCmnd" placeholder="Nhập số CMND/Hộ chiếu">
                       </div>
                       <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
                         style="text-align: right;color:#3f4047;padding-top: 0.6rem">
-                        Ngày cấp<span class="text-danger">*</span></label>
+                        Ngày cấp</label>
                       </div>
                       <div class="col-lg-3">
-                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập nơi cấp CMND">
+                        <input type="text" class="form-control" id="InputCmndDate" placeholder="Nhập nơi cấp CMND">
                       </div>
                   </div>
                    <div class="form-group row">
                       <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
                         style="color:#3f4047;padding-top: 0.6rem">
-                        Nơi cấp<span class="text-danger">*</span></label>
+                        Nơi cấp</label>
                       </div>
                       <div class="col-lg-3">
-                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập nơi cấp CMND/Hộ chiếu">
+                        <input type="text" class="form-control" id="InputCmndAddress" placeholder="Nhập nơi cấp CMND/Hộ chiếu">
                       </div>
                       <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
                         style="text-align: right;color:#3f4047;padding-top: 0.6rem">
-                        Địa chỉ<span class="text-danger">*</span></label>
+                        Địa chỉ</label>
                       </div>
                       <div class="col-lg-3">
-                        <textarea type="textarea" class="form-control" id="InputReceiver" placeholder="Nhập địa chỉ"></textarea>
+                        <textarea type="textarea" class="form-control" id="InputAddress" placeholder="Nhập địa chỉ"></textarea>
                       </div>
                   </div>
                    <h6>
@@ -222,22 +224,22 @@
                   <div class="form-group row">
                       <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
                         style="color:#3f4047;padding-top: 0.6rem">
-                        Loại tài sản thế chấp<span class="text-danger">*</span></label>
+                        Loại tài sản thế chấp</label>
                       </div>
                       <div class="col-lg-3">
-                        <select class="form-control" id="type-revenue">
+                        <select class="form-control" id="type-asset">
                           <option value="0">--Không có tài sản thế chấp--</option>
                           <option value="1">Tài sản mặc định</option>
                         </select>
                       </div>
                   </div>
-                   <div class="form-group row">
+                   <div class="form-group row" style="display: none" id="input-name-asset">
                       <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
                         style="color:#3f4047;padding-top: 0.6rem">
                         Tên tài sản<span class="text-danger">*</span></label>
                       </div>
                       <div class="col-lg-3">
-                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập tên tài sản">
+                        <input type="text" class="form-control" id="InputNameAsset" placeholder="Nhập tên tài sản">
                       </div>
                   </div>
                   <div class="form-group row">
@@ -246,7 +248,13 @@
                         Tổng số tiền vay<span class="text-danger">*</span></label>
                       </div>
                       <div class="col-lg-3">
-                        <input type="text" class="form-control" id="InputReceiver" placeholder="0">
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="InputTotal" placeholder="0">
+                          <span class="input-group-addon">
+                            <i class="text-black">VNĐ</i>
+                          </span>
+                          <p style="color: red"><small >Lỗi</small></p>
+                        </div>
                       </div>
                   </div>
                   <div class="form-group row">
@@ -255,10 +263,26 @@
                         Hình thức lãi<span class="text-danger">*</span></label>
                       </div>
                       <div class="col-lg-3">
-                        <select class="form-control" id="type-revenue">
-                          <option value="0">Chọn giá trị</option>
-                          <option value="1">Lãi ngày</option>
+                        <select class="form-control" id="form-of-profit">
+                          {{#each listStatusInterest}}
+                            <option value="{{this.type}}">{{this.name}}</option>
+                          {{/each}}
                         </select>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
+                        style="color:#3f4047;padding-top: 0.6rem">
+                        Thời gian vay<span class="text-danger">*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="InputProfitTime" placeholder="Nhập thời gian vay">
+                          <span class="input-group-addon">
+                            <i class="text-black-loan-time" id="strLoanTime">Ngày</i>
+                          </span>
+                          <p style="color: red"><small ></small></p>
+                        </div>
                       </div>
                   </div>
                   <div class="form-group row">
@@ -267,13 +291,16 @@
                         Kỳ lãi<span class="text-danger">*</span></label>
                       </div>
                       <div class="col-lg-3">
-                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập số kỳ lãi">
-                        <span class="input-group-addon">
-                          <i class="text-black" id="strLoanTime">Ngày</i>
-                        </span>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="InputProfitPeriod" placeholder="Nhập số kỳ lãi">
+                          <span class="input-group-addon">
+                            <i class="text-black-loan-time" id="strLoanTime">Ngày</i>
+                          </span>
+                          <p style="color: red"><small ></small></p>
+                        </div>
                       </div>
                       <div class="col-lg-3">
-                        (VD : 10 ngày đóng lãi 1 lần thì điền số 10)
+                        (VD : 10 ngày đóng lãi 1 lần thì điền số 10, tương tự với tuần tháng)
                       </div>
                   </div>
                   <div class="form-group row">
@@ -282,7 +309,13 @@
                         Lãi<span class="text-danger">*</span></label>
                       </div>
                       <div class="col-lg-3">
-                        <input type="text" class="form-control" id="InputReceiver" placeholder="Nhập số kỳ lãi">
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="InputInterest" placeholder="Nhập số kỳ lãi">
+                        <span class="input-group-addon">
+                          <i class="text-black" id="strLoanTimeMoney">k/1 Ngày</i>
+                        </span>
+                        <p style="color: red"><small ></small></p>
+                        </div>
                       </div>
                   </div>
                   <div class="form-group row">
@@ -291,9 +324,9 @@
                         Ngày vay<span class="text-danger">*</span></label>
                       </div>
                       <div class="col-lg-3">
-                        <div class="input-group date" id="reservation_from_date" data-target-input="nearest">
-                          <input type="text" class="form-control datetimepicker-input" data-target="#reservation_from_date">
-                          <div class="input-group-append" data-target="#reservation_from_date" data-toggle="datetimepicker">
+                        <div class="input-group date" id="reservation_interest" data-target-input="nearest">
+                          <input type="text" class="form-control datetimepicker-input" data-target="#reservation_interest">
+                          <div class="input-group-append" data-target="#reservation_interest" data-toggle="datetimepicker">
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                           </div>
                         </div>
@@ -302,36 +335,33 @@
                   <div class="form-group row">
                       <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
                         style="color:#3f4047;padding-top: 0.6rem">
-                        Ghi chú<span class="text-danger">*</span></label>
+                        Ghi chú</label>
                       </div>
                       <div class="col-lg-3">
-                        <textarea type="text" class="form-control" id="InputReceiver" placeholder="Nhập số kỳ lãi"></textarea>
+                        <textarea type="text" class="form-control" id="InputNote" placeholder="Nhập ghi chú"></textarea>
                       </div>
                   </div>
-                  {{!-- <div class="form-group row">
-                      <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
-                        style="color:#3f4047;padding-top: 0.6rem">
-                        <span class="text-danger">*</span></label>
+                  <div class="form-group row">
+                      <div class="col-lg-2 label-interest">
                       </div>
                       <div class="col-lg-3">
-                        <select class="form-control" id="type-revenue">
-                          <option value="0">Chọn giá trị</option>
-                          <option value="1">Lãi ngày</option>
-                        </select>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">
+                            <i class="fas fa-times">
+                            </i>
+                          Hủy</button>
+                        <button type="submit" class="btn btn-primary btn-sm" style="color: #fff;
+                            background-color: #5867dd;
+                            border-color: #5867dd;">
+                          <i class="fa fa-save">
+                          </i>
+                        Lưu lại </button>
+                    </div>
                       </div>
-                  </div> --}}
+                  </div>
                 </form>
               </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
-                      <i class="fas fa-times">
-                      </i>
-                      Hủy</button>
-                    <button type="submit" class="btn btn-danger btn-sm">
-                      <i class="fas fa-money-check-alt">
-                      </i>
-                    Chi tiền</button>
-                </div>
+                
               {{!-- </form>      --}}
           </div>
         </div>
@@ -344,7 +374,7 @@
                 <h3 class="card-title">Danh sách vay lãi</h3>
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
-                    <button type="button"  class="btn btn-primary btn-flat" data-toggle="modal" 
+                    <button type="button"  class="btn btn-info btn-flat" data-toggle="modal" 
                     data-target="#modal-default-revenue-expense"
                     style="font-size: .9rem"
                     >
@@ -389,20 +419,9 @@
                         </div>
                       </div>
                     </div>
-                    {{!-- <div class="col-md-3">
-                  <div class="form-group">
-                        <label>Loại</label>
-                        <select class="form-control" id="type-revenue">
-                          <option value="0">Tất cả các loại phiếu</option>
-                          {{#each listStatus}}
-                            <option value="{{this.type}}">{{this.name}}</option>
-                          {{/each}}
-                        </select>
-                      </div>
-                </div> --}}
                     <div class="col-md-2" style="text-align: center;">
                       <div class="form-group" style="margin-top: 35px">
-                        <button  type="submit" class="btn btn-info btn-sm" > <i class="fas fa-search"></i>Tìm kiếm</button>
+                        <button  type="submit" class="btn btn-primary btn-sm" > <i class="fas fa-search"></i>Tìm kiếm</button>
                       </div>
                     </div>
                   
