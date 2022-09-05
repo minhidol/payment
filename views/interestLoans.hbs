@@ -171,7 +171,7 @@
                       </div>
                       <div class="col-lg-3">
                         <input type="text" class="form-control" id="InputClient" placeholder="Nhập tên khách hàng">
-                        {{!-- <p style="color: red"><small ></small></p> --}}
+                        <p style="color: red;display:none"><small ></small></p>
                       </div>
                       <div class="col-lg-2 label-interest"><label for="exampleInputEmail1" 
                         style="text-align: right;color:#3f4047;padding-top: 0.6rem">
@@ -179,7 +179,7 @@
                       </div>
                       <div class="col-lg-3">
                         <input type="text" class="form-control" id="InputNumberPhone" placeholder="Nhập số điện thoại">
-                        {{!-- <p style="color: red"><small ></small></p> --}}
+                        <p style="color: red;display:none"><small ></small></p>
                       </div>
                   </div>
                   <div class="form-group row">
@@ -253,8 +253,8 @@
                           <span class="input-group-addon">
                             <i class="text-black">VNĐ</i>
                           </span>
-                          <p style="color: red"><small >Lỗi</small></p>
                         </div>
+                        <p style="color: red;display:none" ><small></small></p>
                       </div>
                   </div>
                   <div class="form-group row">
@@ -281,8 +281,8 @@
                           <span class="input-group-addon">
                             <i class="text-black-loan-time" id="strLoanTime">Ngày</i>
                           </span>
-                          <p style="color: red"><small ></small></p>
                         </div>
+                        <p style="color: red;display:none" ><small></small></p>
                       </div>
                   </div>
                   <div class="form-group row">
@@ -296,8 +296,8 @@
                           <span class="input-group-addon">
                             <i class="text-black-loan-time" id="strLoanTime">Ngày</i>
                           </span>
-                          <p style="color: red"><small ></small></p>
                         </div>
+                        <p style="color: red;display:none" ><small></small></p>
                       </div>
                       <div class="col-lg-3">
                         (VD : 10 ngày đóng lãi 1 lần thì điền số 10, tương tự với tuần tháng)
@@ -314,8 +314,9 @@
                         <span class="input-group-addon">
                           <i class="text-black" id="strLoanTimeMoney">k/1 Ngày</i>
                         </span>
-                        <p style="color: red"><small ></small></p>
+ 
                         </div>
+                        <p style="color: red;display:none" ><small></small></p>
                       </div>
                   </div>
                   <div class="form-group row">
@@ -479,15 +480,19 @@
                        </tr>
                   </thead>
                   <tbody id="body-revenue-expense">
-                    {{#each listExpense}}
+                    {{#each listLoans}}
                       <tr class="odd">
+                        <td>{{this.create_by}}
+                            {{this.number_phone}}
+                        </td>
+                        <td>{{this.collateral}}</td>
+                        <td>{{this.total}}
+                          {{this.interest}}{{this.currency_unit}}/{{this.time_unit}}
+                        </td>
                         <td>{{this.create_date}}</td>
-                        <td>{{this.receiver}}</td>
-                        <td>{{this.type}}</td>
-                        <td>{{this.note}}</td>
                         <td>{{this.total}}</td>
-                        <td>{{this.create_by}}</td>
-                        <td class="project-actions text-center" style="align-items: center;">
+                        <td>{{this.old_debt}}</td>
+                        {{!-- <td class="project-actions text-center" style="align-items: center;">
                           <a class="btn btn-primary btn-sm" href="#">
                               <i class="fas fa-folder">
                               </i>
@@ -498,7 +503,7 @@
                               </i>
                               Xóa
                           </a>
-                      </td>
+                      </td> --}}
                       </tr>
                   {{/each}}
                   </tbody>
@@ -507,7 +512,7 @@
                   <div class="col-sm-12 col-md-5">
                       <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"
                       style="padding-left: 20px;">
-                        Số khoảng chi: <span id="total-revenue-expense">{{total}}</span>
+                        Số khoản vay: <span id="total-revenue-expense">{{total}}</span>
                          <span id="total-pages" style="display: none;">{{totalPages}}</span>
                       </div>
                   </div>

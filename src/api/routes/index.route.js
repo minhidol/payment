@@ -9,6 +9,7 @@ const debtRoute = require('./debt.route');
 const statusExpenseRoute = require('./status_expense.route');
 const statusRevenueRoute = require('./status_revenue.route');
 const statusRoute = require('./status.route');
+const interestLoansRoute = require('./interest_loans.route');
 const router = express.Router()
 
 router.use('/account', userRoute);
@@ -21,4 +22,5 @@ router.use('/debt', debtRoute);
 router.use('/status-expense', statusExpenseRoute);
 router.use('/status-revenue', statusRevenueRoute);
 router.use('/status', statusRoute);
+router.use('/interest-loans', interestLoansRoute);
 module.exports = router;

@@ -256,11 +256,7 @@ import {
               <td>${item.total}</td>
               <td>${item.create_by}</td>
                   <td class="project-actions text-center" style="align-items: center;">
-              <a class="btn btn-primary btn-sm" href="#">
-                  <i class="fas fa-folder">
-                  </i>
-                  Chi tiết
-              </a>
+             
               <a class="btn btn-danger btn-sm" href="#">
                   <i class="fas fa-trash">
                   </i>
@@ -297,11 +293,7 @@ import {
               <td>${item.total}</td>
               <td>${item.create_by}</td>
               <td class="project-actions text-center" style="align-items: center;">
-              <a class="btn btn-primary btn-sm" href="#">
-                  <i class="fas fa-folder">
-                  </i>
-                  Chi tiết
-              </a>
+              
               <a class="btn btn-danger btn-sm" href="#">
                   <i class="fas fa-trash">
                   </i>
@@ -355,3 +347,6 @@ import {
     );
   }
   
+  $("td#remove-revenue a").click(function(e){     //function_td
+    console.log(e)
+  });

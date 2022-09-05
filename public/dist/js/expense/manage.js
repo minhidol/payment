@@ -217,7 +217,7 @@ $(document).on("click", "#PaginationGeneral li", async function () {
         perPage: 10,
       });
     } else {
-      var to_date = $('#reservation_to_date').find('input').val();
+    var to_date = $('#reservation_to_date').find('input').val();
     var from_date = $('#reservation_from_date').find('input').val();
       const typeSelect = $("#type-revenue option:selected").text();
       const valueSelected = $("#type-revenue option:selected").val();
@@ -256,11 +256,7 @@ async function setTablePagination(getListRevenueExpense) {
             <td>${item.total}</td>
             <td>${item.create_by}</td>
                 <td class="project-actions text-center" style="align-items: center;">
-            <a class="btn btn-primary btn-sm" href="#">
-                <i class="fas fa-folder">
-                </i>
-                Chi tiết
-            </a>
+           
             <a class="btn btn-danger btn-sm" href="#">
                 <i class="fas fa-trash">
                 </i>
@@ -297,11 +293,7 @@ async function setDateTotable(getListRevenueExpense) {
             <td>${item.total}</td>
             <td>${item.create_by}</td>
             <td class="project-actions text-center" style="align-items: center;">
-            <a class="btn btn-primary btn-sm" href="#">
-                <i class="fas fa-folder">
-                </i>
-                Chi tiết
-            </a>
+            
             <a class="btn btn-danger btn-sm" href="#">
                 <i class="fas fa-trash">
                 </i>

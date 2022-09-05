@@ -1,8 +1,8 @@
 import {
-    handleCreateRevenue,
-    handleGetListRevenue,
-    handleFilterRevenue,
-  } from "/dist/js/api/revenueApi.js";
+  handleCreateInterestLoans,
+  handleFilterInterestLoans ,
+  handleGetListInterestLoansByUsername
+  } from "/dist/js/api/interestLoansApi.js";
   const total = document.querySelector("#InputTotalTypeRevenueExpense");
   const formRevenueExpense = document.querySelector("#FormRevenueExpense");
   const formSearchRevenueExpense = document.querySelector(
@@ -19,6 +19,7 @@ const inputCmndDate= document.querySelector("#InputCmndDate");
 const inputCmndAddress= document.querySelector("#InputCmndAddress");
 const inputAddress= document.querySelector("#InputAddress");
 const selectAsset = document.querySelector("#type-asset");
+const inputNameAsset = document.querySelector('#InputNameAsset');
 const inputTotal = document.querySelector("#InputTotal");
 const selectFormProfit= document.querySelector("#form-of-profit");
 const inputProfitPeriod = document.querySelector("#InputProfitPeriod");
@@ -57,9 +58,7 @@ $("#form-of-profit").on('change', function(){
 })
 
 $('#InputTotal').keyup(function(event) {
-    // skip for arrow keys
     if(event.which >= 37 && event.which <= 40) return;
-    // format number
     $(this).val(function(index, value) {
       return value
       .replace(/\D/g, "")
@@ -72,17 +71,29 @@ $('#InputTotal').keyup(function(event) {
     return /^\d+$/.test(val);
   };
   const showError = (input, message) => {
-    const formField = input.parentElement;
-    input.classList.remove("success");
-    input.classList.add("error");
+    let formField;
+    if(input.id == 'InputTotal' || input.id == 'InputProfitTime' || input.id == 'InputProfitPeriod' 
+    ||input.id == 'InputInterest'){
+      formField = input.parentElement.parentElement;
+    }else{
+      formField = input.parentElement;
+    }
     const error = formField.querySelector("small");
+    const pError = formField.querySelector("p");
+    pError.style.display = "";
     error.textContent = message;
   };
   const showSuccess = (input) => {
-    const formField = input.parentElement;
-    input.classList.remove("error");
-    input.classList.add("success");
+    let formField;
+    if(input.id == 'InputTotal' || input.id == 'InputProfitTime' || input.id == 'InputProfitPeriod' 
+    ||input.id == 'InputInterest'){
+      formField = input.parentElement.parentElement;
+    }else{
+      formField = input.parentElement;
+    }
     const error = formField.querySelector("small");
+    const pError = formField.querySelector("p");
+    pError.style.display = "none";
     error.textContent = "";
   };
   const checkNameClient = () => {
@@ -101,7 +112,10 @@ $('#InputTotal').keyup(function(event) {
     const numberPhoneValid = inputNumberPhone.value.trim();
     if (!isRequired(numberPhoneValid)) {
       showError(inputNumberPhone, "Số điện thoại không được bỏ trống.");
-    } else {
+    }else if (!isNumber(numberPhoneValid)) {
+      showError(inputNumberPhone, "Số điện thoại không được chứa chữ.");
+    } 
+    else {
       showSuccess(inputNumberPhone);
       valid = true;
     }
@@ -123,6 +137,8 @@ $('#InputTotal').keyup(function(event) {
     const profitTimeValid = inputProfitTime.value.trim();
     if (!isRequired(profitTimeValid)) {
       showError(inputProfitTime, "Thời gian vay không được bỏ trống.");
+    } else if (!isNumber(profitTimeValid)) {
+      showError(inputProfitTime, "Thời gian vay không được chứa chữ.");
     } else {
       showSuccess(inputProfitTime);
       valid = true;
@@ -132,9 +148,11 @@ $('#InputTotal').keyup(function(event) {
   const checkProfitPeriod = () => {
     let valid = false;
     const profitPeriodValid = inputProfitPeriod.value.trim();
-    if (!isRequired(profitTimeValid)) {
+    if (!isRequired(profitPeriodValid)) {
       showError(inputProfitPeriod, "Kỳ lãi không được bỏ trống.");
-    } else {
+    } else if (!isNumber(profitPeriodValid)) {
+      showError(inputProfitPeriod, "Kỳ lãi không được chứa chữ.");
+    }else {
       showSuccess(inputProfitPeriod);
       valid = true;
     }
@@ -145,7 +163,9 @@ $('#InputTotal').keyup(function(event) {
     const interestValid = inputInterest.value.trim();
     if (!isRequired(interestValid)) {
       showError(inputInterest, "Lãi không được bỏ trống.");
-    } else {
+    } else if (!isNumber(interestValid)) {
+      showError(inputInterest, "Lãi không được chứa chữ.");
+    }else {
       showSuccess(inputInterest);
       valid = true;
     }
@@ -188,7 +208,13 @@ $('#InputTotal').keyup(function(event) {
       return;
     }
   });
-  
+const days = (date_1, date_2) => {
+  console.log({date_1, date_2})
+    let difference = date_1.getTime() - date_2.getTime();
+    console.log('different: ', difference)
+    let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+    return TotalDays;
+}
   if (formInterestLoans) {
     formInterestLoans.addEventListener("submit", async function (e) {
       try {
@@ -200,22 +226,70 @@ $('#InputTotal').keyup(function(event) {
           isProfitPeriod = checkProfitPeriod(),
           isCheckInterest = checkInterest();
 
-        let isFormValid = isNameValid && isValidNumberPhone && isCheckTotal && isCheckProfitTime && isProfitPeriod && isCheckInterest;
+        let isFormValid = isNameValid && isValidNumberPhone && isCheckTotal
+        && isCheckProfitTime && isProfitPeriod && isCheckInterest;
         if (isFormValid) {
-          alert('Done')
-          // const data = {
-          //   receiver: receiver.value,
-          //   type: $("#ChooseRevenue option:selected").text(),
-          //   total: total.value,
-          //   note: note.value,
-          // };
-          //  await handleCreateRevenue(data);
-          // const getListExpense = await handleGetListRevenue({
+          const profitForm = $("#form-of-profit option:selected").text();
+          const data = {
+            name: inputClient.value,
+            cmnd: inputCmnd.value,
+            cmnd_date: inputCmndDate.value,
+            cmnd_address: inputCmndAddress.value,
+            address: inputAddress.value,
+            number_phone: inputNumberPhone.value,
+            type_of_collateral: $("#type-asset option:selected").text(),
+            collateral: inputNameAsset.value,
+            profit_form: $("#form-of-profit option:selected").val(),
+            type_status_profit_form: 'interest_loans',
+            total: inputTotal.value,
+            status: '',
+            term_of_loan: inputProfitTime.value,
+            deadline_loans: inputProfitPeriod.value,
+            interest: inputInterest.value,
+            profit_form_string: profitForm,
+            status: 'Đang vay'
+          };
+          if(profitForm.includes('k/'))
+            data.currency_unit = 'k'
+          else 
+            data.currency_unit = '%'
+          if(profitForm.includes('tháng')){
+            data.time_unit = 'tháng';
+            var date = new Date();
+            var newDate = new Date(date.setMonth(date.getMonth()+8));
+            var dateNow = new Date();
+            data.number_of_days_loans = days(newDate, dateNow);
+            const period = parseInt(inputProfitTime.value/inputProfitPeriod.value);
+            const surplus = inputProfitTime.value%inputProfitPeriod.value;
+            const length = surplus + period;
+            const periodLoansArray = [];
+            let from_date = inputReservationInterest.find('input').val();
+            let to_date = new Date(from_date.setMonth(from_date.getMonth() + inputProfitPeriod.value));
+            console.log({from_date, to_date})
+            // for(let i = 1; i <= length; i++){
+            //   if(i == period){
+
+            //   }
+              
+            // }
+          }
+          else if(profitForm.includes('ngày')){
+            data.time_unit = 'ngày';
+            data.number_of_days_loans = inputProfitTime.value;
+          }            
+          else{
+            data.time_unit = 'tuần';
+            data.number_of_days_loans = inputProfitTime.value*7;
+          }
+            
+          //console.log('data: ', data)
+          // await handleCreateInterestLoans(data);
+          // const getListLoans = await handleGetListInterestLoansByUsername({
           //     page: 1,
           //     perPage: 10
           // });
-          // console.log('list: ', getListExpense)
-          // setDateTotable(getListExpense);
+          // console.log('list: ', getListLoans)
+          // setDateTotable(getListLoans);
           // $("#modal-default-revenue-expense").modal('hide');
           // var typePagination = document.getElementById('type-pagination');
           // typePagination.innerHTML = 1;
@@ -297,7 +371,7 @@ $('#InputTotal').keyup(function(event) {
         });
       } else {
         var to_date = $('#reservation_to_date').find('input').val();
-      var from_date = $('#reservation_from_date').find('input').val();
+        var from_date = $('#reservation_from_date').find('input').val();
         const typeSelect = $("#type-revenue option:selected").text();
         const valueSelected = $("#type-revenue option:selected").val();
         const query = {
