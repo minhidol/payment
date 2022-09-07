@@ -46,6 +46,8 @@ const handleUpdateInterestPayment = async(req, res) => {
         const query = {...req.body};
         query.username = req.jwtDecode.username;
         const listInterestLoans = await interestLoansService.updateInterestPayment(query);
+        if(listInterestLoans.error == 1)
+            return res.json(rsError(201, listInterestLoans.message))
         return res.json(rsSuccess(listInterestLoans));
     }catch(error){
         console.log('error: ', error);

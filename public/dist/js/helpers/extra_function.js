@@ -13,7 +13,6 @@ const stringToDateTime = (x) => {
 }
 
 const compareTwoDate = (x, y) => {
-    console.log({x,y})
     const date1 = stringToDate(x);
     const date2 = stringToDate(y);
     if(date1 < date2)

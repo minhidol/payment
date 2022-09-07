@@ -43,26 +43,42 @@ const getInterestLoansByIdUsername = async(query) => {
 
 const updateInterestPayment = async(data) => {
     try{
-        let check = 0;
-        const loans = await interestLoansModel.findOne({
+        let loans = await interestLoansModel.findOne({
             _id: data.id,
             create_by: data.username,
             is_delete: constants.NOT_DELETED,
         }).lean();
         const listPayment = loans.list_history_payment_interest;
         let totalPaid = parseInt(loans.the_amount_paid.replaceAll('.',''));
-        listPayment.forEach(item => {
-            if(item.fromDate == data.fromDate && item.toDate == data.toDate){
-                if(item.is_paid_interest == 1){
-                    totalPaid -= parseInt(item.money_interest.replaceAll('.',''));
-                    check = 0;
+        let checkError = '';
+        for(let i = 0; i < listPayment.length; i++){
+            if(listPayment[i].fromDate == data.fromDate && listPayment[i].toDate == data.toDate){
+                if(listPayment[i].is_paid_interest == 1){
+                    if(i == listPayment.length-1){
+                        totalPaid -= parseInt(listPayment[i].money_interest.replaceAll('.',''));
+                        listPayment[i].is_paid_interest = 0;
+                        break;
+                    }
+                    if(listPayment[i+1].is_paid_interest == 1){
+                        checkError = 'Bạn phải xóa đóng lãi sau';
+                        break;
+                    }
+                    totalPaid -= parseInt(listPayment[i].money_interest.replaceAll('.',''));
+                    listPayment[i].is_paid_interest = 0;
                 }else{
-                    totalPaid += parseInt(item.money_interest.replaceAll('.',''));
-                    check = 1;
+                    for(let j = 0; j <= i; j++){
+                        if(listPayment[j].is_paid_interest == 0){
+                            totalPaid += parseInt(listPayment[i].money_interest.replaceAll('.',''));
+                            listPayment[j].is_paid_interest = 1;
+                        }
+                    }
                 }
-
             }
-        })
+        }
+        console.log({checkError,listPayment});
+        if(checkError != ''){
+            return {error: 1, message: checkError};
+        }
         const interestLoans = await interestLoansModel.findOneAndUpdate({
             _id: data.id,
             create_by: data.username,
@@ -72,12 +88,9 @@ const updateInterestPayment = async(data) => {
         }
         ,{
             the_amount_paid: numberWithCommas(totalPaid),
-            '$set': {
-                'list_history_payment_interest.$.is_paid_interest': check,
-            }
-        }
-        );
-          
+            list_history_payment_interest: listPayment
+        }, {new: true}).lean();
+        interestLoans.error = 0;
         return interestLoans;
     }catch(error){
         throw error;
@@ -113,7 +126,6 @@ const updatePayOffDebt = async(data) => {
         }
         let totalRest = total - parseInt(data.moneyPay.replaceAll('.',''));
         console.log('total rest: ', {totalRest, currentUnit, rateInterest});
-        let resultUpdate;
         let arr_list_payment = [];
         if(currentUnit == '%'){
             let moneyInterestMonth =  parseInt(totalRest*rateInterest/100);

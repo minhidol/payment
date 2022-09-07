@@ -698,25 +698,28 @@ function numberWithCommas(x) {
   async function setDateTotable(listLoans) {
     $("#body-revenue-expense").find("tr").remove();
     const data = listLoans.Result.data;
-    let theLastPeriodPayment;
     for(let i = 0; i < data.length; i++){
       let totalProfitToDate = 0;
-      let dateProfitToDate = 0;
+      let   dateProfitToDate = 0;
       const listHistoryPaymentInterest = data[i].list_history_payment_interest;
       let count = 0;
+      let checkDone = 0;
       for(let j = listHistoryPaymentInterest.length - 1; j >= 0; j--){
         if(listHistoryPaymentInterest[j].is_paid_interest == 0){
+          checkDone++;
           const dateNow = formatDate(new Date());
-          console.log(listHistoryPaymentInterest[j])
           if(compareTwoDate(dateNow, listHistoryPaymentInterest[j].toDate)){
-            data.StatusInterest = 'Đang vay'
+            data[i].StatusInterest = 'Đang vay'
           }else{
-            data.StatusInterest = 'Quá hạn'
+            data[i].StatusInterest = 'Quá hạn'
           }
           if(compareTwoDateEqual(dateNow, listHistoryPaymentInterest[j].toDate)){
-            data.StatusInterest = 'Hôm nay đóng lãi'
+            data[i].StatusInterest = 'Hôm nay đóng lãi'
           }
+        }
       }
+      if(checkDone == 0){
+        data[i].StatusInterest = 'Đã hoàn thành'
       }
       for(let j = 0; j < listHistoryPaymentInterest.length; j++){
         const nowDate = new Date().getTime();
@@ -727,35 +730,52 @@ function numberWithCommas(x) {
         var check = nowDate >= fromDate && nowDate <= toDate;
         let numberConvert = parseFloat(listHistoryPaymentInterest[j].money_interest.replaceAll('.',''));
         count++;
-        if(listHistoryPaymentInterest[j].is_paid_interest == 0){
-          totalProfitToDate += parseInt(numberConvert);
-          dateProfitToDate += listHistoryPaymentInterest[j].number_of_days_loans;
-        }
-        if(count == 1 && check){
-          dateProfitToDate = days(new Date(nowDate), new Date(fromDate));
-          totalProfitToDate = parseInt(parseFloat(numberConvert/listHistoryPaymentInterest[j].number_of_days_loans).toFixed(3)*dateProfitToDate);
-          console.log({dateProfitToDate, totalProfitToDate, dateProfitToDate});
-          data[i].date_profit_to_date = dateProfitToDate;
-          data[i].total_profit_to_date = numberWithCommas(totalProfitToDate);
-          break;
-        }
-        else if(check && listHistoryPaymentInterest[j].is_paid_interest == 0){
-          const numberDay = days(new Date(nowDate), new Date(fromDate));
-          dateProfitToDate += numberDay;
-          totalProfitToDate += parseInt(parseFloat(numberConvert/listHistoryPaymentInterest[j].number_of_days_loans).toFixed(3)*dateProfitToDate);
-          data[i].date_profit_to_date = dateProfitToDate;
-          data[i].total_profit_to_date = numberWithCommas(totalProfitToDate);
-          break;
-        }else if(check && listHistoryPaymentInterest[j].is_paid_interest == 1){
-          data[i].status = 'Đang vay';
-          break;
-        }
+        // if(listHistoryPaymentInterest[j].is_paid_interest == 0){
+        //   totalProfitToDate += parseInt(numberConvert);
+        //   dateProfitToDate += listHistoryPaymentInterest[j].number_of_days_loans;
+        // }
+        // if(count == 1 && check){
+        //   dateProfitToDate = days(new Date(nowDate), new Date(fromDate));
+        //   totalProfitToDate = parseInt(parseFloat(numberConvert/listHistoryPaymentInterest[j].number_of_days_loans).toFixed(3)*dateProfitToDate);
+        //   data[i].date_profit_to_date = dateProfitToDate;
+        //   data[i].total_profit_to_date = numberWithCommas(totalProfitToDate);
+        //   break;
+        // }
+        // else 
+
+        if(check){
+          if(listHistoryPaymentInterest[j].is_paid_interest == 0){
+            for(let k = 0; k < j; k++){
+              if(listHistoryPaymentInterest[k].is_paid_interest == 0){
+                dateProfitToDate += listHistoryPaymentInterest[k].number_of_days_loans;
+              }
+            }
+            const numberDay = days(new Date(nowDate), new Date(fromDate));
+            dateProfitToDate += numberDay;
+            totalProfitToDate += parseInt(parseFloat(numberConvert/listHistoryPaymentInterest[j].number_of_days_loans).toFixed(3)*dateProfitToDate);
+            data[i].date_profit_to_date = dateProfitToDate;
+            data[i].total_profit_to_date = numberWithCommas(totalProfitToDate);
+            break;
+          }else{
+            data[i].date_profit_to_date = 0;
+            data[i].total_profit_to_date = 0;
+          }
       }
+        // else if(check && listHistoryPaymentInterest[j].is_paid_interest == 1){
+        //   data[i].status = 'Đang vay';
+        //   break;
+        // }
+      }
+      let isDone = 0;
       for(let j = 0; j < listHistoryPaymentInterest.length; j++){
         if(listHistoryPaymentInterest[j].is_paid_interest == 0){
           data[i].interest_payment_date = listHistoryPaymentInterest[j].toDate;
+          isDone++;
           break;
         }
+      }
+      if(isDone == 0){
+        data[i].interest_payment_date = 'Đã đóng xong lãi'
       }
     } 
     const totalPages = listLoans.Result.pages;
@@ -790,8 +810,8 @@ function numberWithCommas(x) {
                 </span>
               </td>
               <td>${item.interest_payment_date}</td>
-              `+( data.StatusInterest == 'Đang vay' ?`<td style="color: #36a3f7">${item.status}</td>` : 
-              `<td style="color: #36a3f7">${item.status}</td>`)
+              `+( data.StatusInterest == 'Đang vay' ?`<td style="color: #36a3f7">${item.StatusInterest}</td>` : 
+              `<td style="color: #36a3f7">${item.StatusInterest}</td>`)
               +`
               
               <td class="project-actions text-center" style="align-items: center;">
@@ -898,7 +918,7 @@ $(document).on("click", "table#table-revenue-expense td button#pay-interest", as
     <td align="center" class="align-middle">
       ${item.toDate}
     </td>       
-    <td align="center" class="align-middle">${item.toDate}</td>
+    <td align="center" class="align-middle">${item.number_of_days_loans}</td>
     <td align="right" class="align-middle">${item.money_interest} VNĐ</td>
     <td align="right" class="align-middle">0 VNĐ</td>
     <td align="right" class="align-middle">${item.money_interest} VNĐ</td>
@@ -927,20 +947,62 @@ $(document).on("click", "tbody#table-profits td input#input-check-interest", asy
   var fromDate =  e.currentTarget.getAttribute('from_date');
   var toDate =  e.currentTarget.getAttribute('to_date');
   var _id =  e.currentTarget.getAttribute('id_interest');
-  var moneyPaid =  e.currentTarget.getAttribute('money_paid');
-  var tempMoney = $("#lblPaymentMoney").text();
-  let totalMoney = 0;
- 
-  if($(this).is(":checked")) {
-    totalMoney = parseInt(moneyPaid.replaceAll('.','')) + parseInt(tempMoney.replaceAll('.',''));
-  }else{
-    totalMoney = parseInt(tempMoney.replaceAll('.','')) - parseInt(moneyPaid.replaceAll('.',''));
-  }
-  $("#lblPaymentMoney").html(numberWithCommas(totalMoney));
   const updateInterest = await handleUpdateInterest({
     fromDate: fromDate,
     toDate: toDate,
     id: _id,
   })
-  console.log({updateInterest});
+  const errorCode = updateInterest.ErrorCode;
+  if(errorCode != 0){
+    alert(updateInterest.Message);
+    $(this).prop('checked', true);
+    return;
+  }
+  const result = updateInterest.Result;
+  const listInterest = result.list_history_payment_interest;
+  let sumInterest = 0;
+  for(let i = 0; i < listInterest.length; i++){
+    sumInterest += parseInt(listInterest[i].money_interest.replaceAll('.',''));
+  }
+  //console.log({rate: data.interest+data.currency_unit+' /' + time_unit});
+  $('i#i-id-interest-loans').html(_id);
+  $("#lblPaymentMoney").html(result.the_amount_paid);
+  $("#table-profits").find("tr").remove();
+  
+  let htmlCol = "";
+  let count = 0;
+  listInterest.forEach((item) => { 
+    count++;
+    htmlCol += `
+    <tr>
+    <td align="center" class="align-middle">${count}</td>
+    <td align="center" class="align-middle">${item.fromDate}</td>
+    <td align="center" class="align-middle">
+      <i class="fa fa-arrow-right"></i></td>
+    <td align="center" class="align-middle">
+      ${item.toDate}
+    </td>       
+    <td align="center" class="align-middle">${item.toDate}</td>
+    <td align="right" class="align-middle">${item.money_interest} VNĐ</td>
+    <td align="right" class="align-middle">0 VNĐ</td>
+    <td align="right" class="align-middle">${item.money_interest} VNĐ</td>
+    <td align="right" class="align-middle">
+      <input type="text" style="text-align:right;color:Red;font-size:14px" 
+      class="form-control form-control-sm m-input m-input--pill " id="txtPaymoney_89197732" 
+      value="${item.money_interest}" disabled>
+    </td>                                                           
+    <td align="center" class="align-middle">
+      <label class="m-checkbox m-checkbox--bold m-checkbox--state-success">  
+        <input type="checkbox" title="Bỏ tích để hủy đóng lãi" id="input-check-interest" 
+        class="ckClickPayment" from_date=${item.fromDate} to_date=${item.toDate}
+        id_interest=${_id}`+
+        (item.is_paid_interest == 1 ? ' checked' : ' ')+`
+        money_paid="${item.money_interest}"> 
+          <span style="margin-top:-6px"></span>
+      </label>
+    </td>
+  </tr> `;
+    });
+    var tableProfits = document.getElementById("table-profits");
+    tableProfits.innerHTML = htmlCol;
 })

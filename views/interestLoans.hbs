@@ -228,14 +228,14 @@
                                               <i class="fas fa-money-check-alt"></i> <span id="lblTitleTraBotGoc">Trả bớt gốc</span>
                                             </a>
                                             </li>
-                                            <li class="nav-item m-tabs__item m-nav" id="item_vaythemtien">
-                                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tab_vaythemtien">
+                                            <li class="nav-item m-tabs__item m-nav" id="item_vaythemtien" disabled>
+                                                <a class="nav-link m-tabs__link disabled" data-toggle="tab" href="#m_tab_vaythemtien" disabled>
                                                   <i class="fas fa-money-check-alt"></i> Vay thêm
                                                 </a>
                                             </li>
                                             <li class="nav-item m-tabs__item m-nav" id="item_chuocdo">
                                               <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tab_giahan">
-                                                        <i class="fas fa-money-check-alt"></i> Gia hạn
+                                                        <i class="fas fa-money-check-alt disabled"></i> Gia hạn
                                                </a>
                                             </li>
                                             {{!-- <li class="nav-item m-tabs__item m-nav" id="item_chuocdo">
@@ -414,7 +414,82 @@
                             <div class="table-responsive" id="tbl_Tragoc_listHistoryLoanExtra">
                             </div>
                         </div>
+
+<div class="tab-pane" id="m_tab_vaythemtien">
+                          <form id="pay_up_the_principal">
+                              <div class="">
+                                  <div class="form-group m-form__group row">
+                                      <label for="example-text-input" 
+                                      class="col-lg-4 col-sm-12 col-12 col-form-label font-weight-bold">
+                                          Ngày vay thêm gốc <span class="text-danger">*</span>
+                                      </label>
+                                      <div class="col-lg-3">
+                                          <div class="input-group date" id="reservation_extra_loan_day" data-target-input="nearest">
+                                          <input type="text" class="form-control datetimepicker-input" data-target="#reservation_extra_loan_day">
+                                          <div class="input-group-append" data-target="#reservation_extra_loan_day" data-toggle="datetimepicker">
+                                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                          </div>
+                                        </div>
+                                        
+                                      </div>
+                                       
+                                  </div>
+                                  <div class="form-group m-form__group row">
+                                      <label for="example-text-input" class="col-lg-4 col-sm-12 col-12 col-form-label font-weight-bold">
+                                          Số tiền vay thêm <span class="text-danger">*</span>
+                                      </label>
+                                      <div class="col-lg-3">
+                                          <div class="m-input-icon m-input-icon--right">
+                                              <div class="input-group m-input-group">
+                                                  <input type="text" class="form-control m-input " 
+                                                  id="txtVaythem_TotalMoney" name="txtVaythem_TotalMoney" 
+                                                  value="0" data-toggle="tooltip" data-placement="top" 
+                                                  data-original-title="Không đồng">
+                                                  <span class="input-group-addon">
+                                                      <i class="text-black">VNĐ</i>
+                                                  </span>
+                                              </div>
+                                              <p style="color: red;display:none"  id="error-date-tragoc"><small></small></p>
+                                          </div>
+                                         
+                                      </div>
+                                  </div>
+                                  <div class="form-group m-form__group row">
+                                      <label for="example-text-input" class="col-lg-4 col-sm-12 col-12 col-form-label font-weight-bold">
+                                          Ghi chú
+                                      </label>
+                                      <div class="col-lg-6">
+                                          <textarea class="form-control m-input " id="txtVaythem_Note" rows="3"></textarea>
+                                      </div>
+                                  </div>
+                                  <div class="form-group m-form__group row">
+                                      <label for="example-text-input" class="col-lg-4 col-sm-12 col-12 col-form-label font-weight-bold">
+                                      </label>
+                                      <div class="col-lg-4">
+                                          <button type="submit" id="BtnTragoc" class="btn btn-sm btn-primary m-btn--air">
+                                              <i class="fa fa-thumbs-up"></i>
+                                              Đồng ý
+                                          </button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </form>
+                        <h6>
+                            <i class="m-portlet__head-text">
+                                <i class="fa fa-align-justify"></i> Danh sách tiền gốc
+                            </i>
+                        </h6>
+                            <div class="d-md-none m--margin-bottom-10"></div>
+                            <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
+                            <div class="table-responsive" id="tbl_Tragoc_listHistoryLoanExtra">
+                            </div>
+                        </div>
+
                       </div>
+                      
+                      
+                      </div>
+
                 </div>
               </div>
             </div>
