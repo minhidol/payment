@@ -23,7 +23,7 @@ const bearerToken = require('express-bearer-token');
 
 
 var app = express();
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 8003;
 
 // view engine setup
 app.use(bearerToken());
