@@ -12,7 +12,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" 
         data-accordion="false" style="color: #b7c0cd; font-size: 15px; font-weight: 100px">
           <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="/home" class="nav-link">
                 <i class="fa fa-home"></i>
                 <p>
                   Trang chủ
@@ -81,9 +81,6 @@
       <!-- /.sidebar-menu -->
     </div>
  </aside>
-
-
-
      <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -126,6 +123,304 @@
     <!-- Main content -->
     <section class="content" >
       <div class="container-fluid">
+        <div class="modal fade" id="modal-details_pawn" style="overflow-x: hidden;
+    overflow-y: auto;">
+    <div class="modal-dialog" style="width: 90%;max-width:1200px;margin: 30px auto;position: relative">
+        <div class="modal-content"
+            style="box-shadow: 0px 0px 15px 1px rgb(69 65 78 / 20%;
+                border: 0;
+                border-radius: 4px;position: relative;
+                display: flex;
+                flex-direction: column;
+                pointer-events: auto;
+                background-color: #fff;
+                background-clip: padding-box;
+                outline: 0;
+            "
+          >
+           <div class="modal-header" 
+            style="padding: 12px;
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                border-bottom: 1px solid #e9ecef;
+                border-top-left-radius: 0.3rem;
+                border-top-right-radius: 0.3rem;">
+              <h4 class="modal-title" style="color: #3f4047;font-weight: 400 !important;
+                font-size: 1.1rem;margin-bottom: 0;
+                  line-height: 1.5;">Chi tiết khoản vay</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" style="color: #3f4047">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style="padding: 25px;position: relative;flex: 1 1 auto;">
+              <div class="m-form m-form--fit m-form--label-align-right">
+                <div class="m-portlet__body">
+                  <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-hover table-bordered">
+                            <tbody>
+                                <tr id="trCusName">
+                                    <td colspan="3">
+                                        <span class="text-danger font-weight-bold" id="lblCusName">aaaa</span> 
+                                        <span id="lblCusPhone"> - <i class="fa fa-phone" style="font-size:10px"></i>
+                                        <small> <i id='telephone-customer'></i></i></small></span>
+                                        <span id="lblCusAddress"></span>
+                                        <i id='i-id-interest-loans' style="display: none;"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                      style="border: 1px solid #f4f5f8;"
+                                    ><span class="font-weight-bold" id="lblTienVay">Tiền vay</span></td>
+                                    <td colspan="2" align="right"><span id="lblTotalMoney">123,123</span> VNĐ</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="font-weight-bold">Lãi suất</span></td>
+                                    <td colspan="2" align="right"><span id="lblStrRate">12k /ngày</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="font-weight-bold">Vay từ ngày</span></td>
+                                    <td align="right"><span id="lblFromDate">05/09/2022</span> </td>
+                                    <td align="right"><span id="lblToDate">16/09/2022</span></td>
+                                </tr>
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-hover table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td><span class="font-weight-bold">Tổng lãi</span></td>
+                                    <td colspan="2" align="right"><span id="lblTotalInterest">144,000</span> VNĐ</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="font-weight-bold">Đã thanh toán</span></td>
+                                    <td colspan="2" align="right">
+                                        <span id="lblPaymentMoney">0</span> VNĐ
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="font-weight-bold" id="lblDisplayDebitOrOverMoney">Nợ cũ KH: </span><span class="text-danger font-weight-bold" id="lblCustomerDebitMoney"><span class="text-danger font-weight-bold">0 VNĐ</span></span></td>
+                                    <td align="right"><span class="font-weight-bold" id="lblDisplayLoanDebit">Nợ cũ HĐ: </span> <span class="text-danger font-weight-bold" id="lblLoanDebitMoney"><span class="text-danger font-weight-bold">0 VNĐ</span></span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="font-weight-bold">Trạng thái</span></td>
+                                    <td colspan="2" align="right" class=""><span id="lblStatus"><span class="m-badge m-badge--info m-badge--wide" style="font-size:12px">Đang vay</span></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="m-portlet__head">
+                            <div class="m-portlet__head-tools">
+                              <ul class="nav nav-tabs  m-tabs-line m-tabs-line--primary m-tabs-line--2x" id="tabs" role="tablist">
+                                  <li class="nav-item m-tabs__item" id="item_donglai">
+                                      <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tab_donglai" id="dong_tien_lai">
+                                          <i class="fas fa-money-check-alt"></i>  <span id="lblTitleTabDongLai">Đóng tiền lãi</span>
+                                      </a>
+                                  </li>
+                                          <li class="nav-item m-tabs__item" id="item_trabotgoc">
+                                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tab_trabotgoc">
+                                              <i class="fas fa-money-check-alt"></i> <span id="lblTitleTraBotGoc">Trả bớt gốc</span>
+                                            </a>
+                                            </li>
+                                            <li class="nav-item m-tabs__item m-nav" id="item_vaythemtien">
+                                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tab_vaythemtien">
+                                                  <i class="fas fa-money-check-alt"></i> Vay thêm
+                                                </a>
+                                            </li>
+                                            <li class="nav-item m-tabs__item m-nav" id="item_chuocdo">
+                                              <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tab_giahan">
+                                                        <i class="fas fa-money-check-alt"></i> Gia hạn
+                                               </a>
+                                            </li>
+                                            {{!-- <li class="nav-item m-tabs__item m-nav" id="item_chuocdo">
+                                              <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tab_chuocdo">
+                                                        <i class="fa fa-money"></i><span id="lblTitleDongHD">Đóng HĐ</span>
+                                              </a>
+                                            </li>
+                                            <li class="nav-item m-tabs__item m-nav" id="item_no">
+                                              <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tab_no">
+                                                <i class="la la-tags"></i>Nợ
+                                              </a>
+                                            </li>
+                                            <li class="nav-item m-tabs__item m-nav" id="item_upload">
+                                              <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tab_upload">
+                                                <i class="la la-photo"></i>Chứng từ
+                                              </a>
+                                            </li>
+                                            <li class="nav-item m-tabs__item m-nav" id="item_lichsu">
+                                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tab_lichsu">
+                                                    <i class="la la-commenting"></i>Lịch sử
+                                                </a>
+                                            </li>
+                                                <li class="nav-item m-tabs__item m-nav" id="item_lichsutracham">
+                                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tab_lichsutracham">
+                                                        <i class="la la-commenting"></i>Lịch sử trả chậm
+                                                  </a>
+                                            </li>
+                                            <li class="nav-item m-tabs__item m-nav" id="item_hengio">
+                                              <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tab_hengio">
+                                                <i class="la la-clock-o"></i>Hẹn giờ
+                                              </a>
+                                            </li> --}}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                      <div class="tab-content" style="margin-top: 20px;">
+                        <div class="tab-pane active" id="m_tab_donglai">
+                          <div id="div_donglai">
+                            <br>
+                            <h6>
+                                <i class="m-portlet__head-text">
+                                    <i class="fa fa-align-justify"></i> Lịch sử đóng tiền lãi
+                                </i>
+                            </h6>
+                            <div class="d-md-none m--margin-bottom-10"></div>
+                            <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
+                            <div class="col-sm-12" id="errorIos_Note" style="display:none">
+                              <span class="m--font-danger" style="font-size:11px">
+                                  * Lưu ý : Đối với điện thoại IOS, vui lòng vuốt 2 bên lịch thanh toán để có thể kéo lên xuống xem dữ liệu.<br>
+                                  Click vào giữa bảng kéo sang ngang để xem đủ thông tin
+                              </span>
+                            </div>
+                            <div class="table-responsive" id="tbl_DongLai_listHistoryPayment">
+                              <table class="table table-bordered m-table  m-table--head-bg-gray table-hover" 
+                              
+                              >
+                                <thead style="background-color: #f2f0f7">
+                                  <tr>
+                                    <th width="50px" class="text-center"> STT</th>
+                                    <th colspan="3" class="text-center">Ngày</th>
+                                    <th class="text-center">Số ngày</th>
+                                    <th class="text-center">Tiền lãi</th>
+                                    <th class="text-center">Tiền khác</th>
+                                    <th class="text-center">Tổng lãi</th>
+                                    <th class="text-center" style="padding:0px 50px 10px 50px;">Tiền khách trả</th>
+                                    {{!-- <th class="text-center">In</th> --}}
+                                    <th class="text-center" >Đóng lãi</th>
+                                    {{!-- <th class="text-center">Ghi chú</th> --}}
+                                  </tr>                             
+                                </thead>
+                                <tbody id="table-profits">
+                                  <tr>
+                                      <td align="center" class="align-middle">1</td>
+                                      <td align="center" class="align-middle">30/08/2022</td>
+                                      <td align="center" class="align-middle">
+                                        <i class="fa fa-arrow-right"></i></td>
+                                      <td align="center" class="align-middle">
+                                        12/09/2022
+                                      </td>       
+                                      <td align="center" class="align-middle">14</td>
+                                      <td align="right" class="align-middle">5,200,000 VNĐ</td>
+                                      <td align="right" class="align-middle">0 VNĐ</td>
+                                      <td align="right" class="align-middle">5,200,000 VNĐ</td>
+                                      <td align="right" class="align-middle">
+                                      <input type="text" style="text-align:right;color:Red;font-size:14px" 
+                                      class="form-control form-control-sm m-input m-input--pill " id="txtPaymoney_89197732" 
+                                      value="5,200,000">
+                                      </td>                                                           
+                                      <td align="center" class="align-middle">
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-success">  
+                                          <input type="checkbox" title="Bỏ tích để hủy đóng lãi" id="ck_89197732" 
+                                          class="ckClickPayment" onclick="FastPayment(1,89197732,2347250,'30/08/2022','12/09/2022','')"> 
+                                            <span style="margin-top:-6px"></span>
+                                        </label>
+                                      </td>
+                                      {{!-- <td align="center" class="align-middle">
+                                          <a id="btnNoteShow_89197732" class="btn btn-secondary btn-sm" title="Ghi chú" 
+                                          onclick="loadDataComment(89197732)">
+                                            <i class="fa fa-pencil"></i>
+                                          </a>
+                                      </td> --}}
+                                    </tr> 
+                                    
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="tab-pane" id="m_tab_trabotgoc">
+                          <form id="pay_down_the_principal">
+                              <div class="">
+                                  <div class="form-group m-form__group row">
+                                      <label for="example-text-input" 
+                                      class="col-lg-4 col-sm-12 col-12 col-form-label font-weight-bold">
+                                          Ngày trả trước gốc <span class="text-danger">*</span>
+                                      </label>
+                                      <div class="col-lg-3">
+                                          <div class="input-group date" id="reservation_interest_payment" data-target-input="nearest">
+                                          <input type="text" class="form-control datetimepicker-input" data-target="#reservation_interest_payment">
+                                          <div class="input-group-append" data-target="#reservation_interest_payment" data-toggle="datetimepicker">
+                                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                          </div>
+                                        </div>
+                                        
+                                      </div>
+                                       
+                                  </div>
+                                  <div class="form-group m-form__group row">
+                                      <label for="example-text-input" class="col-lg-4 col-sm-12 col-12 col-form-label font-weight-bold">
+                                          Số tiền gốc trả trước <span class="text-danger">*</span>
+                                      </label>
+                                      <div class="col-lg-3">
+                                          <div class="m-input-icon m-input-icon--right">
+                                              <div class="input-group m-input-group">
+                                                  <input type="text" class="form-control m-input  "
+                                                   id="txtTragoc_TotalMoney" name="txtTragoc_TotalMoney" value="" 
+                                                   data-toggle="tooltip" data-placement="top" data-original-title="Không đồng">
+                                                  <span class="input-group-addon">
+                                                      <i class="text-black">VNĐ</i>
+                                                  </span>
+                                              </div>
+                                              <p style="color: red;display:none"  id="error-date-tragoc"><small></small></p>
+                                          </div>
+                                         
+                                      </div>
+                                  </div>
+                                  <div class="form-group m-form__group row">
+                                      <label for="example-text-input" class="col-lg-4 col-sm-12 col-12 col-form-label font-weight-bold">
+                                          Ghi chú
+                                      </label>
+                                      <div class="col-lg-6">
+                                          <textarea class="form-control m-input " id="txtTragoc_Note" rows="3"></textarea>
+                                      </div>
+                                  </div>
+                                  <div class="form-group m-form__group row">
+                                      <label for="example-text-input" class="col-lg-4 col-sm-12 col-12 col-form-label font-weight-bold">
+                                      </label>
+                                      <div class="col-lg-4">
+                                          <button type="submit" id="BtnTragoc" class="btn btn-sm btn-primary m-btn--air">
+                                              <i class="fa fa-thumbs-up"></i>
+                                              Đồng ý
+                                          </button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </form>
+                        <h6>
+                            <i class="m-portlet__head-text">
+                                <i class="fa fa-align-justify"></i> Danh sách tiền gốc
+                            </i>
+                        </h6>
+                            <div class="d-md-none m--margin-bottom-10"></div>
+                            <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
+                            <div class="table-responsive" id="tbl_Tragoc_listHistoryLoanExtra">
+                            </div>
+                        </div>
+                      </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
         <div class="modal fade" id="modal-default-revenue-expense">
         <div class="modal-dialog" style="width: 90%;max-width:1200px;margin: 30px auto;position: relative">
           <div class="modal-content"
@@ -155,6 +450,7 @@
                 <span aria-hidden="true" style="color: #3f4047">&times;</span>
               </button>
             </div>
+            
              {{!-- <form id="FormRevenueExpense" style="font-sỉze: 15px"> --}}
               <div class="modal-body" style="padding: 25px;position: relative;flex: 1 1 auto;">
                 <form id="FormInterestLoans" style="font-sỉze: 15px">
@@ -362,8 +658,6 @@
                   </div>
                 </form>
               </div>
-                
-              {{!-- </form>      --}}
           </div>
         </div>
       </div>
@@ -397,14 +691,6 @@
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                           </div>
                         </div>
-                        {{!-- <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="far fa-calendar-alt"></i>
-                            </span>
-                          </div>
-                          <input type="text" class="form-control float-right" id="reservation">
-                        </div> --}}
                       </div>
                     </div>
                     <div class="col-md-2">
@@ -483,27 +769,27 @@
                     {{#each listLoans}}
                       <tr class="odd">
                         <td>{{this.create_by}}
-                            {{this.number_phone}}
+                          <span style="display: inline-block;">
+                            <i class="fas fa-phone">
+                            </i>
+                              {{this.number_phone}}
+                          </span>
                         </td>
                         <td>{{this.collateral}}</td>
                         <td>{{this.total}}
-                          {{this.interest}}{{this.currency_unit}}/{{this.time_unit}}
+                          <span style="display: inline-block;font-size: 14px;color: brown;">
+                            {{this.interest}}{{this.currency_unit}} /{{this.time_unit}}
+                          </span>
                         </td>
-                        <td>{{this.create_date}}</td>
-                        <td>{{this.total}}</td>
+                        <td>{{this.create_date}}
+                          <span style="display: inline-block;font-size: 14px;color: #909090;">
+                            ({{this.number_of_days_loans}} ngày)
+                          </span>
+                        </td>
+                        <td>{{totalInterestPaid}}</td>
                         <td>{{this.old_debt}}</td>
-                        {{!-- <td class="project-actions text-center" style="align-items: center;">
-                          <a class="btn btn-primary btn-sm" href="#">
-                              <i class="fas fa-folder">
-                              </i>
-                              Chi tiết
-                          </a>
-                          <a class="btn btn-danger btn-sm" href="#">
-                              <i class="fas fa-trash">
-                              </i>
-                              Xóa
-                          </a>
-                      </td> --}}
+                        <td>{{this.old_debt}}</td>
+                        <td>{{this.old_debt}}</td>
                       </tr>
                   {{/each}}
                   </tbody>

@@ -7,8 +7,7 @@ const handleCreateInterestLoans = async(req, res) => {
     try {
         const data = {...req.body};
         data.create_by = req.jwtDecode.username;
-        data.create_date = moment(new Date()).format("DD/MM/YYYY HH:mm:ss");
-        data.latest_interest_payment = moment(new Date()).format("DD/MM/YYYY HH:mm:ss");
+        data.latest_interest_payment = data.create_date;
         await interestLoansService.create(data);
         return res.json(rsSuccess(null));
 
@@ -24,6 +23,44 @@ const handleGetListInterestLoansByUsername = async(req, res) => {
         query.username = req.jwtDecode.username;
         const listInterestLoans = await interestLoansService.getListInterestLoansByUsername(query);
         return res.json(rsSuccess(listInterestLoans));
+    }catch(error){
+        console.log('error: ', error);
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
+
+const handleGetInterestLoansByIdUsername = async(req, res) => {
+    try{
+        const query = {...req.query};
+        query.username = req.jwtDecode.username;
+        const listInterestLoans = await interestLoansService.getInterestLoansByIdUsername(query);
+        return res.json(rsSuccess(listInterestLoans));
+    }catch(error){
+        console.log('error: ', error);
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
+
+const handleUpdateInterestPayment = async(req, res) => {
+    try{
+        const query = {...req.body};
+        query.username = req.jwtDecode.username;
+        const listInterestLoans = await interestLoansService.updateInterestPayment(query);
+        return res.json(rsSuccess(listInterestLoans));
+    }catch(error){
+        console.log('error: ', error);
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
+
+const handleUpdatePayOffDebt = async(req, res) => {
+    try{
+        const query = {...req.body};
+        query.username = req.jwtDecode.username;
+        const updateInterestLoans = await interestLoansService.updatePayOffDebt(query);
+        if(updateInterestLoans.error == 1)
+            return res.json(rsError(201, `Ngày trả gốc phải lớn hơn ngày trả lãi cuối cùng: ${updateInterestLoans.checkDate}`));
+        return res.json(rsSuccess(updateInterestLoans));
     }catch(error){
         console.log('error: ', error);
         return res.json(rsError(201, constants.ERROR_API));
@@ -47,5 +84,8 @@ const handleGetListInterestLoansByUsername = async(req, res) => {
 module.exports = {
     handleCreateInterestLoans,
     handleGetListInterestLoansByUsername,
+    handleGetInterestLoansByIdUsername,
+    handleUpdateInterestPayment,
+    handleUpdatePayOffDebt
     // handleGetListExpenseFilter
 }

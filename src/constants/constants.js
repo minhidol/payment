@@ -15,6 +15,10 @@ module.exports = {
 
     // Token
     TOKEN_EXPIRED: 1,
-    TOKEN_NOT_EXPIRED: 0
+    TOKEN_NOT_EXPIRED: 0,
+
+    // interest loans
+    NOT_PAID_INTEREST: 0,
+    INTERESTED: 1
 };
   

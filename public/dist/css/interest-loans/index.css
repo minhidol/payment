@@ -1,7 +1,11 @@
 @media (min-width: 993px)
 {.label-interest{
     text-align: right
-}}
+}
+.m-form .m-form__section.m-form__section--label-align-right .m-form__group > label, .m-form.m-form--label-align-right .m-form__group > label {
+    text-align: right;
+}
+}
 
 .label-interest{
     font-size: 1rem;
@@ -35,3 +39,58 @@ div.input-group .form-control{
     border-radius: 0.25rem;
     display: flex
 }
+
+button#pay-interest{
+    background: white;
+    border-color: #ebedf2;
+}
+
+.table th, .table td {
+    padding: 0.6rem;
+    vertical-align: top;
+    border-top: 1px solid #dcdee4 !important;
+    border-bottom: 1px solid #dcdee4 !important;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #f4f5f8;
+}
+
+.nav.nav-pills .nav-item:first-child, .nav.nav-tabs .nav-item:first-child {
+    margin-left: 0;
+}
+.nav.nav-pills .nav-item, .nav.nav-tabs .nav-item {
+    margin-left: 5px;
+}
+.m-tabs-line .m-tabs__item {
+    margin-right: 30px;
+    margin-bottom: -1px;
+}
+
+
+.m-tabs-line.m-tabs-line--primary.nav.nav-tabs .nav-link:hover, 
+.m-tabs-line.m-tabs-line--primary.nav.nav-tabs .nav-link.active, 
+.m-tabs-line.m-tabs-line--primary a.m-tabs__link:hover, .m-tabs-line.m-tabs-line--primary a.m-tabs__link.active {
+    color: #5867dd;
+    border-bottom: 1px solid #5867dd;
+}
+
+
+.m-tabs-line.nav.nav-tabs .nav-link, .m-tabs-line a.m-tabs__link {
+    background: transparent;
+    color: #7b7e8a;
+    font-size: 15px;
+}
+
+.m-tabs-line .m-tabs__link {
+    border: 0;
+    border-bottom: 1px solid transparent;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.m-tabs-line.m-tabs-line--2x a.m-tabs__link:hover, .m-tabs-line.m-tabs-line--2x a.m-tabs__link.active {
+    border-bottom-width: 4px !important;
+}
+

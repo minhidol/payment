@@ -25,9 +25,39 @@ const handleFilterInterestLoans = async(query) => {
     }
 }
 
+const handleGetInterestLoansById = async(id) => {
+    try {
+        return await axiosClient.get(`/interest-loans/get-loans-by-id?id=${id}`);
+    } catch (error) {
+        console.log('error: ', error);
+        return null;
+    }
+}
+
+const handleUpdateInterest = async(data) => {
+    try {
+        return await axiosClient.post(`/interest-loans/update-interest`, data);
+    } catch (error) {
+        console.log('error: ', error);
+        return null;
+    }
+}
+
+const handleUpdatePayDebt = async(data) => {
+    try {
+        return await axiosClient.post(`/interest-loans/update-pay-debt`, data);
+    } catch (error) {
+        console.log('error: ', error);
+        return null;
+    }
+}
+
 export{
     handleCreateInterestLoans,
     handleFilterInterestLoans ,
-    handleGetListInterestLoansByUsername
+    handleGetListInterestLoansByUsername,
+    handleGetInterestLoansById,
+    handleUpdateInterest,
+    handleUpdatePayDebt
 }
  

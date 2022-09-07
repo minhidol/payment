@@ -96,10 +96,16 @@ var interestLoansSchema = new mongoose.Schema({
         type: String,
         default: moment(new Date()).format("DD/MM/YYYY HH:mm:ss")
     },
-    list_history_payment_interest: {
-        type: Array,
-        default: []
+    the_amount_paid: {
+        type: String,
+        default: '0'
     },
+    list_history_payment_interest: [{
+    fromDate: String,
+    toDate: String,
+    number_of_days_loans: Number,
+    money_interest: String
+    }],
     ...defaultSchema.obj,
 }, { strict: false });
 
