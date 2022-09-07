@@ -69,6 +69,14 @@ const handleUpdatePayOffDebt = async(req, res) => {
     }
 }
 
+const handleDeleteInterestLoan = async(req, res) => {
+    try {
+        await interestLoansService.deleteById(req.query);
+    } catch (error) {
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
+
 // const handleGetListExpenseFilter = async(req, res) => {
 //     try{
 //         const query = {...req.query};
@@ -88,6 +96,7 @@ module.exports = {
     handleGetListInterestLoansByUsername,
     handleGetInterestLoansByIdUsername,
     handleUpdateInterestPayment,
-    handleUpdatePayOffDebt
+    handleUpdatePayOffDebt,
+    handleDeleteInterestLoan
     // handleGetListExpenseFilter
 }

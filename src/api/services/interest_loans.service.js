@@ -176,6 +176,14 @@ const updatePayOffDebt = async(data) => {
     }
 }
 
+const deleteById = async(query) => {
+    try {
+        await interestLoansModel.deleteOne({_id: query.id});
+    } catch (error) {
+        throw error;
+    }
+}
+
 // const getListRevenueFilter = async(query) => {
 //     try{
         
@@ -223,7 +231,8 @@ module.exports ={
     getListInterestLoansByUsername,
     getInterestLoansByIdUsername,
     updateInterestPayment,
-    updatePayOffDebt
+    updatePayOffDebt,
+    deleteById
     // getListRevenueByUsername,
     // getListRevenueFilter
 }

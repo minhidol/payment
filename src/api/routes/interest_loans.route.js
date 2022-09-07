@@ -8,5 +8,6 @@ router.get('/get-loans', interestLoansController.handleGetListInterestLoansByUse
 router.get('/get-loans-by-id', interestLoansController.handleGetInterestLoansByIdUsername);
 router.post('/update-interest', interestLoansController.handleUpdateInterestPayment);
 router.post('/update-pay-debt', interestLoansController.handleUpdatePayOffDebt);
+router.post('/delete', interestLoansController.handleDeleteInterestLoan);
 module.exports = router;
     
