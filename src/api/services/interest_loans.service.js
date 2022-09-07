@@ -68,7 +68,7 @@ const updateInterestPayment = async(data) => {
                 }else{
                     for(let j = 0; j <= i; j++){
                         if(listPayment[j].is_paid_interest == 0){
-                            totalPaid += parseInt(listPayment[i].money_interest.replaceAll('.',''));
+                            totalPaid += parseInt(listPayment[j].money_interest.replaceAll('.',''));
                             listPayment[j].is_paid_interest = 1;
                         }
                     }
