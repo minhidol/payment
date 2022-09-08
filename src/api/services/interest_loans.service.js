@@ -1,6 +1,9 @@
 var interestLoansModel = require('../models/interest_loans.model');
 var constants = require('../../constants/constants');
-var {numberWithCommas, compareTwoDate, getMonthDifference} = require('../helpers/extra_function');
+var {numberWithCommas, compareTwoDate, 
+    getMonthDifference, stringToDate, stringToDateTime, getDays,
+    addDayToDate
+} = require('../helpers/extra_function');
 var moment = require('moment');
 
 const getListInterestLoansByUsername = async(query) => {
@@ -97,6 +100,85 @@ const updateInterestPayment = async(data) => {
     }
 }
 
+const updatePayUpDebt = async(data) => {
+    try {
+        let loans = await interestLoansModel.findOne({
+            _id: data.id,
+            create_by: data.username,
+            is_delete: constants.NOT_DELETED,
+        }).lean();
+        const listPayment = loans.list_history_payment_interest;
+        let total = parseInt(loans.total.replaceAll('.',''));
+        let checkDate = '';
+        const rateInterest = loans.interest;
+        const currentUnit = loans.currency_unit;
+        const deadlineInterest = loans.deadline_loans;
+        for(let i = listPayment.length - 1; i >= 0; i--){
+            if(listPayment[i].is_paid_interest == 1){
+                if(compareTwoDate(data.datePay, listPayment[i].toDate)){
+                    checkDate = listPayment[i].toDate
+                }
+                break;
+            }
+        }
+        if(checkDate != ''){
+            return {
+                error: 1,
+                checkDate: checkDate
+            };
+        }
+        let totalRest = total + parseInt(data.moneyPay.replaceAll('.',''));
+        console.log('total rest: ', {totalRest, currentUnit, rateInterest});
+        let arr_list_payment = [];
+        if(currentUnit == '%'){
+            let moneyInterestMonth =  parseInt(totalRest*rateInterest/100);
+            let moneyInterest = moneyInterestMonth*deadlineInterest;
+            console.log({total, totalRest, moneyInterestMonth, moneyInterest})
+            listPayment.forEach(item => {
+                if(item.is_paid_interest == 0){
+                    console.log({from: item.fromDate, to: item.toDate})
+                    const tempMonth = getMonthDifference(item.fromDate, item.toDate);
+                    console.log('temp month: ', tempMonth)
+                    if(deadlineInterest != tempMonth){
+                        item.money_interest = numberWithCommas(moneyInterestMonth*tempMonth);
+                    }else{
+                        item.money_interest = numberWithCommas(moneyInterest);
+                    }
+                }
+                arr_list_payment.push(item);
+            });
+            resultUpdate = await interestLoansModel.findOneAndUpdate({
+                _id: data.id,
+                create_by: data.username,
+                is_delete: constants.NOT_DELETED
+            },{
+                total: numberWithCommas(totalRest),
+                list_history_payment_interest: arr_list_payment,
+                update_date: moment(new Date()).format("DD/MM/YYYY"),
+                update_by: data.username
+            });
+        };
+        resultUpdate = await interestLoansModel.findOneAndUpdate({
+            _id: data.id,
+            create_by: data.username,
+            is_delete: constants.NOT_DELETED
+        },{
+            total: numberWithCommas(totalRest),
+            update_date: moment(new Date()).format("DD/MM/YYYY"),
+            update_by: data.username
+        });
+        loans = await interestLoansModel.findOne({
+            _id: data.id,
+            create_by: data.username,
+            is_delete: constants.NOT_DELETED,
+        }).lean();
+        loans.error = 0;
+        return loans;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const updatePayOffDebt = async(data) => {
     try{
         let loans = await interestLoansModel.findOne({
@@ -176,6 +258,48 @@ const updatePayOffDebt = async(data) => {
     }
 }
 
+const updateLoansExtension = async(data) => {
+    try{
+        let loans = await interestLoansModel.findOne({
+            _id: data.id,
+            create_by: data.username,
+            is_delete: constants.NOT_DELETED,
+        }).lean();
+        const listPayment = loans.list_history_payment_interest;
+        const finalRevenue = listPayment[listPayment.length - 1];
+        let fromDate = finalRevenue.fromDate;
+        let toDate = finalRevenue.toDate;
+        const time_unit = loans.time_unit;
+        const rateInterest = loans.interest;
+        const currency_unit = loans.currency_unit;
+        const numberOfDayLoans = loans.number_of_days_loans;
+        const deadlineLoans = loans.deadline_loans;
+        let numberOfDayLoansUpdate = 0;
+        const periodLoansArray = [];
+        if(time_unit == 'ngày'){
+            numberOfDayLoansUpdate = numberOfDayLoans + data.timeExtension;
+            let dateNewFinal = addDayToDate(toDate, data.timeExtension);
+            let getProfitTime = getDays(dateNewFinal, fromDate);
+            let period = parseInt(getProfitTime/deadlineLoans);
+            const surplus = getProfitTime%deadlineLoans;
+            if(surplus > 0)
+              period++;
+            console.log({fromDate, toDate, dateNewFinal, deadline: data.timeExtension, getProfitTime,
+            period, surplus})
+            let moneyInterestDay =  parseInt(rateInterest)*1000;
+            let toDatePeriod = addDayToDate(fromDate, deadlineLoans);
+            periodLoansArray.push({fromDate: fromDate, toDate: toDatePeriod, 
+                number_of_days_loans: getDays(toDatePeriod, fromDate), is_paid_interest: 0,
+                money_interest: numberWithCommas(parseInt(moneyInterestDay*deadlineLoans))
+              });
+        }
+        console.log('periodLoansArray: ', periodLoansArray)
+        //return loans;
+    }catch(error){
+        throw error;
+    }
+}
+
 const deleteById = async(query) => {
     try {
         await interestLoansModel.deleteOne({_id: query.id});
@@ -232,7 +356,9 @@ module.exports ={
     getInterestLoansByIdUsername,
     updateInterestPayment,
     updatePayOffDebt,
-    deleteById
+    deleteById,
+    updatePayUpDebt,
+    updateLoansExtension
     // getListRevenueByUsername,
     // getListRevenueFilter
 }

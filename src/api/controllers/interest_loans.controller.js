@@ -69,6 +69,32 @@ const handleUpdatePayOffDebt = async(req, res) => {
     }
 }
 
+const handleUpdatePayUpDebt = async(req, res) => {
+    try{
+        const query = {...req.body};
+        query.username = req.jwtDecode.username;
+        const updateInterestLoans = await interestLoansService.updatePayUpDebt(query);
+        if(updateInterestLoans.error == 1)
+            return res.json(rsError(201, `Ngày vay thêm phải lớn hơn ngày trả lãi cuối cùng: ${updateInterestLoans.checkDate}`));
+        return res.json(rsSuccess(updateInterestLoans));
+    }catch(error){
+        console.log('error: ', error);
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
+
+const handleUpdateLoansExtension = async(req, res) => {
+    try{
+        const query = {...req.body};
+        query.username = req.jwtDecode.username;
+        const updateInterestLoans = await interestLoansService.updateLoansExtension(query);
+        return res.json(rsSuccess(updateInterestLoans));
+    }catch(error){
+        console.log('error: ', error);
+        return res.json(rsError(201, constants.ERROR_API));
+    }
+}
+
 const handleDeleteInterestLoan = async(req, res) => {
     try {
         await interestLoansService.deleteById(req.query);
@@ -97,6 +123,8 @@ module.exports = {
     handleGetInterestLoansByIdUsername,
     handleUpdateInterestPayment,
     handleUpdatePayOffDebt,
-    handleDeleteInterestLoan
+    handleDeleteInterestLoan,
+    handleUpdatePayUpDebt,
+    handleUpdateLoansExtension
     // handleGetListExpenseFilter
 }

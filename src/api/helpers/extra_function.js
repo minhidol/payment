@@ -20,6 +20,14 @@ exports.compareTwoDate = (x, y) => {
     else false
 }
 
+exports.getDays = (date_1, date_2) => {
+    date_1 = this.stringToDateTime(date_1);
+    date_2 = this.stringToDateTime(date_2);
+    let difference = date_1.getTime() - date_2.getTime();
+    let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+    return TotalDays;
+}
+
 exports.getMonthDifference = (startDate, endDate) => {
     const startTypeDate = this.stringToDateTime(startDate);
     const endTypeDate = this.stringToDateTime(endDate);
@@ -29,4 +37,22 @@ exports.getMonthDifference = (startDate, endDate) => {
       12 * (endTypeDate.getFullYear() - startTypeDate.getFullYear())
     );
   }
+
+  exports.padTo2Digits = (num) => {
+    return num.toString().padStart(2, '0');
+  }
+
+exports.formatDate = (date) => {
+    return [
+      this.padTo2Digits(date.getDate()),
+      this.padTo2Digits(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join('/');
+  }
+
+exports.addDayToDate = (startDate, days) => {
+    startDate = this.stringToDateTime(startDate);
+    startDate.setDate(startDate.getDate() + parseInt(days));
+    return this.formatDate(startDate);
+}
 // exports.

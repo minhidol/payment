@@ -4,7 +4,9 @@ import {
   handleGetListInterestLoansByUsername,
   handleGetInterestLoansById,
   handleUpdateInterest,
-  handleUpdatePayDebt
+  handleUpdatePayDebt,
+  handleUpdatePayUpDebt,
+  handleUpdateLoansExtension
   } from "/dist/js/api/interestLoansApi.js";
   import {
     stringToDate,
@@ -38,6 +40,8 @@ const inputNote = document.querySelector("#InputNote");
 const inputProfitTime = document.querySelector("#InputProfitTime");
 const formInterestLoans = document.querySelector("#FormInterestLoans");
 const formPayDownThePrincipal = document.querySelector("#pay_down_the_principal");
+const formPayUpThePrincipal = document.querySelector("#pay_up_the_principal");
+const formLoanExtension = document.querySelector("#loan_extension");
 
 $("#type-asset").on('change', function(){
     const typeSelect = $("#type-asset option:selected").val();
@@ -76,7 +80,16 @@ $('#InputTotal').keyup(function(event) {
       ;
     });
   });
- 
+  
+  $('#txtVaythem_TotalMoney').keyup(function(event) {
+    if(event.which >= 37 && event.which <= 40) return;
+    $(this).val(function(index, value) {
+      return value
+      .replace(/\D/g, "")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      ;
+    });
+  });
   $('#txtTragoc_TotalMoney').keyup(function(event) {
     if(event.which >= 37 && event.which <= 40) return;
     $(this).val(function(index, value) {
@@ -236,6 +249,100 @@ $('#InputTotal').keyup(function(event) {
       return;
     }
   });
+
+  // gia han
+  formLoanExtension.addEventListener("submit", async function (e) {
+    try {
+      e.preventDefault();
+      var timeExtension = $('#txtGiaHan').val();
+      console.log('time extension: ', timeExtension);
+      var _id = $('#input-check-interest').attr("id_interest");
+      $('#error-date-giahanthem').hide();
+      if(!isRequired(timeExtension)){
+        $('#error-date-giahanthem small').html('Thời gian gia hạn không được để trống');
+        $('#error-date-giahanthem').show();
+        return;
+      }
+      if(timeExtension < 0){
+        $('#error-date-giahanthem small').html('Thời gian gia hạn không được nhỏ hơn 0');
+        $('#error-date-giahanthem').show();
+        return;
+      }
+      const data = {
+        id: _id,
+        timeExtension: timeExtension,
+      };
+      console.log('data: ', data);
+      const updateLoansExtension = await handleUpdateLoansExtension(data);
+      // if(updateDebt.ErrorCode != 0){
+      //   $('#error-date-tragoc small').html(updateDebt.Message);
+      //   $('#error-date-tragoc').show();
+      //   return;
+      // }
+      // alert('Trả bớt gốc thành công!');
+      // const res = updateDebt.Result;
+      // console.log('data: ', {data, updateDebt});
+      // $('#lblTotalMoney').html(res.total);
+      
+      // var check = datePay >= fromDate && datePay <= toDate;
+      // if(check)
+      //   $('#error-date-tragoc').hide();
+      // else{
+      //   $('#error-date-tragoc small').html('Ngày trả gốc phải lớn hơn ngày bắt đầu và nhỏ hơn ngày kết thúc của khoản vay');
+      //   $('#error-date-tragoc').show();
+      // }
+        
+    } catch (error) {
+      console.log("error: ", error);
+      //errorLogin.textContent = 'Server bị lỗi!';
+      return;
+    }
+  });
+  // vay them
+  formPayUpThePrincipal.addEventListener("submit", async function (e) {
+    try {
+      e.preventDefault();
+      var datePayString = $('#reservation_extra_loan_day').find('input').val();
+      var _id = $('#input-check-interest').attr("id_interest");
+      var money =  $('#txtVaythem_TotalMoney').val();
+      $('#error-date-vaythem').hide();
+      if(!isRequired(money)){
+        $('#error-date-vaythem small').html('Số tiền không được để trống');
+        $('#error-date-vaythem').show();
+        return;
+      }
+      const data = {
+        id: _id,
+        datePay: datePayString,
+        moneyPay: $('#txtVaythem_TotalMoney').val()
+      };
+      console.log('data: ', data);
+      const updateDebt = await handleUpdatePayUpDebt(data);
+      if(updateDebt.ErrorCode != 0){
+        $('#error-date-vaythem small').html(updateDebt.Message);
+        $('#error-date-vaythem').show();
+        return;
+      }
+      alert('Vay thêm thành công!');
+      const res = updateDebt.Result;
+      console.log('data: ', {data, updateDebt});
+      $('#lblTotalMoney').html(res.total);
+      
+      // var check = datePay >= fromDate && datePay <= toDate;
+      // if(check)
+      //   $('#error-date-tragoc').hide();
+      // else{
+      //   $('#error-date-tragoc small').html('Ngày trả gốc phải lớn hơn ngày bắt đầu và nhỏ hơn ngày kết thúc của khoản vay');
+      //   $('#error-date-tragoc').show();
+      // }
+        
+    } catch (error) {
+      console.log("error: ", error);
+      //errorLogin.textContent = 'Server bị lỗi!';
+      return;
+    }
+  });
+
 
   formSearchRevenueExpense.addEventListener("submit", async function (e) {
     try {
@@ -592,7 +699,7 @@ function numberWithCommas(x) {
     }
   });
  // tabdonglai
-  $(document).on("click", "#lblTitleTabDongLai", async function () {
+  $(document).on("click", "#item_donglai", async function () {
     try {
       var _id = $('#i-id-interest-loans').text();
       console.log('id: ', _id);
@@ -628,7 +735,7 @@ function numberWithCommas(x) {
         <td align="center" class="align-middle">
           ${item.toDate}
         </td>       
-        <td align="center" class="align-middle">${item.toDate}</td>
+        <td align="center" class="align-middle">${item.number_of_days_loans}</td>
         <td align="right" class="align-middle">${item.money_interest} VNĐ</td>
         <td align="right" class="align-middle">0 VNĐ</td>
         <td align="right" class="align-middle">${item.money_interest} VNĐ</td>
@@ -655,6 +762,8 @@ function numberWithCommas(x) {
       console.log("error: ", error);
     }
   });
+
+  //tab vay them
   
   async function setTablePagination(getListRevenueExpense) {
     $("#body-revenue-expense").find("tr").remove();
@@ -881,6 +990,7 @@ function numberWithCommas(x) {
     typePagination.innerHTML = 1;
 });
 
+// pay interest
 $(document).on("click", "table#table-revenue-expense td button#pay-interest", async function (e) {
   // $('#dong_tien_lai').addClass('active');
   // $('#m_tab_donglai').addClass('active');
@@ -903,6 +1013,16 @@ $(document).on("click", "table#table-revenue-expense td button#pay-interest", as
   $('span#lblToDate').html(toDate);
   $('span#lblTotalInterest').html(numberWithCommas(sumInterest));
   $("#lblPaymentMoney").html(data.the_amount_paid);
+  $("#lblGiaHan_CusName").html(data.name);
+  if(data.time_unit == 'ngày'){
+    $("#strGiaHan").html('Ngày');
+  }else if(data.time_unit == 'tháng'){
+    $("#strGiaHan").html('Tháng');
+  }else if(data.time_unit == 'tuần'){
+    $("#strGiaHan").html('Tuần');
+  }
+  
+
   $("#table-profits").find("tr").remove();
   
   let htmlCol = "";

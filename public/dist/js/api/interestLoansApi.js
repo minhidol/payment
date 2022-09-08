@@ -52,12 +52,32 @@ const handleUpdatePayDebt = async(data) => {
     }
 }
 
+const handleUpdatePayUpDebt = async(data) => {
+    try {
+        return await axiosClient.post(`/interest-loans/update-pay-up-debt`, data);
+    } catch (error) {
+        console.log('error: ', error);
+        return null;
+    }
+}
+
+const handleUpdateLoansExtension = async(data) => {
+    try {
+        return await axiosClient.post(`/interest-loans/update-loans-extension`, data);
+    } catch (error) {
+        console.log('error: ', error);
+        return null;
+    }
+}
+
 export{
     handleCreateInterestLoans,
     handleFilterInterestLoans ,
     handleGetListInterestLoansByUsername,
     handleGetInterestLoansById,
     handleUpdateInterest,
-    handleUpdatePayDebt
+    handleUpdatePayDebt,
+    handleUpdatePayUpDebt,
+    handleUpdateLoansExtension
 }
  
