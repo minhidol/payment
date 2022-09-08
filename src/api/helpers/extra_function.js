@@ -25,7 +25,7 @@ exports.getDays = (date_1, date_2) => {
     date_2 = this.stringToDateTime(date_2);
     let difference = date_1.getTime() - date_2.getTime();
     let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
-    return TotalDays;
+    return TotalDays + 1;
 }
 
 exports.getMonthDifference = (startDate, endDate) => {

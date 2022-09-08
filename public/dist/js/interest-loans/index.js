@@ -12,7 +12,11 @@ import {
     stringToDate,
     stringToDateTime,
     compareTwoDate,
-    compareTwoDateEqual
+    compareTwoDateEqual,
+    addDayToDate,
+    getDays,
+    compareTwoDateLessEqual,
+    compareTwoDateGreaterEqual
     } from "/dist/js/helpers/extra_function.js";
   const total = document.querySelector("#InputTotalTypeRevenueExpense");
   const formRevenueExpense = document.querySelector("#FormRevenueExpense");
@@ -383,7 +387,7 @@ $('#InputTotal').keyup(function(event) {
 const days = (date_1, date_2) => {
     let difference = date_1.getTime() - date_2.getTime();
     let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
-    return TotalDays;
+    return TotalDays + 1;
 }
 function getMonthDifference(startDate, endDate) {
   return (
@@ -449,87 +453,83 @@ function numberWithCommas(x) {
           if(profitForm.includes('tháng')){
             data.time_unit = 'tháng';
             var inputDateCreatedString = $('#reservation_interest').find('input').val();
-            const [day, month, year] = inputDateCreatedString.split('/');
-            let fromDate = new Date(+year, month - 1, + day);
-            const toDate = new Date(+year, month - 1, + day);
-            new Date(toDate.setMonth(toDate.getMonth() + parseInt(inputProfitTime.value)));
-            data.number_of_days_loans = days(toDate, fromDate);
+            let fromDate = inputDateCreatedString;
+            const toDate = addDayToDate(fromDate, parseInt(inputProfitTime.value*30) - 1);
+            data.number_of_days_loans = getDays(toDate, fromDate);
             let period = parseInt(inputProfitTime.value/inputProfitPeriod.value);
             const surplus = inputProfitTime.value%inputProfitPeriod.value;
             if(surplus > 0)
               period++;
             const periodLoansArray = [];
-            let toDatePeriod = new Date(+year, month - 1, + day);
-            new Date(toDatePeriod.setMonth(toDatePeriod.getMonth() + parseInt(inputProfitPeriod.value)));
+            let toDatePeriod = addDayToDate(fromDate, parseInt(inputProfitPeriod.value*30 - 1));
             let numberTotal = parseFloat(inputTotal.value.replaceAll('.',''));
             //console.log('number total: ', {numberTotal, value:inputTotal.value})
             let moneyInterestMonth =  parseInt(numberTotal*inputInterest.value/100);
-            periodLoansArray.push({fromDate: formatDate(fromDate), toDate: formatDate(toDatePeriod), 
-              number_of_days_loans: days(toDatePeriod, fromDate), is_paid_interest: 0, 
+            periodLoansArray.push({fromDate: fromDate, toDate: toDatePeriod, 
+              number_of_days_loans: getDays(toDatePeriod, fromDate), is_paid_interest: 0, 
               money_interest: numberWithCommas(parseInt(moneyInterestMonth*InputProfitPeriod.value))});
             for(let i = 1; i < period; i++){
-              fromDate = toDatePeriod;
+              fromDate = addDayToDate(toDatePeriod, 1); 
               const temp = {
-                fromDate: new Date(fromDate)
+                fromDate: fromDate
               };
-              let tempToDate = toDatePeriod;
-              toDatePeriod = new Date(tempToDate.setMonth(tempToDate.getMonth() + parseInt(inputProfitPeriod.value)));
+              toDatePeriod = addDayToDate(fromDate, parseInt(inputProfitPeriod.value*30 - 1));
               temp.toDate = toDatePeriod;
               let moneyInterest = parseInt(moneyInterestMonth*InputProfitPeriod.value);
               // console.log({moneyInterestMonth, period: InputProfitPeriod.value})
-              if(toDatePeriod > toDate){
+              if(compareTwoDate(toDate, toDatePeriod)){
                 temp.toDate = toDate;
-                moneyInterest = parseInt(moneyInterestMonth*getMonthDifference(temp.fromDate, temp.toDate));
+                moneyInterest = parseInt(moneyInterestMonth*getDays(temp.toDate, temp.fromDate)/30);
               }
-              temp.number_of_days_loans = days(temp.toDate, temp.fromDate);
+              temp.number_of_days_loans = getDays(temp.toDate, temp.fromDate);
               const tempResult = {
-                fromDate: formatDate(temp.fromDate),
-                toDate: formatDate(temp.toDate),
+                fromDate: temp.fromDate,
+                toDate: temp.toDate,
                 number_of_days_loans: temp.number_of_days_loans,
                 is_paid_interest: 0,
                 money_interest: numberWithCommas(moneyInterest)
               }
               periodLoansArray.push(tempResult);
             }
+            console.log('data: ', periodLoansArray)
             data.list_history_payment_interest = periodLoansArray;
           }
           else if(profitForm.includes('ngày')){
             data.time_unit = 'ngày';
             data.number_of_days_loans = inputProfitTime.value;
             var inputDateCreatedString = $('#reservation_interest').find('input').val();
-            const [day, month, year] = inputDateCreatedString.split('/');
-            let fromDate = new Date(+year, month - 1, + day);
-            const toDate = new Date(+year, month - 1, + day);
-            new Date(toDate.setDate(toDate.getDate() + parseInt(inputProfitTime.value)));
+            let fromDate = inputDateCreatedString;
+            const toDate = addDayToDate(fromDate, parseInt(inputProfitTime.value) - 1);
+
             let period = parseInt(inputProfitTime.value/inputProfitPeriod.value);
             const surplus = inputProfitTime.value%inputProfitPeriod.value;
             if(surplus > 0)
               period++;
             let moneyInterestDay =  parseInt(inputInterest.value.replaceAll('.',''))*1000;
             const periodLoansArray = [];
-            let toDatePeriod = new Date(+year, month - 1, + day);
-            new Date(toDatePeriod.setDate(toDatePeriod.getDate() + parseInt(inputProfitPeriod.value)));
-            periodLoansArray.push({fromDate: formatDate(fromDate), toDate: formatDate(toDatePeriod), 
-              number_of_days_loans: days(toDatePeriod, fromDate), is_paid_interest: 0,
+            let toDatePeriod = addDayToDate(fromDate, parseInt(inputProfitPeriod.value - 1));
+            
+            periodLoansArray.push({fromDate: fromDate, toDate: toDatePeriod, 
+              number_of_days_loans: getDays(toDatePeriod, fromDate), is_paid_interest: 0,
               money_interest: numberWithCommas(parseInt(moneyInterestDay*InputProfitPeriod.value))
             });
             for(let i = 1; i < period; i++){
-              fromDate = toDatePeriod;
+              fromDate = addDayToDate(toDatePeriod, 1); 
               const temp = {
-                fromDate: new Date(fromDate)
+                fromDate: fromDate
               };
-              let tempToDate = toDatePeriod;
-              toDatePeriod = new Date(tempToDate.setDate(tempToDate.getDate() + parseInt(inputProfitPeriod.value)));
+              toDatePeriod = addDayToDate(fromDate, parseInt(inputProfitPeriod.value) - 1);
               temp.toDate = toDatePeriod;
               let moneyInterest = parseInt(moneyInterestDay*InputProfitPeriod.value);
-              if(toDatePeriod > toDate){
+              if(compareTwoDate(toDate, toDatePeriod))
+              {
                 temp.toDate = toDate;
-                moneyInterest = parseInt(moneyInterestDay*days(temp.toDate, temp.fromDate));
+                moneyInterest = parseInt(moneyInterestDay*getDays(temp.toDate, temp.fromDate));
               }
-              temp.number_of_days_loans = days(temp.toDate, temp.fromDate);
+              temp.number_of_days_loans = getDays(temp.toDate, temp.fromDate);
               const tempResult = {
-                fromDate: formatDate(temp.fromDate),
-                toDate: formatDate(temp.toDate),
+                fromDate: temp.fromDate,
+                toDate: temp.toDate,
                 number_of_days_loans: temp.number_of_days_loans,
                 is_paid_interest: 0,
                 money_interest: numberWithCommas(moneyInterest)
@@ -537,48 +537,45 @@ function numberWithCommas(x) {
               periodLoansArray.push(tempResult);
             }
             data.list_history_payment_interest = periodLoansArray;
+            console.log('data period: ', periodLoansArray)
           }            
           else{
             data.time_unit = 'tuần';
             data.number_of_days_loans = inputProfitTime.value*7;
             var inputDateCreatedString = $('#reservation_interest').find('input').val();
-            const [day, month, year] = inputDateCreatedString.split('/');
-            let fromDate = new Date(+year, month - 1, + day);
-            const toDate = new Date(+year, month - 1, + day);
-            new Date(toDate.setDate(toDate.getDate() + parseInt(inputProfitTime.value*7)));
+            let fromDate = inputDateCreatedString;
+            const toDate = addDayToDate(fromDate, parseInt(inputProfitTime.value*7) - 1);
             let period = parseInt(inputProfitTime.value/inputProfitPeriod.value);
             const surplus = inputProfitTime.value%inputProfitPeriod.value;
             if(surplus > 0)
               period++;
             const periodLoansArray = [];
-            let toDatePeriod = new Date(+year, month - 1, + day);
-            new Date(toDatePeriod.setDate(toDatePeriod.getDate() + parseInt(inputProfitPeriod.value*7)));
+            let toDatePeriod = addDayToDate(fromDate, parseInt(inputProfitPeriod.value*7 - 1));
             let numberTotal = parseFloat(inputTotal.value.replaceAll('.',''));
             let moneyInterestWeek;
             if(profitForm.includes('k/'))
               moneyInterestWeek =  parseInt(inputInterest.value.replaceAll('.',''))*1000;
             else 
               moneyInterestWeek =  parseInt(numberTotal*inputInterest.value/100);
-              periodLoansArray.push({fromDate: formatDate(fromDate), toDate: formatDate(toDatePeriod), 
-              number_of_days_loans: days(toDatePeriod, fromDate), is_paid_interest: 0,
+              periodLoansArray.push({fromDate: fromDate, toDate: toDatePeriod, 
+              number_of_days_loans: getDays(toDatePeriod, fromDate), is_paid_interest: 0,
               money_interest: numberWithCommas(parseInt(moneyInterestWeek*InputProfitPeriod.value))});
             for(let i = 1; i < period; i++){
-              fromDate = toDatePeriod;
+              fromDate = addDayToDate(toDatePeriod, 1); 
               const temp = {
-                fromDate: new Date(fromDate)
+                fromDate: fromDate
               };
-              let tempToDate = toDatePeriod;
-              toDatePeriod = new Date(tempToDate.setDate(tempToDate.getDate() + parseInt(inputProfitPeriod.value*7)));
+              toDatePeriod = addDayToDate(fromDate, parseInt(inputProfitPeriod.value*7 - 1));
               temp.toDate = toDatePeriod;
               let moneyInterest = parseInt(moneyInterestWeek*InputProfitPeriod.value);
-              if(toDatePeriod > toDate){
+              if(compareTwoDate(toDate, toDatePeriod)){
                 temp.toDate = toDate;
-                moneyInterest = parseInt(moneyInterestWeek*(days(temp.toDate, temp.fromDate)/7));
+                moneyInterest = parseInt(moneyInterestWeek*(getDays(temp.toDate, temp.fromDate)/7));
               }
-              temp.number_of_days_loans = days(temp.toDate, temp.fromDate);
+              temp.number_of_days_loans = getDays(temp.toDate, temp.fromDate);
               const tempResult = {
-                fromDate: formatDate(temp.fromDate),
-                toDate: formatDate(temp.toDate),
+                fromDate: temp.fromDate,
+                toDate: temp.toDate,
                 number_of_days_loans: temp.number_of_days_loans,
                 is_paid_interest: 0,
                 money_interest: numberWithCommas(moneyInterest)
@@ -586,6 +583,7 @@ function numberWithCommas(x) {
               periodLoansArray.push(tempResult);
             }
             data.list_history_payment_interest = periodLoansArray;
+            console.log('period: ', periodLoansArray)
           }
           await handleCreateInterestLoans(data);
           const getListLoans = await handleGetListInterestLoansByUsername({
@@ -831,12 +829,10 @@ function numberWithCommas(x) {
         data[i].StatusInterest = 'Đã hoàn thành'
       }
       for(let j = 0; j < listHistoryPaymentInterest.length; j++){
-        const nowDate = new Date().getTime();
-        const [day, month, year] = listHistoryPaymentInterest[j].fromDate.split('/');
-        const [dayTo, monthTo, yearTo] = listHistoryPaymentInterest[j].toDate.split('/');
-        let fromDate = new Date(+year, month - 1, + day).getTime();
-        let toDate = new Date(+yearTo, monthTo - 1, + dayTo).getTime();
-        var check = nowDate >= fromDate && nowDate <= toDate;
+        const nowDate = formatDate(new Date());
+        let fromDate = listHistoryPaymentInterest[j].fromDate;
+        let toDate = listHistoryPaymentInterest[j].toDate;
+        var check =  compareTwoDateGreaterEqual(nowDate, fromDate) && compareTwoDateLessEqual(nowDate, toDate);
         let numberConvert = parseFloat(listHistoryPaymentInterest[j].money_interest.replaceAll('.',''));
         count++;
         // if(listHistoryPaymentInterest[j].is_paid_interest == 0){
@@ -859,7 +855,8 @@ function numberWithCommas(x) {
                 dateProfitToDate += listHistoryPaymentInterest[k].number_of_days_loans;
               }
             }
-            const numberDay = days(new Date(nowDate), new Date(fromDate));
+            const numberDay = getDays(nowDate, fromDate);
+            console.log({fromDate, toDate, numberDay})
             dateProfitToDate += numberDay;
             totalProfitToDate += parseInt(parseFloat(numberConvert/listHistoryPaymentInterest[j].number_of_days_loans).toFixed(3)*dateProfitToDate);
             data[i].date_profit_to_date = dateProfitToDate;
