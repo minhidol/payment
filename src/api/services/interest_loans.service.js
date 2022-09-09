@@ -93,8 +93,13 @@ const updateInterestPayment = async(data) => {
             the_amount_paid: numberWithCommas(totalPaid),
             list_history_payment_interest: listPayment
         }, {new: true}).lean();
-        interestLoans.error = 0;
-        return interestLoans;
+        loans = await interestLoansModel.findOne({
+            _id: data.id,
+            create_by: data.username,
+            is_delete: constants.NOT_DELETED,
+        }).lean();
+        loans.error = 0;
+        return loans;
     }catch(error){
         throw error;
     }
@@ -275,74 +280,123 @@ const updateLoansExtension = async(data) => {
         const listPayment = loans.list_history_payment_interest;
         const finalRevenue = listPayment[listPayment.length - 1];
         
-        const time_unit = loans.time_unit;
+        const timeUnit = loans.time_unit;
         const rateInterest = loans.interest;
-        const currency_unit = loans.currency_unit;
+        const totalNumber = loans.total;
+        const currencyUnit = loans.currency_unit;
         const numberOfDayLoans = loans.number_of_days_loans;
         const deadlineLoans = loans.deadline_loans;
         let numberOfDayLoansUpdate = 0;
         const periodLoansArray = [];
         let numberOfLoan = 0;
-        if(time_unit == 'ngày'){
-            // updated
-            numberOfDayLoansUpdate = numberOfDayLoans + data.timeExtension;
-            //
-            let fromDate = addDayToDate(finalRevenue.toDate, 1);
-            let toDate = addDayToDate(finalRevenue.toDate, 1);
-            for(let i = 0; i < listPayment.length ; i++){
-                if(listPayment[i].is_paid_interest == 0){
-                    fromDate = listPayment[i].fromDate;
-                    //toDate = listPayment[i].toDate;
-                    break;
-                }else{
-                    periodLoansArray.push(listPayment[i]);
-                }
+        // updated
+        numberOfDayLoansUpdate = (timeUnit == 'ngày' ? numberOfDayLoans + parseInt(data.timeExtension) :
+        (timeUnit == 'tuần' ? numberOfDayLoans + parseInt(data.timeExtension)*7 :
+        (timeUnit == 'tháng' ? numberOfDayLoans + parseInt(data.timeExtension)*30 : 0))
+        );
+        numberOfDayLoans + data.timeExtension;
+        //
+        let fromDate = addDayToDate(finalRevenue.toDate, 1);
+        let toDate = addDayToDate(finalRevenue.toDate, 1);
+        for(let i = 0; i < listPayment.length ; i++){
+            if(listPayment[i].is_paid_interest == 0){
+                fromDate = listPayment[i].fromDate;
+                //toDate = listPayment[i].toDate;
+                break;
+            }else{
+                 periodLoansArray.push(listPayment[i]);
             }
-            console.log({fromDate, toDate});
-            let dateNewFinal = addDayToDate(toDate, data.timeExtension - 1);
-            let getProfitTime = getDays(dateNewFinal, fromDate);
-            let period = parseInt(getProfitTime/deadlineLoans);
-            console.log({dateNewFinal,fromDate})
-            const surplus = getProfitTime%deadlineLoans;
-            if(surplus > 0)
-              period++;
-            let moneyInterestDay =  parseInt(rateInterest)*1000;
-            let toDatePeriod = addDayToDate(fromDate, deadlineLoans - 1);
-            let moneyInterest = numberWithCommas(parseInt(moneyInterestDay*deadlineLoans));
-            if(compareTwoDate(dateNewFinal, toDatePeriod)){
-                moneyInterest = parseInt(moneyInterestDay*getDays(dateNewFinal, fromDate));
-                toDatePeriod = dateNewFinal;
-            }
-            periodLoansArray.push({
-                fromDate: fromDate, toDate: toDatePeriod, 
-                number_of_days_loans: getDays(toDatePeriod, fromDate), is_paid_interest: 0,
-                money_interest: moneyInterest
-            });
-            for(let i = 1; i < period; i++){
-                fromDate = addDayToDate(toDatePeriod, 1);
-                const temp = {
-                  fromDate: fromDate
-                };
-                toDatePeriod = addDayToDate(fromDate, deadlineLoans - 1);// new Date(tempToDate.setDate(tempToDate.getDate() + parseInt(deadlineLoans)));
-                temp.toDate = toDatePeriod;
-                let moneyInterest = parseInt(moneyInterestDay*deadlineLoans);
-                if(compareTwoDate(dateNewFinal, toDatePeriod)){
-                  temp.toDate = dateNewFinal;
-                  moneyInterest = parseInt(moneyInterestDay*getDays(temp.toDate, temp.fromDate));
-                }
-                temp.number_of_days_loans = getDays(temp.toDate, temp.fromDate);
-                const tempResult = {
-                  fromDate: temp.fromDate,
-                  toDate: temp.toDate,
-                  number_of_days_loans: temp.number_of_days_loans,
-                  is_paid_interest: 0,
-                  money_interest: numberWithCommas(moneyInterest)
-                }
-                periodLoansArray.push(tempResult);
-              }
         }
-        console.log('periodLoansArray: ', periodLoansArray)
-        //return loans;
+        
+        let dateNewFinal = (timeUnit == 'ngày' ? addDayToDate(toDate, data.timeExtension - 1) :
+           (timeUnit == 'tuần' ? addDayToDate(toDate, data.timeExtension*7 - 1) :
+           (timeUnit == 'tháng' ? addDayToDate(toDate, data.timeExtension*30 - 1)  : 0))
+           );
+        let getProfitTime = getDays(dateNewFinal, fromDate);
+        console.log({fromDate, toDate, dateNewFinal, getProfitTime});
+        let period = (timeUnit == 'ngày' ? parseInt(getProfitTime/deadlineLoans) :
+        (timeUnit == 'tuần' ? parseInt((getProfitTime/7)/deadlineLoans) :
+        (timeUnit == 'tháng' ? parseInt((getProfitTime/30)/deadlineLoans) : 0))
+        );
+
+        const surplus =  (timeUnit == 'ngày' ? parseInt(getProfitTime%deadlineLoans) :
+        (timeUnit == 'tuần' ? parseInt((getProfitTime/7)%deadlineLoans) :
+        (timeUnit == 'tháng' ? parseInt((getProfitTime/30)%deadlineLoans) : 0))
+        );
+        getProfitTime%deadlineLoans;
+        if(surplus > 0)
+            period++;
+        let moneyInterestDay = 0;
+        if(currencyUnit == 'k'){
+            moneyInterestDay =  parseInt(rateInterest)*1000;
+        }else if(currencyUnit == '%'){
+            moneyInterestDay = parseInt(totalNumber.replaceAll('.','')*rateInterest/100);
+        }
+        
+        let toDatePeriod = (timeUnit == 'ngày' ? addDayToDate(fromDate, deadlineLoans - 1) :
+        (timeUnit == 'tuần' ? addDayToDate(fromDate, deadlineLoans*7 - 1) :
+        (timeUnit == 'tháng' ? addDayToDate(fromDate, deadlineLoans*30 - 1) : 0))
+        );
+        let moneyInterest = numberWithCommas(parseInt(moneyInterestDay*deadlineLoans));
+        if(compareTwoDate(dateNewFinal, toDatePeriod)){
+            moneyInterest = (timeUnit == 'ngày' ? parseInt(moneyInterestDay*getDays(dateNewFinal, fromDate)) :
+            (timeUnit == 'tuần' ? parseInt(moneyInterestDay*(getDays(dateNewFinal, fromDate)/7)) :
+            (timeUnit == 'tháng' ? parseInt(moneyInterestDay*(getDays(dateNewFinal, fromDate)/30)) : 0))
+            );
+            toDatePeriod = dateNewFinal;
+        }
+        periodLoansArray.push({
+            fromDate: fromDate, toDate: toDatePeriod, 
+            number_of_days_loans: getDays(toDatePeriod, fromDate), is_paid_interest: 0,
+            money_interest: numberWithCommas(moneyInterest)
+        });
+        for(let i = 1; i < period; i++){
+            fromDate = addDayToDate(toDatePeriod, 1);
+            const temp = {
+                fromDate: fromDate
+            };
+            
+            toDatePeriod = (timeUnit == 'ngày' ? addDayToDate(fromDate, deadlineLoans - 1) :
+            (timeUnit == 'tuần' ? addDayToDate(fromDate, deadlineLoans*7 - 1) :
+            (timeUnit == 'tháng' ? addDayToDate(fromDate, deadlineLoans*30 - 1) : 0))
+            );
+            temp.toDate = toDatePeriod;
+            let moneyInterest = parseInt(moneyInterestDay*deadlineLoans);
+            if(compareTwoDate(dateNewFinal, toDatePeriod)){
+                temp.toDate = dateNewFinal;
+                moneyInterest = (timeUnit == 'ngày' ? parseInt(moneyInterestDay*getDays(temp.toDate, temp.fromDate)) :
+                (timeUnit == 'tuần' ? parseInt(moneyInterestDay*getDays(temp.toDate, temp.fromDate)/7) :
+                (timeUnit == 'tháng' ? parseInt(moneyInterestDay*getDays(temp.toDate, temp.fromDate)/30) : 0))
+                );
+            }
+            temp.number_of_days_loans = getDays(temp.toDate, temp.fromDate);
+            const tempResult = {
+                fromDate: temp.fromDate,
+                toDate: temp.toDate,
+                number_of_days_loans: temp.number_of_days_loans,
+                is_paid_interest: 0,
+                money_interest: numberWithCommas(moneyInterest)
+            }
+            periodLoansArray.push(tempResult);
+        }
+        console.log({period, periodLoansArray})
+        resultUpdate = await interestLoansModel.findOneAndUpdate({
+            _id: data.id,
+            create_by: data.username,
+            is_delete: constants.NOT_DELETED,
+
+        },{
+            list_history_payment_interest: periodLoansArray,
+            number_of_days_loans: numberOfDayLoansUpdate,
+            update_date: moment(new Date()).format("DD/MM/YYYY"),
+            update_by: data.username
+        },{new: true});
+        loans = await interestLoansModel.findOne({
+            _id: data.id,
+            create_by: data.username,
+            is_delete: constants.NOT_DELETED,
+        }).lean();
+        return loans;
     }catch(error){
         throw error;
     }

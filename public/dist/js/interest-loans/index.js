@@ -209,7 +209,7 @@ $('#InputTotal').keyup(function(event) {
     return valid;
   };
 
-  
+  // tabtragoc
   formPayDownThePrincipal.addEventListener("submit", async function (e) {
     try {
       e.preventDefault();
@@ -236,8 +236,14 @@ $('#InputTotal').keyup(function(event) {
       }
       alert('Trả bớt gốc thành công!');
       const res = updateDebt.Result;
+      const listPayment = updateDebt.Result.list_history_payment_interest;
+      let sumInterest = 0;
+      for(let i = 0; i < listPayment.length; i++){
+        sumInterest += parseInt(listPayment[i].money_interest.replaceAll('.',''));
+      }
       console.log('data: ', {data, updateDebt});
       $('#lblTotalMoney').html(res.total);
+      $('span#lblTotalInterest').html(numberWithCommas(sumInterest));
       
       // var check = datePay >= fromDate && datePay <= toDate;
       // if(check)
@@ -254,7 +260,7 @@ $('#InputTotal').keyup(function(event) {
     }
   });
 
-  // gia han
+  // submit gia han
   formLoanExtension.addEventListener("submit", async function (e) {
     try {
       e.preventDefault();
@@ -278,6 +284,23 @@ $('#InputTotal').keyup(function(event) {
       };
       console.log('data: ', data);
       const updateLoansExtension = await handleUpdateLoansExtension(data);
+      if(updateLoansExtension.ErrorCode == 0){
+        alert('Gia hạn thành công');
+      }else{
+        alert('Lỗi server')
+      }
+      console.log('update: ', updateLoansExtension)
+      const listPayment = updateLoansExtension.Result.list_history_payment_interest;
+      let sumInterest = 0;
+      let toDateFinall = 0;
+      for(let i = 0; i < listPayment.length; i++){
+        sumInterest += parseInt(listPayment[i].money_interest.replaceAll('.',''));
+        toDateFinall = listPayment[i].toDate;
+      }
+      // console.log('data: ', {data, updateDebt});
+      console.log('toDa: ', toDateFinall);
+      $('span#lblToDate').html(toDateFinall);
+      $('span#lblTotalInterest').html(numberWithCommas(sumInterest));
       // if(updateDebt.ErrorCode != 0){
       //   $('#error-date-tragoc small').html(updateDebt.Message);
       //   $('#error-date-tragoc').show();
@@ -331,7 +354,13 @@ $('#InputTotal').keyup(function(event) {
       const res = updateDebt.Result;
       console.log('data: ', {data, updateDebt});
       $('#lblTotalMoney').html(res.total);
-      
+      const listPayment = res.list_history_payment_interest;
+      let sumInterest = 0;
+      for(let i = 0; i < listPayment.length; i++){
+        sumInterest += parseInt(listPayment[i].money_interest.replaceAll('.',''));
+      }
+      console.log('data: ', {data, updateDebt});
+      $('span#lblTotalInterest').html(numberWithCommas(sumInterest));
       // var check = datePay >= fromDate && datePay <= toDate;
       // if(check)
       //   $('#error-date-tragoc').hide();
@@ -408,10 +437,25 @@ function formatDate(date) {
     date.getFullYear(),
   ].join('/');
 }
+
+// hide modal
+$('#modal-details_pawn').on('hidden.bs.modal', async function () {
+  const getListLoans = await handleGetListInterestLoansByUsername({
+    page: 1,
+    perPage: 100
+  });
+  console.log('list loans: ', getListLoans);
+  setDateTotable(getListLoans);
+  $("#modal-default-revenue-expense").modal('hide');
+  var typePagination = document.getElementById('type-pagination');
+  typePagination.innerHTML = 1;
+})
+
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
   if (formInterestLoans) {
+    // submit
     formInterestLoans.addEventListener("submit", async function (e) {
       try {
         e.preventDefault();
@@ -1076,6 +1120,7 @@ $(document).on("click", "tbody#table-profits td input#input-check-interest", asy
     return;
   }
   const result = updateInterest.Result;
+  console.log({result})
   const listInterest = result.list_history_payment_interest;
   let sumInterest = 0;
   for(let i = 0; i < listInterest.length; i++){
@@ -1099,7 +1144,7 @@ $(document).on("click", "tbody#table-profits td input#input-check-interest", asy
     <td align="center" class="align-middle">
       ${item.toDate}
     </td>       
-    <td align="center" class="align-middle">${item.toDate}</td>
+    <td align="center" class="align-middle">${item.number_of_days_loans}</td>
     <td align="right" class="align-middle">${item.money_interest} VNĐ</td>
     <td align="right" class="align-middle">0 VNĐ</td>
     <td align="right" class="align-middle">${item.money_interest} VNĐ</td>
