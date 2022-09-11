@@ -1,0 +1,29 @@
+.hummingbird-treeview,.hummingbird-treeview 
+*{list-style:none;font-size:20px;line-height:24px}
+.hummingbird-treeview label{font-weight:normal}
+.hummingbird-treeview input[type=checkbox]
+{width:16px;height:16px;padding:0;margin:0}
+.hummingbird-treeview ul:not(.hummingbird-base){display:none}
+.hummingbird-treeview .fa{font-style:normal;cursor:pointer}
+.hummingbird-treeview 
+.fas{font-style:normal;cursor:pointer}
+.hummingbird-base{white-space:nowrap}
+
+ul.hummingbird-base{
+    position: relative;
+    display: inline-block;
+    min-width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    list-style-image: none;
+}
+
+.jstree-node {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+i.jstree-icon {
+    background-image: url(../../img/icon-treeview.png);
+}

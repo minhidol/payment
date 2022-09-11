@@ -1,0 +1,116 @@
+.hummingbird-treeview,
+.hummingbird-treeview *
+{
+    list-style: none;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.hummingbird-treeview label.label-treebox {
+    font-weight: normal;
+    color: #575962 !important;
+    font-size: 16px;
+}
+
+.hummingbird-treeview .fa {
+    font-style: normal;
+    cursor: pointer;
+    font-size: 8px;
+    color: #676669;
+    border: 1px solid;
+    position: relative;
+    top: -4px;
+    padding: 2px;
+}
+
+i.fa-folder{
+    border: none;
+
+}
+
+.hummingbird-treeview input[type=checkbox]:checked {
+    background-color: red !important;
+    color: red !important
+    ;
+}
+
+.hummingbird-treeview input[type=checkbox] {
+    width : 14px;
+    height :14px;
+    padding: 0px;
+    margin-top: 10px;
+    accent-color: #fff;
+    border: 1px solid black;
+}
+
+.hummingbird-treeview ul:not(.hummingbird-base) {
+    display: none;
+}
+
+
+.hummingbird-treeview .fas {
+    font-style: normal;
+    cursor: pointer;
+}
+
+.hummingbird-base {
+    white-space:nowrap;
+}
+
+
+.jstree-node {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.jstree-default .jstree-icon:empty {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+}
+
+.jstree-default .jstree-icon {
+    color: #c1bfd0;
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    text-align: center;
+}
+
+i.jstree-icon {
+    background-image: url(../../img/icon-treeview.png);
+}
+
+
+.jstree-icon {
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+
+div.icon-plus{
+    background-image: url(../../img/icon-plus.png);
+}
+
+ul#treeview ul{
+    margin-left: -23px;
+    transition: 1s ease-out;
+
+}
+
+ul.ul-action{
+    margin-left: 0px !important;
+    transition-property: height;
+    transition-duration: 2s;
+}
+
+/* ul li:hover{
+    background-color: red;
+} */
+
+label.label-treebox:hover{
+    background-color: rgb(243, 240, 240) !important;
+}

@@ -12,6 +12,10 @@ var userSchema = new mongoose.Schema({
         default: null,
         required: true
     },
+    number_phone: {
+        type: String,
+        default: null
+    },
     role: {
         type: Number,
         default: "",
@@ -26,6 +30,10 @@ var userSchema = new mongoose.Schema({
         default: ""
     },
     is_delete: {
+        type: Number,
+        default: 0
+    },
+    is_active: {
         type: Number,
         default: 0
     },
