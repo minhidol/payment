@@ -18,8 +18,27 @@ const handleUpdateListFeature = async(data) => {
     }
 }
 
+const handleUpdateMenuAction = async(data) => {
+    try {
+        return await axiosClient.post(`/permission/update`, data);
+    } catch (error) {
+        return null;
+    }
+}
+
+const handleGetPermission = async(type) => {
+    try {
+      
+        return await axiosClient.get(`/permission/get?type=${type}`);
+    } catch (error) {
+        return null;
+    }
+}
+
 export{
     handleGetListFeature,
-    handleUpdateListFeature
+    handleUpdateListFeature,
+    handleUpdateMenuAction,
+    handleGetPermission
 }
  

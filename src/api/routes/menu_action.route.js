@@ -5,5 +5,5 @@ var menuActionController = require('../controllers/menu_action.controller');
 
 router.post('/create', menuActionController.handleCreateMenuAction);
 router.post('/get-all', menuActionController.handleGetAll);
-router.post('/get-menu-action', menuActionController.handleGetMenuActionArr);
+router.get('/get-menu-action', menuActionController.handleGetMenuActionArr);
 module.exports = router;

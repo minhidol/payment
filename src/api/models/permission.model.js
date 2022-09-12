@@ -13,7 +13,10 @@ var permissionSchema = new mongoose.Schema({
         require: true,
         unique: true
     },
-    
+    menu_action: {
+        type: Object,
+        default: null
+    },
     is_delete: {
         type: Number,
         default: 0

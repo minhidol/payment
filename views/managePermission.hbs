@@ -149,7 +149,7 @@
               <div class="col-md-6">
                  <div class="form-group">
                   <label for="">Danh sách quyền <span class="text-danger">*</span></label>
-                  <select class="form-control select2" style="width: 100%;">
+                  <select class="form-control select2" style="width: 100%;" id="select-permission">
                     {{#each listPermission}}
                       <option value="{{this.type}}">{{this.name}}</option>                  
                     {{/each}}
@@ -165,112 +165,22 @@
                       Chức năng
               </label>
               <div class="col-md-6" style="padding-top:2px">
-                <div id="treeview_container" class="hummingbird-treeview" 
-                  >
+                <div id="treeview_container" class="hummingbird-treeview" >
                     <ul id="treeview" class="hummingbird-base">
-                      <li data-id="0" class="jstree-node  jstree-leaf">
-                        {{!-- <i class="fa fa-plus"></i> --}}
-                        <i class="fa fa-plus"></i>
-                        <label class="label-treebox">
-                            <input id="xnode-0" data-id="custom-0" type="checkbox" /> 
-                            <i class="fa fa-folder" style="border: none;font-size:1.2rem;color:green;position:relative;top:0px"></i>
-                            Quản lý nhân viên
-                        </label>
-                        <ul >
-                          <li data-id="1">
-                            <i class="fa fa-plus"></i>
-                            <label class="label-treebox"> 
-                                <input  id="xnode-0-1" data-id="custom-0-1" type="checkbox" /> 
-                                <i class="fa fa-folder" style="border: none;font-size:1.2rem;color:green;position:relative;top:0px"></i>
-                                Quản lý tài khoản
-                            </label>
-                            <ul class="ul-action">
-                                <li>
-                                  <label class="label-treebox">
-                                      <input class="hummingbird-end-node" 
-                                      id="xnode-0-1-1" data-id="custom-0-1-1" type="checkbox" />
-                                      <i class="fa fa-folder" style="border: none;font-size:1.2rem;color:green;position:relative;top:0px"></i>
-                                       Tạo mới tài khoản
-                                  </label>
-                                </li>
-                                <li>
-                                  <label class="label-treebox">
-                                      <input class="hummingbird-end-node" 
-                                      id="xnode-0-1-2" data-id="custom-0-1-2" type="checkbox" /> 
-                                      <i class="fa fa-folder" style="border: none;font-size:1.2rem;color:green;position:relative;top:0px"></i>
-                                      Cập nhật tài khoản
-                                  </label>
-                                </li>
-                            </ul>
-                          </li>
-                          <li data-id="1">
-                            <i class="fa fa-plus"></i>
-                            <label class="label-treebox">
-                                <input  id="xnode-0-2" data-id="custom-0-2" type="checkbox" /> 
-                                <i class="fa fa-folder" style="border: none;font-size:1.2rem;color:green;position:relative;top:0px"></i>
-                                Quản lý phân quyền
-                            </label>
-                          <ul>
-                            <li>
-                              <label class="label-treebox">
-                                  <input class="hummingbird-end-node" id="xnode-0-2-1" data-id="custom-0-2-1" type="checkbox" /> 
-                                  <i class="fa fa-folder" style="border: none;font-size:1.2rem;color:green;position:relative;top:0px"></i>
-                                  Xem danh sách quyền
-                              </label>
-                            </li>
-                          <li>
-                              <label class="label-treebox">
-                                  <input class="hummingbird-end-node" id="xnode-0-2-1" data-id="custom-0-2-1" type="checkbox" /> 
-                                  <i class="fa fa-folder" style="border: none;font-size:1.2rem;color:green;position:relative;top:0px"></i>
-                                  Xem danh sách quyền
-                              </label>
-                            </li>
-                            <li>
-                              <label class="label-treebox">
-                                  <input class="hummingbird-end-node" id="xnode-0-2-1" data-id="custom-0-2-1" type="checkbox" /> 
-                                  <i class="fa fa-folder" style="border: none;font-size:1.2rem;color:green;position:relative;top:0px"></i>
-                                  Xem danh sách quyền
-                              </label>
-                            </li>
-                            <li>
-                              <label class="label-treebox">
-                                  <input class="hummingbird-end-node" id="xnode-0-2-1" data-id="custom-0-2-1" type="checkbox" /> 
-                                  <i class="fa fa-folder" style="border: none;font-size:1.2rem;color:green;position:relative;top:0px"></i>
-                                  Xem danh sách quyền
-                              </label>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                  </li>
-                </ul>
+                      
+                    </ul>
                 </div>
+              </div>
+              <div class="col-md-3" style="padding-top:2px;text-align:center">
+                <button  class="btn btn-success btn-sm"
+                  id="submit-permission-action"
+                >
+                  <i class="fa fa-edit"></i>
+                  Cập nhật</button>
               </div>
             </div>
           </div>
       </div>
-      
-        {{!-- <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 h3 class="card-title">Danh sách quyền</h3>
-                
-                {{!-- <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                  <button type="button"  class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-default" disabled>
-                  Thêm mới
-                </button>
-                  </div>
-                </div> --}}
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                
-              </div>
-            </div>
-          </div>
-        </div> --}}
       </div>
     </section>
   </div>

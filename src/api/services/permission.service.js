@@ -17,6 +17,31 @@ const findAll = async() => {
     }
 }
 
+const updateMenuAction = async(data) => {
+    try {
+        console.log('data: ', data)
+        return await permissionModel.findOneAndUpdate({
+            type: data.type,
+            is_delete: constants.NOT_DELETED
+        },{
+            menu_action: data.menu_action
+        });
+    } catch (error) {
+        throw error;
+    }
+}
+
+const getPermissionByType = async(data) => {
+    try {
+        console.log('data: ', data)
+        return await permissionModel.findOne({
+            type: data.type,
+            is_delete: constants.NOT_DELETED
+        });
+    } catch (error) {
+        throw error;
+    }
+}
 
 
 // const findAll = async() => {
@@ -42,5 +67,7 @@ const findAll = async() => {
 
 module.exports = {
     create,
-    findAll
+    findAll,
+    updateMenuAction,
+    getPermissionByType
 };

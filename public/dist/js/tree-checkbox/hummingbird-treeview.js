@@ -1286,6 +1286,10 @@
 		list.text.push($(this).parent("label").parent("li").text());
 		list.id.push($(this).attr("id"));
 		list.dataid.push($(this).attr("data-id"));
+		list.id_parent_menu.push($(this).attr("id_parent_menu"));
+		list.id_parent_sub_menu.push($(this).attr("id_parent_sub_menu"));
+		list.type_permission.push($(this).attr("type_permission"));
+		list.link.push($(this).attr("link"));
 	    });
 	} else {
 	    if (onlyParents == true){
@@ -1293,12 +1297,20 @@
 		    list.text.push($(this).parent("label").parent("li").text());
 		    list.id.push($(this).attr("id"));
 		    list.dataid.push($(this).attr("data-id"));
+			list.id_parent_menu.push($(this).attr("id_parent_menu"));
+		list.id_parent_sub_menu.push($(this).attr("id_parent_sub_menu"));
+		list.type_permission.push($(this).attr("type_permission"));
+		list.link.push($(this).attr("link"));
 		});
 	    } else {
 		activeGroup.find('input:checkbox:checked').each(function() {
 		    list.text.push($(this).parent("label").parent("li").text());
 		    list.id.push($(this).attr("id"));
 		    list.dataid.push($(this).attr("data-id"));
+			list.id_parent_menu.push($(this).attr("id_parent_menu"));
+		list.id_parent_sub_menu.push($(this).attr("id_parent_sub_menu"));
+		list.type_permission.push($(this).attr("type_permission"));
+		list.link.push($(this).attr("link"));
 		});
 	    }
 	}
@@ -1312,6 +1324,10 @@
 		list.text.push($(this).parent("label").parent("li").text());
 		list.id.push($(this).attr("id"));
 		list.dataid.push($(this).attr("data-id"));
+		list.id_parent_menu.push($(this).attr("id_parent_menu"));
+		list.id_parent_sub_menu.push($(this).attr("id_parent_sub_menu"));
+		list.type_permission.push($(this).attr("type_permission"));
+		list.link.push($(this).attr("link"));
 	    });
 	} else {
 	    if (onlyParents == true){
@@ -1319,12 +1335,20 @@
 		    list.text.push($(this).parent("label").parent("li").text());
 		    list.id.push($(this).attr("id"));
 		    list.dataid.push($(this).attr("data-id"));
+			list.id_parent_menu.push($(this).attr("id_parent_menu"));
+		list.id_parent_sub_menu.push($(this).attr("id_parent_sub_menu"));
+		list.type_permission.push($(this).attr("type_permission"));
+		list.link.push($(this).attr("link"));
 		});
 	    } else {
 		tree.find('input:checkbox:not(:checked)').each(function() {
 		    list.text.push($(this).parent("label").parent("li").text());
 		    list.id.push($(this).attr("id"));
 		    list.dataid.push($(this).attr("data-id"));
+			list.id_parent_menu.push($(this).attr("id_parent_menu"));
+		list.id_parent_sub_menu.push($(this).attr("id_parent_sub_menu"));
+		list.type_permission.push($(this).attr("type_permission"));
+		list.link.push($(this).attr("link"));
 		});
 	    }
 	}
@@ -1337,6 +1361,10 @@
 	    list.text.push($(this).parent("label").parent("li").text());
 	    list.id.push($(this).attr("id"));
 	    list.dataid.push($(this).attr("data-id"));
+		list.id_parent_menu.push($(this).attr("id_parent_menu"));
+		list.id_parent_sub_menu.push($(this).attr("id_parent_sub_menu"));
+		list.type_permission.push($(this).attr("type_permission"));
+		list.link.push($(this).attr("link"));
 	});
     };
     //--------------get all indeterminate items------------------//
@@ -1354,10 +1382,10 @@
     $.fn.hummingbird.saveState = function(tree,save_state){
 	//console.log("humming saveState")
 	//save_state.checked = {"hallo":"123"};
-	var List_full = {"id" : [], "dataid" : [], "text" : []};
+	var List_full = {"id" : [], "dataid" : [], "text" : [], "id_parent_menu": [], "id_parent_sub_menu": [], "type_permission": [], "link": []};
 	tree.hummingbird("getChecked",{list:List_full});
 	//console.log(List_full)
-	var List_indeterminate = {"id" : [], "dataid" : [], "text" : []};
+	var List_indeterminate = {"id" : [], "dataid" : [], "text" : [], "id_parent_menu": [], "id_parent_sub_menu": [], "type_permission": [], "link": []};
 	tree.hummingbird("getIndeterminate",{list:List_indeterminate});
 	//console.log(List_indeterminate)
 	save_state.checked = List_full.id;
