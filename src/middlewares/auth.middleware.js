@@ -6,6 +6,7 @@ const {isJwtExpired} = require('jwt-check-expiration');
 
 const isAuth = async(req, res, next) => {
 	try {
+		console.log('requestaa: ', req._parsedUrl.pathname);
 		const accessTokenFromHeader = req.token;
 		if (!accessTokenFromHeader) {
 			return res.json(rsError(401, constants.NOT_FIND_ACCESS_TOKEN));
