@@ -32,6 +32,10 @@ var menuActionSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    icon: {
+        type: String,
+        default: null
+    },
     is_delete: {
         type: Number,
         default: 0

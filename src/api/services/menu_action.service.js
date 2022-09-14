@@ -38,10 +38,11 @@ const getSubMenuActionByIdMenu = async(id) => {
     }
 }
 
-const getSubMenuActionByIdType = async(id) => {
+const getSubMenuByIdType = async(data) => {
     try {
-        const listSubMenu = await menuActionModel.find({
-            parent: id,
+        const listSubMenu = await menuActionModel.findOne({
+            id: data.id,
+            type: data.type,
             is_delete: constants.NOT_DELETED
         });
         return listSubMenu;
@@ -104,5 +105,6 @@ const arrangementMenuAction = async() => {
 module.exports = {
     create,
     findAll,
-    arrangementMenuAction
+    arrangementMenuAction,
+    getSubMenuByIdType
 };

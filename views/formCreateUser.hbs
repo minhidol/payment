@@ -207,8 +207,79 @@
                   </div>
                 </div>
               </div>
-              <div class="card-body table-responsive p-0" style="height: 500px">
-                <table class="table table-head-fixed text-nowrap" id="TableUser">
+              <div class="card-body table-responsive" style="height: 500px">
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                  <div class="row"><div class="col-sm-12 col-md-6"></div>
+                <div class="col-sm-12 col-md-6"></div></div><div class="row"><div class="col-sm-12">
+                  <table id="table-revenue-expense" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info" style="font-size: 15px;">
+                  <thead style="background-color: #f4f3f7;font-weight: 500; color: #575962">
+                    <tr>
+                      <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1">
+                       Họ và tên
+                       </th>
+                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1">
+                       Tên đăng nhập
+                       </th>
+                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1">
+                       Quyền
+                       </th>
+                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1">
+                       Ngày tạo
+                       </th>                    
+                       <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1">
+                       </th>
+                       </tr>
+                  </thead>
+                  <tbody id="table-user">
+                     {{#each listUser}}
+                      <tr>
+                        <td>{{this.name}}</td>
+                        <td>{{this.username}}</td>
+                        <td><span class="tag tag-success">{{this.roleDetail}}</span></td>
+                        <td>{{dateFormat this.create_date "DD/MM/yyyy"}}</td>
+                        <td> 
+
+                          <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default-update-user">
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Chỉnh sửa
+                          </a>
+                    </td>
+                      </tr>
+                    {{/each}}
+
+                  </tbody>
+                </table></div></div>
+                <div class="row">
+                  <div class="col-sm-12 col-md-5">
+                      {{!-- <div class="dataTables_info" id="example2_info" role="status" aria-live="polite" style="padding-left: 20px;">
+                        Số khoảng thu: <span id="total-revenue-expense">6</span>
+                         <span id="total-pages" style="display: none;">1</span>
+                      </div> --}}
+                  </div>
+                  <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                      <h1 id="type-pagination" style="display:none">1</h1>
+                      <ul class="pagination" id="PaginationGeneral">
+                        <li class="paginate_button page-item previous disabled" id="example2_previous" disabled="">
+                          <a aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">
+                            Previous
+                          </a>
+                        </li>
+                        <li class="paginate_button page-item active">
+                          <a aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+                            1
+                          </a>
+                        </li>
+                          <li class="paginate_button page-item next disabled" id="example2_next">
+                              <a aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                          </li>
+                      </ul>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+                {{!-- <table class="table table-head-fixed text-nowrap" id="TableUser">
                   <thead>
                     <tr>
                       <th>Họ và tên</th>
@@ -235,7 +306,7 @@
                       </tr>
                     {{/each}}
                   </tbody>
-                </table>
+                </table> --}}
               </div>
             </div>
           </div>

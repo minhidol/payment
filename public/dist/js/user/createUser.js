@@ -173,6 +173,7 @@ formCreateUser.addEventListener('submit', async function (e) {
 
 $(document).on('click','#table-user tr td', async function () {
        try {
+       // alert('123213')
         var currentRow=$(this).closest("tr");
         var usernameDetail = currentRow.find("td:eq(1)").html();
         const getUser = await handleGetUser(usernameDetail);

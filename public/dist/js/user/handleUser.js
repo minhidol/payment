@@ -100,7 +100,7 @@ if(formLogin){
                 username: username.value,
                 password: password.value
             });
-            
+            console.log({login})
             errorLogin.textContent = ''
             if(login == null){
                 errorLogin.textContent = 'Server bị lỗi!';
@@ -110,7 +110,9 @@ if(formLogin){
                 errorLogin.textContent = 'Tên đăng nhập hoặc mật khẩu không đúng';
                 return;
             }
+            let string = JSON.stringify(login.Result.menu);
             document.cookie = `token=${login.Result.access_token}`;
+            document.cookie = `menu=${string}`;
             window.location.href = "/home";
         }
         } catch (error) {

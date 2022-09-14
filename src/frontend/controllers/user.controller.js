@@ -1,11 +1,12 @@
 
 const userService = require('../../api/services/user.service');
-const groupPermissionService = require('../../api/services/permission_group.service');
+const permissionService = require('../../api/services/permission.service');
 
 const managerUser = async(req, res) => {
     try {
         const listStaff = await userService.getListStaff();
-        const listPermission = await groupPermissionService.findAll();
+        const listPermission = await permissionService.findAll();
+
         res.render('formCreateUser', {
             layout: 'index',
             user: req.jwtDecode,

@@ -5,6 +5,13 @@ import { handleUpdateMenuAction,
 
 $(document).ready(function(){
     $("#select-permission").change(async function(){
+    $("#treeview").hummingbird("uncheckAll");
+    $("#treeview").hummingbird("uncheckNode",{
+       sel:"id",// "id", "data-id" or "text"
+        vals:["hum_1","hum_2","hum_3"],
+        });
+             
+            
         var selectedOption = $(this).find(":selected").val();
         const getPermission = await handleGetPermission(
             selectedOption
@@ -16,10 +23,10 @@ $(document).ready(function(){
         list_action.forEach(item => {
             listId.push(item.id);
         })
-        // $("#treeview").hummingbird("checkNode",{
-        //     sel:"id",// "id", "data-id" or "text"
-        //     vals:listId,
-        // });
+        $("#treeview").hummingbird("checkNode",{
+            sel:"id",// "id", "data-id" or "text"
+            vals:listId,
+        });
     });
 });
 

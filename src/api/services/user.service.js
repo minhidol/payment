@@ -2,6 +2,7 @@ const userModel = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const constants = require('../../constants/constants');
 const permissionGroupService = require('./permission_group.service');
+const permissionService = require('./permission.service');
 const {generateToken} = require('../helpers/jwt');
 const {config} = require('../../../config/env');
 const saltRounds = 10;
@@ -80,19 +81,22 @@ const login = async(body) => {
     const isPasswordValid = await bcrypt.compare(body.password, password);
     if(!isPasswordValid)
       return constants.PASSWORD_NOT_VALID;
-    const permission = await permissionGroupService.findGroupPermissionByType(checkUserExist.role);
-    console.log('permission123: ', permission)
+    console.log('check exist: ', checkUserExist)
+    const permission = await permissionService.getPermissionByTypeForLogin({type: checkUserExist.role});
+    console.log({permission})
+    // console.log('permission123: ', permission)
     const payload = {
       username: checkUserExist.username,
       name: checkUserExist.name,
       role: checkUserExist.role,
-      menu: permission.menu,
-      action: permission.action
+      menu: permission.listMenu,
+      action: permission.listLinkAction
     };
     const access_token = await generateToken(payload, config.ACCESS_TOKEN_SECRET, config.ACCESS_TOKEN_LIFE);
     const res = {...payload};
     res.access_token = access_token;
     return res;
+    //return permission;
   } catch (error) {
       
       throw error;

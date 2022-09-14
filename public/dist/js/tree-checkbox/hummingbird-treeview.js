@@ -892,7 +892,7 @@
     //-------------------uncheckAll---------------//
     $.fn.hummingbird.uncheckAll = function(tree){
 	//get enabled checked endnodes
-	var checked_end_nodes = tree.find('input:checkbox:checked.hummingbird-end-node:not(:disabled)');
+	var checked_end_nodes = tree.find('input:checkbox:checked:not(:disabled)');
 	//uncheck those
 	checked_end_nodes.prop('checked', false);
 	//apply triState
