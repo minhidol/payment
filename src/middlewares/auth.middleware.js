@@ -6,6 +6,7 @@ const {isJwtExpired} = require('jwt-check-expiration');
 
 const isAuth = async(req, res, next) => {
 	try {
+		const pathName = req._parsedUrl.pathname;
 		const accessTokenFromHeader = req.token;
 		if (!accessTokenFromHeader) {
 			return res.json(rsError(401, constants.NOT_FIND_ACCESS_TOKEN));
@@ -22,6 +23,8 @@ const isAuth = async(req, res, next) => {
 			return res.json(rsErrorTokenExpired());
 		const jwtDecode = await authMethod.decodedToken(accessTokenFromHeader, accessTokenSecret);
 		req.jwtDecode = jwtDecode.payload;
+		const listAction = jwtDecode.payload.action;
+		console.log({pathName, listAction})
 		next();
 	} catch (error) {
 		return res.json(rsErrorInvalid());

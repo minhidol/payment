@@ -9,71 +9,8 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" 
-        data-accordion="false" style="color: #b7c0cd; font-size: 15px; font-weight: 100px">
-          <li class="nav-item">
-              <a href="/home" class="nav-link">
-                <i class="fa fa-home"></i>
-                <p>
-                  Trang chủ
-                </p>
-              </a>
-            </li>
-            <li class="nav-item menu-open" >
-              <a href="#" class="nav-link" >
-                <i class="fa fa-users"></i>
-                <p>
-                  Quản lý nhân viên
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/user" class="nav-link active">
-                    <i class="fa fa-circle nav-icon" style="font-size: 10px;"></i>
-                    <p>Quản lý tài khoản</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/permission" class="nav-link">
-                    <i class="fa fa-circle nav-icon" style="font-size: 10px;"></i>
-                    <p>Quản lý nhóm quyền</p>
-                  </a>
-                </li>
-            </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="fas fa-money-check-alt"></i>
-                <p>
-                  Quản lý thu chi
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/revenue" class="nav-link">
-                    <i class="fa fa-circle nav-icon" style="font-size: 10px;"></i>
-                    <p>Quản lý thu</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/expense" class="nav-link">
-                    <i class="fa fa-circle nav-icon" style="font-size: 10px;"></i>
-                    <p>Quản lý chi</p>
-                  </a>
-                </li>
-            </ul>
-            </li>
-            
-            <li class="nav-item menu">
-              <a href="/interest-loans" class="nav-link">
-                <i class="fas fa-money-check-alt"></i>
-                <p>
-                  Vay lãi
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-            </li>
+        data-accordion="false" style="color: #b7c0cd; font-size: 15px; font-weight: 100px" id="get-menu">
+          
           
         </ul>
       </nav>
@@ -86,11 +23,14 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Quản lý user</h1>
+            <h5 class="m-0" style="font-weight: 500;
+    font-family: quicksand,sans-serif; color: #6c757d">
+    <i class="fas fa-money" style="color: blue;"></i>
+    Quản lý tài khoản</h5>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
               <li class="breadcrumb-item active">Quản lý user</li>
             </ol>
           </div><!-- /.col -->
@@ -207,11 +147,11 @@
                   </div>
                 </div>
               </div>
-              <div class="card-body table-responsive" style="height: 500px">
+              <div class="card-body table-responsive" >
                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                   <div class="row"><div class="col-sm-12 col-md-6"></div>
                 <div class="col-sm-12 col-md-6"></div></div><div class="row"><div class="col-sm-12">
-                  <table id="table-revenue-expense" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info" style="font-size: 15px;">
+                  <table id="table-revenue-expense" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info" style="font-size: 15px; height: 300px;overflow-y:auto;">
                   <thead style="background-color: #f4f3f7;font-weight: 500; color: #575962">
                     <tr>
                       <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1">
@@ -252,10 +192,7 @@
                 </table></div></div>
                 <div class="row">
                   <div class="col-sm-12 col-md-5">
-                      {{!-- <div class="dataTables_info" id="example2_info" role="status" aria-live="polite" style="padding-left: 20px;">
-                        Số khoảng thu: <span id="total-revenue-expense">6</span>
-                         <span id="total-pages" style="display: none;">1</span>
-                      </div> --}}
+
                   </div>
                   <div class="col-sm-12 col-md-7">
                     <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">

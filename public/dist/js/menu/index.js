@@ -23,29 +23,44 @@ $( document ).ready(async function() {
         </li>`;
     
     let menu = JSON.parse(getCookie('menu'));
-    menu.forEach(element => {
-        const listSubMenu = element.list_sub_menu;
-        let ulSubMenu = '';
-        listSubMenu.forEach(item => {
-            ulSubMenu += `<li class="nav-item">
-                    <a href="${item.link}" class="nav-link">
+    let url = document.URL.split('/');
+    let urlMenu = url[url.length - 1];
+    menu.forEach(item => {
+        const listSubMenu = item.list_sub_menu;
+        let subMenuHtml = '';
+        let check = 0;
+        for(let i = 0; i < listSubMenu.length; i++){
+            if(listSubMenu[i].link.includes(urlMenu)){
+                subMenuHtml += `<li class="nav-item">
+                    <a href="${listSubMenu[i].link}" class="nav-link active">
                     <i class="fa fa-circle nav-icon" style="font-size: 10px;"></i>
-                    <p>${item.name}</p>
+                    <p>${listSubMenu[i].name}</p>
                     </a>
                 </li>`;
-        });
-        htmlMenu += `<li class="nav-item">
-        <a href="${element.link}" class="nav-link">
-            <i class="${element.icon}"></i>
-            <p>
-           ${element.name}
+                check = 1;
+            }else{
+                subMenuHtml += `<li class="nav-item">
+                    <a href="${listSubMenu[i].link}" class="nav-link">
+                    <i class="fa fa-circle nav-icon" style="font-size: 10px;"></i>
+                    <p>${listSubMenu[i].name}</p>
+                    </a>
+                </li>`
+            }
+        }
+
+        htmlMenu += ` <li ` + ((check == 1 || item.link.includes(urlMenu)) ? `class="nav-item menu-open"` : `class="nav-item"`) + `>
+        <a href="${item.link}" class="nav-link">
+        <i class="${item.icon}"></i>
+        <p>
+            ${item.name}
             <i class="right fas fa-angle-left"></i>
-          </p>
-        </a>
-        `+(element.link == '' ? `<ul class="nav nav-treeview">${ulSubMenu}</ul>` : `K`)+`
-        </li>`
+        </p>
+        </a>`+
+       (item.link == '' ? `<ul class="nav nav-treeview">${subMenuHtml}</ul>` : '') +`
+        </li>`;
     });
     $('ul#get-menu').html(htmlMenu);
     console.log('menu: ', menu);
     console.log('url: ', document.URL);
 })
+
