@@ -3,7 +3,7 @@ const username = document.querySelector('#InputUsername');
 const password = document.querySelector('#InputPassword');
 const formLogin = document.querySelector('#LogIn');
 const errorLogin= document.querySelector('#ErrorLogin');
-const handleLogout = document.querySelector('#HandleLogout');
+
 
 const isRequired = value => value === '' ? false : true;
 const isBetween = (length, min, max) => length < min || length > max ? false : true;
@@ -123,10 +123,4 @@ if(formLogin){
     
 }
 
-if(handleLogout){
-    handleLogout.addEventListener('click', function(e){
-        document.cookie = "token=;";
-        window.location.href = "/";
-    })
-}
 

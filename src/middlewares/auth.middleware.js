@@ -1,4 +1,7 @@
-const {rsError, rsErrorUnauthorized, rsErrorTokenExpired, rsErrorInvalid} = require('../api/helpers/response');
+const {rsError, rsErrorUnauthorized, 
+	rsErrorTokenExpired, rsErrorInvalid, 
+	rsErrorPermission
+} = require('../api/helpers/response');
 const constants = require('../constants/constants');
 const {config} = require('../../config/env/index');
 const authMethod = require('../api/helpers/jwt');
@@ -24,15 +27,15 @@ const isAuth = async(req, res, next) => {
 		const jwtDecode = await authMethod.decodedToken(accessTokenFromHeader, accessTokenSecret);
 		req.jwtDecode = jwtDecode.payload;
 		const listAction = jwtDecode.payload.action;
-		console.log({pathName, listAction})
+		console.log({listAction, pathName})
+		if(!listAction.includes(pathName)){
+			return res.json(rsErrorPermission());
+		}
 		next();
 	} catch (error) {
 		return res.json(rsErrorInvalid());
 	}
-    // }
-    //console.log('token: ', req.token);
-	// Lấy access token từ header
-	// return next();
+
 };
 
 const isAuthCookie = async(req, res, next) => {

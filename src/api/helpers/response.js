@@ -12,7 +12,7 @@ exports.rsErrorTokenExpired = () => {
   };
 
 exports.rsErrorPermission = () => {
-	return { ErrorCode: 400, Message: 'Permission denied', Result: null }
+	return { ErrorCode: 406, Message: 'Permission denied', Result: null }
 }
 
 exports.rsErrorOperation = (error) => {

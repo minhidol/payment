@@ -3,7 +3,7 @@
   <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Vay lãi</title>
     <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -33,15 +33,11 @@
   <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
 </head>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="modal hide" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
-      {{!-- <div class="modal-dialog">
-          <div class="modal-content"> --}}
-             {{!-- <form id="FormRevenueExpense"> --}}
-              {{!-- <div class="modal-body">
-                <div class="card-body"> --}}
-                  {{!-- <div class="form-group"> --}}
+
                     <i class="fas fa-spinner fa-spin" style=" position: absolute;
    left: 50%;
    top: 50%;
@@ -82,8 +78,9 @@
 <script type="module" src="dist/js/loading.js"></script>
 <script type="module" src="dist/js/api/index.js"></script>
  <script type="module" src="dist/js/menu/index.js"></script>
+ <script type="module" src="dist/js/logout/index.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
+<script src="/plugins/toastr/toastr.min.js"></script>
 <!-- Page specific script -->
 <script>
   $(function () {

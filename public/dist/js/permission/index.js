@@ -94,25 +94,10 @@ $('button#submit-permission-action').click(async function(){
     }
     console.log('data: ', data);
     const updateMenuAction = await handleUpdateMenuAction(data);
-//     const getPermission = await handleGetPermission(
-//         $("#select-permission option:selected").val()
-//    );
-//    const permission = getPermission.Result;
-//    const list_action = permission.menu_action.list_action;
-//    const list_menu = permission.menu_action.list_menu;
-//     console.log('get permission: ', {list_action});
-//     const listId = [];
-//     list_action.forEach(item => {
-//         listId.push(item.id);
-//     })
-//     $("#treeview").hummingbird("checkNode",{
-//         sel:"id",// "id", "data-id" or "text"
-//         vals:listId,
-//     });
-        
-    alert('Cập nhật quyền thành công!');
 
-    // console.log({data})
+    $('#message-success').modal();
+    
+
 });
 
 $( document ).ready(async function() {

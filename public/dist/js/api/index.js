@@ -13,7 +13,7 @@ const axiosClient = axios.create({
     headers: {
     'content-type': 'application/json',
     },
-    // paramsSerializer: params => queryString.stringify(params),
+
 });
 
 axiosClient.interceptors.request.use(async (config) => {
@@ -27,8 +27,16 @@ axiosClient.interceptors.request.use(async (config) => {
 })
 axiosClient.interceptors.response.use((response) => {
     if (response && response.data) {
-        //console.log('response: ', response)
+        console.log('response: ', response.data);
+        const errorCode = response.data.ErrorCode;
+      
         $('#pleaseWaitDialog').modal('hide');
+        if(errorCode == 406){
+            console.log('not permission')
+            toastr.error('Bạn không có quyền thực hiện chức năng này!');
+            
+            return;
+        }
         return response.data;
     }
     return response;

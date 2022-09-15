@@ -18,14 +18,11 @@ import {
     compareTwoDateLessEqual,
     compareTwoDateGreaterEqual
     } from "/dist/js/helpers/extra_function.js";
-  const total = document.querySelector("#InputTotalTypeRevenueExpense");
-  const formRevenueExpense = document.querySelector("#FormRevenueExpense");
+
   const formSearchRevenueExpense = document.querySelector(
     "#searchRevenueExpense"
   );
-  const receiver = document.querySelector("#InputReceiver");
   const totalRevenueExpense = document.querySelector("#total-revenue-expense");
-  const note = document.querySelector("#InputNoter");
 
 const inputClient = document.querySelector("#InputClient");
 const inputNumberPhone = document.querySelector("#InputNumberPhone");
@@ -39,8 +36,6 @@ const inputTotal = document.querySelector("#InputTotal");
 const selectFormProfit= document.querySelector("#form-of-profit");
 const inputProfitPeriod = document.querySelector("#InputProfitPeriod");
 const inputInterest = document.querySelector("#InputInterest");
-const inputReservationInterest = document.querySelector("#reservation_interest");
-const inputNote = document.querySelector("#InputNote");
 const inputProfitTime = document.querySelector("#InputProfitTime");
 const formInterestLoans = document.querySelector("#FormInterestLoans");
 const formPayDownThePrincipal = document.querySelector("#pay_down_the_principal");
@@ -214,7 +209,6 @@ $('#InputTotal').keyup(function(event) {
     try {
       e.preventDefault();
       var datePayString = $('#reservation_interest_payment').find('input').val();
-
       var _id = $('#input-check-interest').attr("id_interest");
       var money =  $('#txtTragoc_TotalMoney').val();
       $('#error-date-tragoc').hide();
@@ -229,6 +223,7 @@ $('#InputTotal').keyup(function(event) {
         moneyPay: $('#txtTragoc_TotalMoney').val()
       };
       const updateDebt = await handleUpdatePayDebt(data);
+      
       if(updateDebt.ErrorCode != 0){
         $('#error-date-tragoc small').html(updateDebt.Message);
         $('#error-date-tragoc').show();
@@ -967,7 +962,7 @@ function numberWithCommas(x) {
               <td class="project-actions text-center" style="align-items: center;">
               <button
                 id='pay-interest'
-                data-toggle="modal" data-target="#modal-details_pawn" 
+                data-toggle="modal" 
                 class="btn btn-secondary btn-sm" title="Đóng lãi">							                    
                   <i class="fas fa-coins" style="color: #ffbf00"></i>
                   <span id='id-interest' style="display:none">${item._id}</span>						                    
@@ -1063,7 +1058,6 @@ $(document).on("click", "table#table-revenue-expense td button#pay-interest", as
     $("#strGiaHan").html('Tuần');
   }
   
-
   $("#table-profits").find("tr").remove();
   
   let htmlCol = "";
@@ -1102,6 +1096,8 @@ $(document).on("click", "table#table-revenue-expense td button#pay-interest", as
     });
     var tableProfits = document.getElementById("table-profits");
     tableProfits.innerHTML = htmlCol;
+
+    $('#modal-details_pawn ').modal();
 })
 
 $(document).on("click", "tbody#table-profits td input#input-check-interest", async function (e) {

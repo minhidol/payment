@@ -1,0 +1,9 @@
+#toast-container {
+    position: fixed;
+    z-index: 999999;
+    pointer-events: none;
+}
+.toast-top-right {
+    top: 12px;
+    right: 12px;
+}

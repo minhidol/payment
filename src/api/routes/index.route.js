@@ -15,6 +15,7 @@ const interestLoansRoute = require('./interest_loans.route');
 const router = express.Router()
 
 router.use('/account', userRoute);
+router.use('/menu-action', menuActionRoute);
 router.use(authMiddleware.isAuth);
 router.use('/permission-group', permissionGroupRoute);
 router.use('/permission-action', permissionActionRoute);
@@ -26,5 +27,5 @@ router.use('/status-revenue', statusRevenueRoute);
 router.use('/status', statusRoute);
 router.use('/interest-loans', interestLoansRoute);
 router.use('/permission', permissionRoute);
-router.use('/menu-action', menuActionRoute);
+
 module.exports = router;

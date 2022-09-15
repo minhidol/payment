@@ -12,7 +12,6 @@ function getCookie(name) {
     return null;
 }
 $( document ).ready(async function() {
-
     let menu = JSON.parse(getCookie('menu'));
     const listSubMenu = []
     menu.forEach(item => {
@@ -25,13 +24,11 @@ $( document ).ready(async function() {
         }
        
     });
-    let lengthRow = listSubMenu.length / 4;
-    let length = listSubMenu % 4;
-    if(length > 0)
-        lengthRow++;
+
     let divCol = '';
     let divRow = '';
     for(let i = 0; i < listSubMenu.length; i++){
+     
         divCol += `<div class="col-lg-3 col-6">
         <div class="small-box bg-info">
           <div class="inner">
@@ -43,6 +40,7 @@ $( document ).ready(async function() {
           <a href="${listSubMenu[i].link}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>`;
+      console.log(divCol)
       if(i % 4 == 0 && i != 0){
         divRow += `<div class="row">${divCol}</div>`;
         divCol = '';
@@ -50,7 +48,7 @@ $( document ).ready(async function() {
 
     }
     $('#action-permission').html(divRow);
-    console.log('menu: ', divRow);
+    console.log('menu123123123: ', divRow);
 
 })
 
