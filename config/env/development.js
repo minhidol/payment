@@ -1,6 +1,6 @@
 module.exports = {
     env: "local",
-    db: "mongodb://minhnn:minhnn@localhost:2017/payment",
+    db: "mongodb://minhnn:minhnn@118.69.111.40:27017/payment",
     
     ACCESS_TOKEN_SECRET: "DEVELOPMENT_@123abcd",
     ACCESS_TOKEN_LIFE: "5h",
