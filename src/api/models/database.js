@@ -17,4 +17,10 @@ mongoose.connection.on('reconnected', function () {
     console.log('MongoDB reconnected!');
 });
 
+mongoose.connection.on('error', function(err) {
+    if (err) {
+        console.log('MongoDB failed!');
+        throw err};
+});
+
 module.exports = mongoose;
